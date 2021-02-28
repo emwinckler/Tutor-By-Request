@@ -8,39 +8,25 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_homePage"
-            app:destination="@id/homePage" />
-    </fragment>
-    <fragment
-        android:id="@+id/homePage"
-        android:name="com.example.myapplication.HomePage"
-        android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" >
-        <action
-            android:id="@+id/action_homePage_to_get_A_Tutor"
-            app:destination="@id/get_A_Tutor" />
-        <action
-            android:id="@+id/action_homePage_to_my_Sessions"
-            app:destination="@id/my_Sessions" />
-        <action
-            android:id="@+id/action_homePage_to_logout"
-            app:destination="@id/logout" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/get_A_Tutor"
-        android:name="com.example.myapplication.Get_A_Tutor"
+        android:name="com.example.myapplication.Get_A_Tutor.Get_A_Tutor"
         android:label="fragment_get__a__tutor"
         tools:layout="@layout/fragment_get__a__tutor" />
-    <fragment
-        android:id="@+id/my_Sessions"
-        android:name="com.example.myapplication.My_Sessions"
-        android:label="fragment_my__sessions"
-        tools:layout="@layout/fragment_my__sessions" />
     <fragment
         android:id="@+id/logout"
         android:name="com.example.myapplication.Logout"
         android:label="fragment_logout"
         tools:layout="@layout/fragment_logout" />
+    <fragment
+        android:id="@+id/my_Sessions"
+        android:name="com.example.myapplication.MySessions.My_Sessions"
+        android:label="fragment_my__sessions"
+        tools:layout="@layout/fragment_my__sessions" />
+    <fragment
+        android:id="@+id/StudentMain"
+        android:name="com.example.myapplication.ui.main.PlaceholderFragment"
+        android:label="fragment_student"
+        tools:layout="@layout/fragment_student" />
 </navigation>
