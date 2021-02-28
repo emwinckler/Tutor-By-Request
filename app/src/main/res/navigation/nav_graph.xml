@@ -3,26 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/loginFragment">
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.myapplication.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/loginFragment"
+        android:name="com.example.myapplication.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_loginFragment_to_homePage"
+            app:destination="@id/homePage" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.myapplication.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/homePage"
+        android:name="com.example.myapplication.HomePage"
+        android:label="fragment_home_page"
+        tools:layout="@layout/fragment_home_page" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_homePage_to_get_A_Tutor"
+            app:destination="@id/get_A_Tutor" />
+        <action
+            android:id="@+id/action_homePage_to_my_Sessions"
+            app:destination="@id/my_Sessions" />
+        <action
+            android:id="@+id/action_homePage_to_logout"
+            app:destination="@id/logout" />
     </fragment>
+    <fragment
+        android:id="@+id/get_A_Tutor"
+        android:name="com.example.myapplication.Get_A_Tutor"
+        android:label="fragment_get__a__tutor"
+        tools:layout="@layout/fragment_get__a__tutor" />
+    <fragment
+        android:id="@+id/my_Sessions"
+        android:name="com.example.myapplication.My_Sessions"
+        android:label="fragment_my__sessions"
+        tools:layout="@layout/fragment_my__sessions" />
+    <fragment
+        android:id="@+id/logout"
+        android:name="com.example.myapplication.Logout"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" />
 </navigation>
