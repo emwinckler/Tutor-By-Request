@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".StudentActivity"
+            android:name=".student.StudentActivity"
             android:label="@string/title_activity_student"
             android:theme="@style/Theme.MyApplication.NoActionBar"></activity>
         <activity
