@@ -1,4 +1,4 @@
-package com.example.myapplication.student;
+package com.example.myapplication.tutor;
 
 import android.content.Context;
 
@@ -10,11 +10,10 @@ import com.example.myapplication.common.Logout;
 import com.example.myapplication.common.My_Sessions;
 import com.example.myapplication.common.HomePage;
 
-public class StudentAdapter extends FragmentPagerAdapter {
-
+public class TutorAdapter extends FragmentPagerAdapter {
     Context context;
     int totalTabs;
-    public StudentAdapter(Context c, FragmentManager fm, int totalTabs) {
+    public TutorAdapter(Context c, FragmentManager fm, int totalTabs) {
         super(fm);
         context = c;
         this.totalTabs = totalTabs;
@@ -26,11 +25,11 @@ public class StudentAdapter extends FragmentPagerAdapter {
                 HomePage homePageFragment = new HomePage();
                 return homePageFragment;
             case 1:
-                Get_A_Tutor getATutorFragment = new Get_A_Tutor();
-                return getATutorFragment;
-            case 2:
                 My_Sessions mySessionsFragment = new My_Sessions();
                 return mySessionsFragment;
+            case 2:
+                SetTutorAvailability tutorAvailabilityFragment = new SetTutorAvailability();
+                return tutorAvailabilityFragment;
             case 3:
                 Logout logoutFragment = new Logout();
                 return logoutFragment;

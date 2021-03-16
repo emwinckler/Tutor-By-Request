@@ -1,4 +1,4 @@
-package com.example.myapplication.Get_A_Tutor;
+package com.example.myapplication.student;
 
 import android.os.Bundle;
 

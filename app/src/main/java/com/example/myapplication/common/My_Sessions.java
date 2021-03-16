@@ -1,4 +1,4 @@
-package com.example.myapplication.MySessions;
+package com.example.myapplication.common;
 
 import android.os.Bundle;
 

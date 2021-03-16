@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.student.StudentActivity;
+import com.example.myapplication.studentandtutor.StudentAndTutor;
+import com.example.myapplication.tutor.TutorActivity;
 
 public class LoginFragment extends Fragment {
 
@@ -50,6 +52,8 @@ public class LoginFragment extends Fragment {
         final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
 
         final Button studentButton = view.findViewById(R.id.student);
+        final Button tutorButton = view.findViewById(R.id.tutorButton);
+        final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -128,6 +132,22 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 Intent student = new Intent(view.getContext(),StudentActivity.class);
                 startActivity(student);
+            }
+        });
+
+        tutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent tutor = new Intent(view.getContext(), TutorActivity.class);
+                startActivity(tutor);
+            }
+        });
+
+        studentAndTutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent studentAndTutor = new Intent(view.getContext(), StudentAndTutor.class);
+                startActivity(studentAndTutor);
             }
         });
     }

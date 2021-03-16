@@ -8,34 +8,5 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_studentActivity2"
-            app:destination="@id/studentActivity2" />
-    </fragment>
-    <fragment
-        android:id="@+id/get_A_Tutor"
-        android:name="com.example.myapplication.Get_A_Tutor.Get_A_Tutor"
-        android:label="fragment_get__a__tutor"
-        tools:layout="@layout/fragment_get__a__tutor" />
-    <fragment
-        android:id="@+id/logout"
-        android:name="com.example.myapplication.Logout"
-        android:label="fragment_logout"
-        tools:layout="@layout/fragment_logout" />
-    <fragment
-        android:id="@+id/my_Sessions"
-        android:name="com.example.myapplication.MySessions.My_Sessions"
-        android:label="fragment_my__sessions"
-        tools:layout="@layout/fragment_my__sessions" />
-    <fragment
-        android:id="@+id/StudentMain"
-        android:name="com.example.myapplication.ui.main.PlaceholderFragment"
-        android:label="fragment_student"
-        tools:layout="@layout/fragment_student" />
-    <activity
-        android:id="@+id/studentActivity2"
-        android:name="com.example.myapplication.student.StudentActivity"
-        android:label="activity_student"
-        tools:layout="@layout/activity_student" />
+        tools:layout="@layout/fragment_login" />
 </navigation>
