@@ -29,3 +29,8 @@ Evan:
 -Added activities for tutor, student, and student/tutor.
 -Creating skeleton for everyone to build on.
 
+3/16/2021 - 10:15
+-Added indicators for tabs so that user knows where they're at.
+-Still not sure why the labels aren't showing up for the tabs.  I'm going to leave it
+for now since it's not totally necessary for a minimum viable product.
+
