@@ -2,11 +2,14 @@ package com.example.myapplication.common;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.myapplication.R;
 
@@ -62,5 +65,20 @@ public class My_Sessions extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my__sessions, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
+//        super.onViewCreated(view, savedInstanceState);
+        final Button sessionDetails = view.findViewById(R.id.sessionDetailsButton);
+
+        sessionDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.common.My_Sessions.this)
+                        .navigate(R.id.action_my_Sessions_to_sessionDetails);
+            }
+        });
     }
 }

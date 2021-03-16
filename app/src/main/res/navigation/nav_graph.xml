@@ -9,4 +9,43 @@
         android:name="com.example.myapplication.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/logout"
+        android:name="com.example.myapplication.common.Logout"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_logout_to_logoutConfirmation"
+            app:destination="@id/logoutConfirmation" />
+    </fragment>
+    <fragment
+        android:id="@+id/logoutConfirmation"
+        android:name="com.example.myapplication.common.LogoutConfirmation"
+        android:label="fragment_logout_confirmation"
+        tools:layout="@layout/fragment_logout_confirmation" >
+        <action
+            android:id="@+id/action_logoutConfirmation_to_logout"
+            app:destination="@id/logout" />
+        <action
+            android:id="@+id/action_logoutConfirmation_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/my_Sessions"
+        android:name="com.example.myapplication.common.My_Sessions"
+        android:label="fragment_my__sessions"
+        tools:layout="@layout/fragment_my__sessions" >
+        <action
+            android:id="@+id/action_my_Sessions_to_sessionDetails"
+            app:destination="@id/sessionDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/sessionDetails"
+        android:name="com.example.myapplication.common.SessionDetails"
+        android:label="fragment_session_details"
+        tools:layout="@layout/fragment_session_details" >
+        <action
+            android:id="@+id/action_sessionDetails_to_my_Sessions"
+            app:destination="@id/my_Sessions" />
+    </fragment>
 </navigation>
