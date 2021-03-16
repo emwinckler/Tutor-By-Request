@@ -8,7 +8,11 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_studentActivity2"
+            app:destination="@id/studentActivity2" />
+    </fragment>
     <fragment
         android:id="@+id/get_A_Tutor"
         android:name="com.example.myapplication.Get_A_Tutor.Get_A_Tutor"
@@ -29,4 +33,9 @@
         android:name="com.example.myapplication.ui.main.PlaceholderFragment"
         android:label="fragment_student"
         tools:layout="@layout/fragment_student" />
+    <activity
+        android:id="@+id/studentActivity2"
+        android:name="com.example.myapplication.student.StudentActivity"
+        android:label="activity_student"
+        tools:layout="@layout/activity_student" />
 </navigation>
