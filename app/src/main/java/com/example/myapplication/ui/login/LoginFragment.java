@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.student.StudentActivity;
+import com.example.myapplication.studentandtutor.StudentAndTutor;
+import com.example.myapplication.tutor.TutorActivity;
 
 public class LoginFragment extends Fragment {
 
@@ -46,7 +51,11 @@ public class LoginFragment extends Fragment {
         final Button loginButton = view.findViewById(R.id.login);
         final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        final Button studentButton = view.findViewById(R.id.student);
+        final Button tutorButton = view.findViewById(R.id.tutorButton);
+        final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
+
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -62,7 +71,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
+        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
                 if (loginResult == null) {
@@ -115,6 +124,30 @@ public class LoginFragment extends Fragment {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        studentButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent student = new Intent(view.getContext(),StudentActivity.class);
+                startActivity(student);
+            }
+        });
+
+        tutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent tutor = new Intent(view.getContext(), TutorActivity.class);
+                startActivity(tutor);
+            }
+        });
+
+        studentAndTutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent studentAndTutor = new Intent(view.getContext(), StudentAndTutor.class);
+                startActivity(studentAndTutor);
             }
         });
     }
