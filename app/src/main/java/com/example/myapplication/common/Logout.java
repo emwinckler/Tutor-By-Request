@@ -74,8 +74,8 @@ public class Logout extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.common.Logout.this)
-                        .navigate(R.id.action_logout_to_logoutConfirmation);
+//                NavHostFragment.findNavController(com.example.myapplication.common.Logout.this)
+//                        .navigate(R.id.action_logout_to_logoutConfirmation);
             }
         });
     }

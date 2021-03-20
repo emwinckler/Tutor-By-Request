@@ -130,24 +130,24 @@ public class LoginFragment extends Fragment {
         studentButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent student = new Intent(view.getContext(),StudentActivity.class);
-                startActivity(student);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentHome);
             }
         });
 
         tutorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent tutor = new Intent(view.getContext(), TutorActivity.class);
-                startActivity(tutor);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_tutorHome);
             }
         });
 
         studentAndTutorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent studentAndTutor = new Intent(view.getContext(), StudentAndTutor.class);
-                startActivity(studentAndTutor);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentTutorHome);
             }
         });
     }
