@@ -103,13 +103,10 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         textView_subject     = (TextView) view.findViewById(R.id.textView_subject);
         textView_course      = (TextView) view.findViewById(R.id.textView_course);
 
-        spinner_week          = (Spinner) view.findViewById(R.id.spinner_week);
 
         button_prevWeek       = (Button) view.findViewById(R.id.button_prevWeek);
         button_nextWeek       = (Button) view.findViewById(R.id.button_nextWeek);
 
-        spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
-        spinner_course        = (Spinner) view.findViewById(R.id.spinner_course);
 
         //MainActivity ma = (MainActivity) this.getActivity();
         //dbHelper=ma.getMenuDB();
@@ -122,6 +119,15 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //SPINNER INITIALIZATION
+        spinner_week          = (Spinner) view.findViewById(R.id.spinner_week);
+        spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
+        spinner_course        = (Spinner) view.findViewById(R.id.spinner_course);
+
+
+
+
         // BEGIN WEEK
         available_week = new ArrayList<String>();
         // TODO: NEED A GOOD WAY TO LOAD THESE FOR ONLY VALID WEEKS EACH SEMESTER
