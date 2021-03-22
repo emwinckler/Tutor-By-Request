@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class StudentDBHelper extends SQLiteOpenHelper {
+public class UsersDBHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "StudentDBHelper";
 
@@ -15,23 +15,26 @@ public class StudentDBHelper extends SQLiteOpenHelper {
     public static final String COL_2 = "password";
     public static final String COL_3 = "name";
     public static final String COL_4 = "email";
-    public static final String COL_5 = "account_type";
+    public static final String COL_5 = "tutor";
+    public static final String COL_6= "tutee";
 
 
 
-    public StudentDBHelper(Context context) {
+
+    public UsersDBHelper(Context context) {
         super(context, TABLE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+
+                "("+
                 COL_1 +" VARCHAR(30) PRIMARY KEY, "+
                 COL_2 +" VARCHAR(30), "+
                 COL_3 +" VARCHAR(30), "+
                 COL_4 +" VARCHAR(30), "+
-                COL_5 +" VARCHAR(10), "+
+                COL_5 +" CHAR(5), "+
+                COL_6 +" VARCHAR(5) "+
                 ")";
         db.execSQL(createTable);
     }
@@ -44,7 +47,8 @@ public class StudentDBHelper extends SQLiteOpenHelper {
 
 
     public boolean addData(String NetID, String password, String name, String email,
-                           String account_type) throws Exception {
+            boolean tutor, boolean tutee) throws Exception {
+
         long result;
 
         try {
@@ -54,7 +58,8 @@ public class StudentDBHelper extends SQLiteOpenHelper {
             contentValues.put(COL_2, password);
             contentValues.put(COL_3, name);
             contentValues.put(COL_4, email);
-            contentValues.put(COL_5, account_type);
+            contentValues.put(COL_5, Boolean.toString(tutor));
+            contentValues.put(COL_6, Boolean.toString(tutee));
 
             result = db.insert(TABLE_NAME,null,contentValues);
 
@@ -83,12 +88,6 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_3, newName);
         return modifyData(NetID, COL_3, contentValues);
-    }
-
-    public boolean modifyEmail(String NetID, String newEmail) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_5, newEmail);
-        return modifyData(NetID, COL_5, contentValues);
     }
 
     public boolean modifyPassword(String NetID, String newPassword) {
