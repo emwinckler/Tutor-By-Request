@@ -1,4 +1,4 @@
-package com.example.myapplication.Get_A_Tutor;
+package com.example.myapplication.common;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.myapplication.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Get_A_Tutor#newInstance} factory method to
+ * Use the {@link SessionDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Get_A_Tutor extends Fragment {
+public class SessionDetails extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class Get_A_Tutor extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Get_A_Tutor() {
+    public SessionDetails() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class Get_A_Tutor extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Get_A_Tutor.
+     * @return A new instance of fragment SessionDetails.
      */
     // TODO: Rename and change types and number of parameters
-    public static Get_A_Tutor newInstance(String param1, String param2) {
-        Get_A_Tutor fragment = new Get_A_Tutor();
+    public static SessionDetails newInstance(String param1, String param2) {
+        SessionDetails fragment = new SessionDetails();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class Get_A_Tutor extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
+        return inflater.inflate(R.layout.fragment_session_details, container, false);
     }
 }

@@ -1,12 +1,17 @@
-package com.example.myapplication;
+package com.example.myapplication.common;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.myapplication.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +65,18 @@ public class Logout extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_logout, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_logout, container, false);
+        super.onViewCreated(view, savedInstanceState);
+        final Button logout = view.findViewById(R.id.logoutButton);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.common.Logout.this)
+//                        .navigate(R.id.action_logout_to_logoutConfirmation);
+            }
+        });
     }
 }

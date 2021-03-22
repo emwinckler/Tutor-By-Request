@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,8 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.student.StudentActivity;
+import com.example.myapplication.studentandtutor.StudentAndTutor;
+import com.example.myapplication.tutor.TutorActivity;
 
 public class LoginFragment extends Fragment {
+
+    Button button_login;
 
     private LoginViewModel loginViewModel;
 
@@ -46,7 +53,13 @@ public class LoginFragment extends Fragment {
         final Button loginButton = view.findViewById(R.id.login);
         final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        final Button studentButton = view.findViewById(R.id.student);
+        final Button tutorButton = view.findViewById(R.id.tutorButton);
+        final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
+
+        button_login = view.findViewById(R.id.button_login);
+
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -62,7 +75,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
+        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
                 if (loginResult == null) {
@@ -109,12 +122,44 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        button_login.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_home_student);
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        studentButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentHome);
+            }
+        });
+
+        tutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_tutorHome);
+            }
+        });
+
+        studentAndTutorButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentTutorHome);
             }
         });
     }
