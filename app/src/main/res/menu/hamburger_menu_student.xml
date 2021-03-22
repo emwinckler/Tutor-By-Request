@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/main_menu_student_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/main_menu_student_get_a_tutor"
+            android:title="Get A Tutor" />
+        <item
+            android:id="@+id/main_menu_student_my_sessions"
+            android:title="My Sessions" />
+        <item
+            android:id="@+id/main_menu_student_logout"
+            android:title="Logout" />
+    </group>
+</menu>

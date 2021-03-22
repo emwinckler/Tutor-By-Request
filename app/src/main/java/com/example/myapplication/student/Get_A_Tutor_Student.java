@@ -229,7 +229,7 @@ public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemS
         button_prevWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spinner_week.isSelected()) {
+                if (spinner_week.getSelectedItem() != null) {
                     int curr_week_pos = spinner_week.getSelectedItemPosition();
                     if (curr_week_pos > 0) {
                         curr_week_pos--;
@@ -242,9 +242,9 @@ public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemS
         button_nextWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spinner_week.isSelected()) {
+                if (spinner_week.getSelectedItem() != null) {
                     int curr_week_pos = spinner_week.getSelectedItemPosition();
-                    if (curr_week_pos < available_week.size()) {
+                    if (curr_week_pos < available_week.size() - 1) {
                         curr_week_pos++;
                         spinner_week.setSelection(curr_week_pos, true);
                     }
