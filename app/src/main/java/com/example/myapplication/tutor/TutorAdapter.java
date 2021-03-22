@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.myapplication.common.Logout;
 import com.example.myapplication.common.My_Sessions;
-import com.example.myapplication.common.HomePage;
 
 public class TutorAdapter extends FragmentPagerAdapter {
     Context context;
@@ -22,8 +21,9 @@ public class TutorAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                HomePage homePageFragment = new HomePage();
-                return homePageFragment;
+//                HomePage homePageFragment = new HomePage();
+//                return homePageFragment;
+                return null;
             case 1:
                 My_Sessions mySessionsFragment = new My_Sessions();
                 return mySessionsFragment;

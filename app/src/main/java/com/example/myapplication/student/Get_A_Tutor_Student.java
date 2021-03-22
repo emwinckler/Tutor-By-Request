@@ -2,11 +2,6 @@ package com.example.myapplication.student;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +12,29 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Get_A_Tutor#newInstance} factory method to
+ * Use the {@link Get_A_Tutor_Student#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    // UPPER MENU BEGIN
+    Button button_home;
+    Button button_get_a_tutor;
+    Button button_my_sessions;
+    Button button_logout;
+    // UPPER MENU END
+
     TextView textView_get_a_tutor;
     TextView textView_date;
     TextView textView_subject;
@@ -61,7 +69,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     private String mParam1;
     private String mParam2;
 
-    public Get_A_Tutor() {
+    public Get_A_Tutor_Student() {
         // Required empty public constructor
     }
 
@@ -71,18 +79,17 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Get_A_Tutor.
+     * @return A new instance of fragment Get_A_Tutor_Student.
      */
     // TODO: Rename and change types and number of parameters
-    public static Get_A_Tutor newInstance(String param1, String param2) {
-        Get_A_Tutor fragment = new Get_A_Tutor();
+    public static Get_A_Tutor_Student newInstance(String param1, String param2) {
+        Get_A_Tutor_Student fragment = new Get_A_Tutor_Student();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +102,15 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
+        View view = inflater.inflate(R.layout.fragment_get__a__tutor__student, container, false);
 
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_get__a__tutor__student, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         textView_get_a_tutor = (TextView) view.findViewById(R.id.textView_get_a_tutor);
         textView_date        = (TextView) view.findViewById(R.id.textView_date);
@@ -107,18 +121,72 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         button_prevWeek       = (Button) view.findViewById(R.id.button_prevWeek);
         button_nextWeek       = (Button) view.findViewById(R.id.button_nextWeek);
 
+        // UPPER MENU BEGIN
+        button_home        = (Button) view.findViewById(R.id.button_home);
+        button_get_a_tutor = (Button) view.findViewById(R.id.button_get_a_tutor);
+        button_my_sessions = (Button) view.findViewById(R.id.button_my_sessions);
+        button_logout      = (Button) view.findViewById(R.id.button_logout);
 
-        //MainActivity ma = (MainActivity) this.getActivity();
-        //dbHelper=ma.getMenuDB();
+        button_home.setBackgroundColor(Color.RED);
+        button_get_a_tutor.setBackgroundColor(Color.RED);
+        button_my_sessions.setBackgroundColor(Color.RED);
+        button_logout.setBackgroundColor(Color.RED);
 
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
-    }
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+                        .navigate(R.id.action_get_a_tutor_student_to_home_student); // refresh student home?
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+
+            }
+        });
+
+        button_get_a_tutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+//                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+//                        .navigate(R.id.action_student_home_to_student_get);
+                //iteration 0: do nothing
+            }
+        });
+
+        button_my_sessions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // bundle student id and pass it to my sessions fragment for database
+
+                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+                        .navigate(R.id.action_get_a_tutor_student_to_my_sessions_student);
+
+
+            }
+        });
+
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // bundle student id and pass it to my sessions fragment for database
+
+                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+                        .navigate(R.id.action_get_a_tutor_student_to_logout);
+
+
+            }
+        });
+
+
+
+    // UPPER MENU END
+
+
+
 
         //SPINNER INITIALIZATION
         spinner_week          = (Spinner) view.findViewById(R.id.spinner_week);
@@ -149,19 +217,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         available_week.add("04/25 - 05/01");
         available_week.add("05/02 - 05/08");
 
-        String[] array_available_week = new String[available_week.size()];
-        array_available_week = available_week.toArray(array_available_week);
-
-        adapter_week = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, array_available_week);
+        adapter_week = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, available_week);
         adapter_week.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_week.setAdapter(adapter_week);
         spinner_week.setEnabled(true);
         spinner_week.setOnItemSelectedListener(this);
-        spinner_week.setSelection(0, true);
 
-
-        System.out.println("available_week[0] = " + available_week.get(0));
-        System.out.println("MADE IT TO THE SET SELECTION STUFF");
 
 
         // BEGIN WEEK BUTTONS
@@ -197,6 +258,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // BEGIN SUBJECT
         available_subject = new ArrayList<String>();
         adapter_subject = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_subject);
+        available_subject.add("ECE: Electrical & Computer Engineering");
+        available_subject.add("CS: Computer Sciences");
+        available_subject.add("MATH: Mathematics");
         spinner_subject.setAdapter(adapter_subject);
         spinner_subject.setOnItemSelectedListener(this);
         // END SUBJECT
@@ -204,6 +268,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // BEGIN COURSE
         available_course = new ArrayList<String>();
         adapter_course = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course);
+        available_course.add("ECE 552");
+        available_course.add("CS 506");
         spinner_course.setAdapter(adapter_course);
         spinner_course.setOnItemSelectedListener(this);
         // END COURSE
@@ -232,14 +298,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             button_nextWeek.setBackgroundColor(Color.RED);
 
             // LOAD SUBJECTS FROM DATABASE
-            available_subject.add("ECE: Electrical & Computer Engineering");
-            available_subject.add("CS: Computer Sciences");
-            available_subject.add("MATH: Mathematics");
+
             spinner_subject.setEnabled(true);
         }
         if (parent.getId() == R.id.spinner_subject) {
             // LOAD COURSES FROM DATABASE
-            available_course.add("ECE 552");
+
             spinner_course.setEnabled(true);
         }
         if (parent.getId() == R.id.spinner_course) {

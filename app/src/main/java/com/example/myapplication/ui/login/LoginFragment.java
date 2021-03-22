@@ -30,6 +30,8 @@ import com.example.myapplication.tutor.TutorActivity;
 
 public class LoginFragment extends Fragment {
 
+    Button button_login;
+
     private LoginViewModel loginViewModel;
 
     @Nullable
@@ -54,6 +56,8 @@ public class LoginFragment extends Fragment {
         final Button studentButton = view.findViewById(R.id.student);
         final Button tutorButton = view.findViewById(R.id.tutorButton);
         final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
+
+        button_login = view.findViewById(R.id.button_login);
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -118,6 +122,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        button_login.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_home_student);
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,24 +142,24 @@ public class LoginFragment extends Fragment {
         studentButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent student = new Intent(view.getContext(),StudentActivity.class);
-                startActivity(student);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentHome);
             }
         });
 
         tutorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent tutor = new Intent(view.getContext(), TutorActivity.class);
-                startActivity(tutor);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_tutorHome);
             }
         });
 
         studentAndTutorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent studentAndTutor = new Intent(view.getContext(), StudentAndTutor.class);
-                startActivity(studentAndTutor);
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentTutorHome);
             }
         });
     }
