@@ -106,6 +106,20 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getCourseTutors(String Subject, String CourseNumber) {
+        Cursor result;
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {Subject, CourseNumber});
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
+
 
 }
 
