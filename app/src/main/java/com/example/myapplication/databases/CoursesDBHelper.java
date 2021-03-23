@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.myapplication.models.Course;
+
+import java.util.ArrayList;
+
 public class CoursesDBHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "coursesDBHelper";
@@ -66,6 +70,20 @@ public class CoursesDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public ArrayList<Course> getData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM "+TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<Course> courseList = new ArrayList<Course>();
+        while(data.moveToNext()){
+            String subject = data.getString(0);
+            String course = data.getString(1);
+            int courseNo = Integer.parseInt(data.getString(2));
+            courseList.add(new Course(subject,course,courseNo));
+        }
+        return courseList;
+    }
+
 
 
     public boolean modifyData(String NetID, String COL, ContentValues cv) {
@@ -92,13 +110,6 @@ public class CoursesDBHelper extends SQLiteOpenHelper {
         return modifyData(NetID, COL_2, contentValues);
     }
 
-
-    public Cursor getData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+TABLE_NAME;
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
     public Cursor checkLogin2(String NetID, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] selectionArgs = {NetID,password};

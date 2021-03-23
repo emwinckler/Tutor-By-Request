@@ -1,0 +1,42 @@
+_____________Team Section______________
+
+2/28:
+Today we had our initial meeting to plan creating the TBR app.  We created our rough draft of the
+schema we'll be using for the database.  We also gave ourselves a rough idea of what the program
+will look like in the nav graph.  And we decided how to divide the labor.  Ryan and Edwin will be
+working together to develop the database.  Harrison will be doing the Login Activity.  Azzed will
+be doing the Tutor Activity.  And Evan will be doing the Student Activity.
+
+
+
+
+____________Personal Section______________
+
+Azzed:
+
+
+Ryan:
+3/21/2021 - 8:38PM
+-Created users databases and
+
+Edwin:
+
+
+Harrison:
+
+
+Evan:
+3/20/2021 - 9:20
+-Created new skeleton code due to the startup cost of learning how to navigate within a tabbed
+activity.  We can try implementing that later however in order to get a minimum viable product
+completed I'm simplifying the layout.
+
+3/16/2021 - 9:00
+-Added activities for tutor, student, and student/tutor.
+-Creating skeleton for everyone to build on.
+
+3/16/2021 - 10:15
+-Added indicators for tabs so that user knows where they're at.
+-Still not sure why the labels aren't showing up for the tabs.  I'm going to leave it
+for now since it's not totally necessary for a minimum viable product.
+

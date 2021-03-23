@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class MySessionsDBHelper extends SQLiteOpenHelper {
 
-    public static final String TAG = "StudentDBHelper";
+    public static final String TAG = "sessionsBHelper";
 
     public static final String TABLE_NAME = "sessions_table";
     public static final String COL_1 = "student_id";

@@ -75,6 +75,8 @@ public class TutorHome extends Fragment {
         final Button tutorSessions = view.findViewById(R.id.tutorSessions);
         final Button tutorAvailability = view.findViewById(R.id.tutorAvailability);
         final Button tutorLogout = view.findViewById(R.id.tutorLogout);
+        final Button tutorAddCourse = view.findViewById(R.id.tutorAddCourse);
+        final Button tutorSetCourse = view.findViewById(R.id.tutorSetCourse);
 
         tutorReminders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +104,22 @@ public class TutorHome extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
                         .navigate(R.id.action_tutorHome_to_logoutConfirmation);
+            }
+        });
+
+        tutorAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
+                        .navigate(R.id.action_tutorHome_to_addCourseTutor);
+            }
+        });
+
+        tutorSetCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
+                        .navigate(R.id.action_tutorHome_to_tutorSetClasses);
             }
         });
 
