@@ -1,4 +1,4 @@
-package com.example.myapplication.Models;
+package com.example.myapplication.models;
 
 /*
 This class is a model that is meant to represent the users of the application
