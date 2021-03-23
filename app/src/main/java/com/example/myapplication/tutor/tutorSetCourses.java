@@ -3,22 +3,29 @@ package com.example.myapplication.tutor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SetTutorAvailability#newInstance} factory method to
+ * Use the {@link tutorSetCourses#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SetTutorAvailability extends Fragment {
+public class tutorSetCourses extends Fragment {
+
+    Spinner subjectSelect;
+    ArrayList<String> available_subject;
+    ArrayAdapter<String> adapter_subject;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +36,7 @@ public class SetTutorAvailability extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SetTutorAvailability() {
+    public tutorSetCourses() {
         // Required empty public constructor
     }
 
@@ -39,11 +46,11 @@ public class SetTutorAvailability extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SetTutorAvailability.
+     * @return A new instance of fragment tutorSetCourses.
      */
     // TODO: Rename and change types and number of parameters
-    public static SetTutorAvailability newInstance(String param1, String param2) {
-        SetTutorAvailability fragment = new SetTutorAvailability();
+    public static tutorSetCourses newInstance(String param1, String param2) {
+        tutorSetCourses fragment = new tutorSetCourses();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,31 +71,22 @@ public class SetTutorAvailability extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_set_tutor_availability, container, false);
+        return inflater.inflate(R.layout.fragment_tutor_set_courses, container, false);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
-//        super.onViewCreated(view, savedInstanceState);
-        final Button tutorSetDateAndTime = view.findViewById(R.id.tutorSetDateAndTime);
-        final Button tutorSetCourses = view.findViewById(R.id.tutorSetCourses);
-
-
-        tutorSetDateAndTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.tutor.SetTutorAvailability.this)
-                        .navigate(R.id.action_setTutorAvailability_to_tutorSetDateAndTime2);
-            }
-        });
-
-        tutorSetCourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.tutor.SetTutorAvailability.this)
-                        .navigate(R.id.action_setTutorAvailability_to_tutorSetCourses2);
-            }
-        });
+        subjectSelect = (Spinner) view.findViewById(R.id.tutorSubjectSelect);
+        available_subject = new ArrayList<String>();
+        adapter_subject = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_subject);
+        available_subject.add("Select a subject");
+        available_subject.add("ECE: Electrical & Computer Engineering");
+        available_subject.add("CS: Computer Sciences");
+        available_subject.add("MATH: Mathematics");
+        adapter_subject.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        subjectSelect.setAdapter(adapter_subject);
+//        subjectSelect.setOnItemSelectedListener(this);
     }
+
 }

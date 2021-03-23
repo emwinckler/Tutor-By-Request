@@ -35,4 +35,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_tutor">TutorActivity</string>
     <string name="title_activity_student_and_tutor">StudentAndTutor</string>
+    <string name="meat" />
+    <string name="cheese" />
 </resources>

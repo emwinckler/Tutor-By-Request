@@ -18,9 +18,6 @@
         <action
             android:id="@+id/action_loginFragment_to_studentHome"
             app:destination="@id/studentHome" />
-        <action
-            android:id="@+id/action_loginFragment_to_home_student"
-            app:destination="@id/fragment_home_student" />
     </fragment>
     <fragment
         android:id="@+id/studentHome"
@@ -102,6 +99,15 @@
         <action
             android:id="@+id/action_logoutConfirmation_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_logoutConfirmation_to_tutorHome"
+            app:destination="@id/tutorHome" />
+        <action
+            android:id="@+id/action_logoutConfirmation_to_studentTutorHome"
+            app:destination="@id/studentTutorHome" />
+        <action
+            android:id="@+id/action_logoutConfirmation_to_studentHome"
+            app:destination="@id/studentHome" />
     </fragment>
     <fragment
         android:id="@+id/get_A_Tutor"
@@ -117,62 +123,30 @@
         android:id="@+id/setTutorAvailability"
         android:name="com.example.myapplication.tutor.SetTutorAvailability"
         android:label="fragment_set_tutor_availability"
-        tools:layout="@layout/fragment_set_tutor_availability" />
+        tools:layout="@layout/fragment_set_tutor_availability" >
+        <action
+            android:id="@+id/action_setTutorAvailability_to_tutorSetCourses2"
+            app:destination="@id/tutorSetCourses2" />
+        <action
+            android:id="@+id/action_setTutorAvailability_to_tutorSetDateAndTime2"
+            app:destination="@id/tutorSetDateAndTime2" />
+    </fragment>
     <fragment
         android:id="@+id/reminders"
         android:name="com.example.myapplication.common.Reminders"
         android:label="fragment_reminders"
         tools:layout="@layout/fragment_reminders" />
-
-
-
     <fragment
-        android:id="@+id/fragment_home_student"
-        android:name="com.example.myapplication.student.Home_Student"
-        android:label="fragment_reminders"
-        tools:layout="@layout/fragment_home__student" >
-        <action
-            android:id="@+id/action_home_student_to_get_a_tutor_student"
-            app:destination="@id/fragment_get_a_tutor_student" />
-        <action
-            android:id="@+id/action_home_student_to_my_sessions_student"
-            app:destination="@id/fragment_my_sessions_student" />
-        <action
-            android:id="@+id/action_home_student_to_logout"
-            app:destination="@id/loginFragment" />
-    </fragment>
-
+        android:id="@+id/tutorSetCourses2"
+        android:name="com.example.myapplication.tutor.tutorSetCourses"
+        android:label="fragment_tutor_set_courses"
+        tools:layout="@layout/fragment_tutor_set_courses" />
     <fragment
-        android:id="@+id/fragment_get_a_tutor_student"
-        android:name="com.example.myapplication.student.Get_A_Tutor_Student"
-        android:label="fragment_get_a_tutor"
-        tools:layout="@layout/fragment_get__a__tutor__student" >
-        <action
-            android:id="@+id/action_get_a_tutor_student_to_home_student"
-            app:destination="@id/fragment_home_student" />
-        <action
-            android:id="@+id/action_get_a_tutor_student_to_my_sessions_student"
-            app:destination="@id/fragment_my_sessions_student" />
-        <action
-            android:id="@+id/action_get_a_tutor_student_to_logout"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        android:id="@+id/tutorSetDateAndTime2"
+        android:name="com.example.myapplication.tutor.tutorSetDateAndTime"
+        android:label="fragment_tutor_set_date_and_time"
+        tools:layout="@layout/fragment_tutor_set_date_and_time" />
 
-    <fragment
-        android:id="@+id/fragment_my_sessions_student"
-        android:name="com.example.myapplication.student.My_Session_Student"
-        android:label="fragment_my_sessions_student"
-        tools:layout="@layout/fragment_my__session__student" >
-        <action
-            android:id="@+id/action_my_sessions_student_to_home_student"
-            app:destination="@id/fragment_home_student" />
-        <action
-            android:id="@+id/action_my_sessions_student_to_get_a_tutor_student"
-            app:destination="@id/fragment_get_a_tutor_student" />
-        <action
-            android:id="@+id/action_my_sessions_student_to_logout"
-            app:destination="@id/loginFragment" />
-    </fragment>
     <fragment
         android:id="@+id/addCourseTutor"
         android:name="com.example.myapplication.tutor.AddCourseTutor"

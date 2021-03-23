@@ -107,8 +107,8 @@ public class My_Session_Student extends Fragment {
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
-                        .navigate(R.id.action_my_sessions_student_to_home_student); // refresh student home?
+//                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
+//                        .navigate(R.id.action_my_sessions_student_to_home_student); // refresh student home?
 
 
             }
@@ -120,8 +120,8 @@ public class My_Session_Student extends Fragment {
 
 
 
-                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
-                        .navigate(R.id.action_my_sessions_student_to_get_a_tutor_student);
+//                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
+//                        .navigate(R.id.action_my_sessions_student_to_get_a_tutor_student);
 
             }
         });
@@ -145,8 +145,8 @@ public class My_Session_Student extends Fragment {
 
                 // bundle student id and pass it to my sessions fragment for database
 
-                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
-                        .navigate(R.id.action_my_sessions_student_to_logout);
+//                NavHostFragment.findNavController(com.example.myapplication.student.My_Session_Student.this)
+//                        .navigate(R.id.action_my_sessions_student_to_logout);
 
 
             }

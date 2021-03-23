@@ -133,15 +133,15 @@ public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemS
         button_logout.setBackgroundColor(Color.RED);
 
 
-        button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
-                        .navigate(R.id.action_get_a_tutor_student_to_home_student); // refresh student home?
-
-
-            }
-        });
+//        button_home.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+//                        .navigate(R.id.action_get_a_tutor_student_to_home_student); // refresh student home?
+//
+//
+//            }
+//        });
 
         button_get_a_tutor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +161,8 @@ public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemS
 
                 // bundle student id and pass it to my sessions fragment for database
 
-                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
-                        .navigate(R.id.action_get_a_tutor_student_to_my_sessions_student);
+//                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+//                        .navigate(R.id.action_get_a_tutor_student_to_my_sessions_student);
 
 
             }
@@ -174,8 +174,8 @@ public class Get_A_Tutor_Student extends Fragment implements AdapterView.OnItemS
 
                 // bundle student id and pass it to my sessions fragment for database
 
-                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
-                        .navigate(R.id.action_get_a_tutor_student_to_logout);
+//                NavHostFragment.findNavController(com.example.myapplication.student.Get_A_Tutor_Student.this)
+//                        .navigate(R.id.action_get_a_tutor_student_to_logout);
 
 
             }

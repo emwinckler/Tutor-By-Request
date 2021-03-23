@@ -2,11 +2,6 @@ package com.example.myapplication.student;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +12,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +27,14 @@ import com.example.myapplication.R;
  * create an instance of this fragment.
  */
 public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    // UPPER MENU BEGIN
+    Button button_home;
+    Button button_get_a_tutor;
+    Button button_my_sessions;
+    Button button_logout;
+    // UPPER MENU END
+
     TextView textView_get_a_tutor;
     TextView textView_date;
     TextView textView_subject;
@@ -36,6 +44,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ArrayList<String> available_week;
     ArrayAdapter<String> adapter_week;
 
+    Boolean first = true;
+    Boolean test = true;
     Button button_prevWeek;
     Button button_nextWeek;
 
@@ -45,8 +55,14 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ArrayAdapter<String> adapter_subject;
 
     Spinner spinner_course;
-    ArrayList<String> available_course;
-    ArrayAdapter<String> adapter_course;
+    ArrayList<String> available_course_Default;
+    ArrayAdapter<String> adapter_course_Default;
+    ArrayList<String> available_course_ECE;
+    ArrayAdapter<String> adapter_course_ECE;
+    ArrayList<String> available_course_CS;
+    ArrayAdapter<String> adapter_course_CS;
+    ArrayList<String> available_course_MATH;
+    ArrayAdapter<String> adapter_course_MATH;
 
     ListView listView_session;
     ArrayList<String> available_session;
@@ -71,18 +87,17 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Get_A_Tutor.
+     * @return A new instance of fragment Get_A_Tutor_Student.
      */
     // TODO: Rename and change types and number of parameters
-    public static Get_A_Tutor newInstance(String param1, String param2) {
-        Get_A_Tutor fragment = new Get_A_Tutor();
+    public static Get_A_Tutor_Student newInstance(String param1, String param2) {
+        Get_A_Tutor_Student fragment = new Get_A_Tutor_Student();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +112,13 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
 
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         textView_get_a_tutor = (TextView) view.findViewById(R.id.textView_get_a_tutor);
         textView_date        = (TextView) view.findViewById(R.id.textView_date);
@@ -107,19 +129,6 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         button_prevWeek       = (Button) view.findViewById(R.id.button_prevWeek);
         button_nextWeek       = (Button) view.findViewById(R.id.button_nextWeek);
 
-
-        //MainActivity ma = (MainActivity) this.getActivity();
-        //dbHelper=ma.getMenuDB();
-
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         //SPINNER INITIALIZATION
         spinner_week          = (Spinner) view.findViewById(R.id.spinner_week);
         spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
@@ -127,48 +136,11 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
 
 
-
-        // BEGIN WEEK
-        available_week = new ArrayList<String>();
-        // TODO: NEED A GOOD WAY TO LOAD THESE FOR ONLY VALID WEEKS EACH SEMESTER
-        // THIS WILL DO FOR NOW THO
-        // ADMIN ACTIVITY TO SET WEEKS?
-        available_week.add("01/24 - 01/30");
-        available_week.add("01/31 - 02/06");
-        available_week.add("02/07 - 02/13");
-        available_week.add("02/14 - 02/20");
-        available_week.add("02/21 - 02/27");
-        available_week.add("02/28 - 03/06");
-        available_week.add("03/07 - 03/13");
-        available_week.add("03/14 - 03/20");
-        available_week.add("03/21 - 03/27");
-        available_week.add("03/28 - 04/03");
-        available_week.add("04/04 - 04/10");
-        available_week.add("04/11 - 04/17");
-        available_week.add("04/18 - 04/24");
-        available_week.add("04/25 - 05/01");
-        available_week.add("05/02 - 05/08");
-
-        String[] array_available_week = new String[available_week.size()];
-        array_available_week = available_week.toArray(array_available_week);
-
-        adapter_week = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, array_available_week);
-        adapter_week.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_week.setAdapter(adapter_week);
-        spinner_week.setEnabled(true);
-        spinner_week.setOnItemSelectedListener(this);
-        spinner_week.setSelection(0, true);
-
-
-        System.out.println("available_week[0] = " + available_week.get(0));
-        System.out.println("MADE IT TO THE SET SELECTION STUFF");
-
-
         // BEGIN WEEK BUTTONS
         button_prevWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spinner_week.isSelected()) {
+                if (spinner_week.getSelectedItem() != null) {
                     int curr_week_pos = spinner_week.getSelectedItemPosition();
                     if (curr_week_pos > 0) {
                         curr_week_pos--;
@@ -181,9 +153,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         button_nextWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (spinner_week.isSelected()) {
+                if (spinner_week.getSelectedItem() != null) {
                     int curr_week_pos = spinner_week.getSelectedItemPosition();
-                    if (curr_week_pos < available_week.size()) {
+                    if (curr_week_pos < available_week.size() - 1) {
                         curr_week_pos++;
                         spinner_week.setSelection(curr_week_pos, true);
                     }
@@ -193,20 +165,14 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // END WEEK BUTTONS
         // END WEEK
 
+        // Helper methods for populating spinners and array lists.
+        // Got sick of seeing code that I wasn't using.
+        weekHelper();
+        subjectHelper();
+        courseHelper();
 
-        // BEGIN SUBJECT
-        available_subject = new ArrayList<String>();
-        adapter_subject = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_subject);
-        spinner_subject.setAdapter(adapter_subject);
-        spinner_subject.setOnItemSelectedListener(this);
-        // END SUBJECT
 
-        // BEGIN COURSE
-        available_course = new ArrayList<String>();
-        adapter_course = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course);
-        spinner_course.setAdapter(adapter_course);
-        spinner_course.setOnItemSelectedListener(this);
-        // END COURSE
+
 
         // BEGIN CALENDAR
         // FOR FIRST ITERATION, LET'S JUST DO A SIMPLE LISTVIEW
@@ -223,25 +189,64 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent.getId() == R.id.spinner_week) {
-            button_prevWeek.setEnabled(true);
-            button_prevWeek.setBackgroundColor(Color.RED);
-            button_nextWeek.setEnabled(true);
-            button_nextWeek.setBackgroundColor(Color.RED);
 
-            // LOAD SUBJECTS FROM DATABASE
-            available_subject.add("ECE: Electrical & Computer Engineering");
-            available_subject.add("CS: Computer Sciences");
-            available_subject.add("MATH: Mathematics");
-            spinner_subject.setEnabled(true);
+        if (parent.getId() == R.id.spinner_week) {
+            if (first) {
+                button_prevWeek.setEnabled(false);
+                button_prevWeek.setClickable(false);
+                button_prevWeek.setBackgroundColor(Color.GRAY);
+                button_nextWeek.setEnabled(false);
+                button_nextWeek.setClickable(false);
+                button_nextWeek.setBackgroundColor(Color.GRAY);
+                first = false;
+
+            } else {
+                if(test) {
+                    available_week.remove(0);
+                    test = false;
+                }
+                spinner_subject.setEnabled(true);
+                spinner_subject.setClickable(true);
+                button_prevWeek.setEnabled(true);
+                button_prevWeek.setClickable(true);
+                button_prevWeek.setBackgroundColor(Color.RED);
+                button_nextWeek.setEnabled(true);
+                button_nextWeek.setClickable(true);
+                button_nextWeek.setBackgroundColor(Color.RED);
+            }
         }
+
         if (parent.getId() == R.id.spinner_subject) {
-            // LOAD COURSES FROM DATABASE
-            available_course.add("ECE 552");
-            spinner_course.setEnabled(true);
+                switch (spinner_subject.getSelectedItemPosition()) {
+                    case 0:
+                        spinner_course.setAdapter(adapter_course_Default);
+                        spinner_course.setSelection(0);
+                        break;
+                    case 1:
+                        spinner_course.setAdapter(adapter_course_ECE);
+                        break;
+                    case 2:
+                        spinner_course.setAdapter(adapter_course_CS);
+                        break;
+                    case 3:
+                        spinner_course.setAdapter(adapter_course_MATH);
+                        break;
+                    default:
+                        spinner_course.setAdapter(adapter_course_Default);
+                        break;
+                }
+            if (spinner_subject.getSelectedItemPosition() != 0) { // If a subject is selected
+                spinner_course.setEnabled(true);
+                spinner_course.setClickable(true);
+            } else {
+                spinner_course.setEnabled(false);
+                spinner_course.setClickable(false);
+            }
         }
+
         if (parent.getId() == R.id.spinner_course) {
             // LOAD TUTOR_AVAILABILITY FROM DATABASE
             // LOAD CALENDAR STUFF
@@ -259,7 +264,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             button_nextWeek.setBackgroundColor(Color.GRAY);
 
             spinner_subject.setEnabled(false);
+            spinner_subject.setClickable(false);
             spinner_course.setEnabled(false);
+            spinner_course.setClickable(false);
         }
         if (parent.getId() == R.id.spinner_subject) {
             spinner_course.setEnabled(false);
@@ -269,5 +276,87 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         }
 
+    }
+
+    public void weekHelper() {
+        // BEGIN WEEK
+        available_week = new ArrayList<String>();
+        // TODO: NEED A GOOD WAY TO LOAD THESE FOR ONLY VALID WEEKS EACH SEMESTER
+        // THIS WILL DO FOR NOW THO
+        // ADMIN ACTIVITY TO SET WEEKS?
+        available_week.add("Select a week");
+        available_week.add("01/24 - 01/30");
+        available_week.add("01/31 - 02/06");
+        available_week.add("02/07 - 02/13");
+        available_week.add("02/14 - 02/20");
+        available_week.add("02/21 - 02/27");
+        available_week.add("02/28 - 03/06");
+        available_week.add("03/07 - 03/13");
+        available_week.add("03/14 - 03/20");
+        available_week.add("03/21 - 03/27");
+        available_week.add("03/28 - 04/03");
+        available_week.add("04/04 - 04/10");
+        available_week.add("04/11 - 04/17");
+        available_week.add("04/18 - 04/24");
+        available_week.add("04/25 - 05/01");
+        available_week.add("05/02 - 05/08");
+
+        adapter_week = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, available_week);
+        adapter_week.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_week.setAdapter(adapter_week);
+        spinner_week.setEnabled(true);
+        spinner_week.setOnItemSelectedListener(this);
+
+        button_prevWeek.setEnabled(false);
+        button_prevWeek.setClickable(false);
+        button_nextWeek.setEnabled(false);
+        button_nextWeek.setClickable(false);
+
+    }
+
+    public void subjectHelper(){
+        // BEGIN SUBJECT
+        available_subject = new ArrayList<String>();
+        adapter_subject = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_subject);
+        available_subject.add("Select a subject");
+        available_subject.add("ECE: Electrical & Computer Engineering");
+        available_subject.add("CS: Computer Sciences");
+        available_subject.add("MATH: Mathematics");
+        spinner_subject.setAdapter(adapter_subject);
+        spinner_subject.setOnItemSelectedListener(this);
+        spinner_subject.setEnabled(false);
+        spinner_subject.setClickable(false);
+        // END SUBJECT
+    }
+
+    public void courseHelper() {
+
+        // BEGIN COURSE
+        available_course_Default = new ArrayList<String>();
+        adapter_course_Default = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_Default);
+        available_course_Default.add("Select a course");
+        available_course_Default.add("No courses available");
+
+        available_course_ECE = new ArrayList<String>();
+        adapter_course_ECE = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_ECE);
+        available_course_ECE.add("Select a course");
+        available_course_ECE.add("ECE 552");
+
+        available_course_CS = new ArrayList<String>();
+        adapter_course_CS = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_CS);
+        available_course_CS.add("Select a course");
+        available_course_CS.add("CS 506");
+
+        available_course_MATH = new ArrayList<String>();
+        adapter_course_MATH = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_MATH);
+        available_course_MATH.add("Select a course");
+        available_course_MATH.add("MATH 577");
+//        available_course.add("ECE 552");
+//        available_course.add("CS 506");
+        spinner_course.setAdapter(adapter_course_Default);
+        spinner_course.setOnItemSelectedListener(this);
+        spinner_course.setEnabled(false);
+        spinner_course.setClickable(false);
+        // END COURSE
     }
 }

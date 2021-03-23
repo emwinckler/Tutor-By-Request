@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
         final Button tutorButton = view.findViewById(R.id.tutorButton);
         final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
 
-        button_login = view.findViewById(R.id.button_login);
+//        button_login = view.findViewById(R.id.button_login);
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -127,13 +127,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        button_login.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                        .navigate(R.id.action_loginFragment_to_home_student);
-            }
-        });
+//        button_login.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+////                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+////                        .navigate(R.id.action_loginFragment_to_home_student);
+//            }
+//        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

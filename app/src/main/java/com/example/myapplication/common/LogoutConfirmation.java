@@ -68,27 +68,34 @@ public class LogoutConfirmation extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_logout, container, false);
         super.onViewCreated(view, savedInstanceState);
-//        View view = inflater.inflate(R.layout.fragment_logout_confirmation, container, false);
         final Button logoutYes = view.findViewById(R.id.logoutYes);
-        final Button logoutNo = view.findViewById(R.id.logoutNo);
 
         logoutYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.common.LogoutConfirmation.this)
-                        .navigate(R.id.action_logoutConfirmation_to_loginFragment);
+                System.exit(0);
+
             }
         });
 
-        logoutNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                NavHostFragment.findNavController(com.example.myapplication.common.LogoutConfirmation.this)
-//                        .navigate(R.id.action_logoutConfirmation_to_logout);
-            }
-        });
+//        logoutNo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO: Based on user type navigate back to correct page
+//                //Pseudocode below
+////                if (user = student) {
+////                    GOTO studentHome fragment
+////                } else if (user = tutor) {
+////                    GOTO tutorHome fragment
+////                } else {
+////                    GOTO studentTutorHome fragment
+////                }
+//
+//                // For now it's just going to studentHome for testing purposes.
+//
+//            }
+//        });
 
     }
 }

@@ -121,8 +121,8 @@ public class Home_Student extends Fragment {
 
 
 
-                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
-                        .navigate(R.id.action_home_student_to_get_a_tutor_student);
+//                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
+//                        .navigate(R.id.action_home_student_to_get_a_tutor_student);
 
             }
         });
@@ -133,8 +133,8 @@ public class Home_Student extends Fragment {
 
                 // bundle student id and pass it to my sessions fragment for database
 
-                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
-                        .navigate(R.id.action_home_student_to_my_sessions_student);
+//                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
+//                        .navigate(R.id.action_home_student_to_my_sessions_student);
 
 
             }
@@ -146,8 +146,8 @@ public class Home_Student extends Fragment {
 
                 // bundle student id and pass it to my sessions fragment for database
 
-                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
-                        .navigate(R.id.action_home_student_to_logout);
+//                NavHostFragment.findNavController(com.example.myapplication.student.Home_Student.this)
+//                        .navigate(R.id.action_home_student_to_logout);
 
 
             }

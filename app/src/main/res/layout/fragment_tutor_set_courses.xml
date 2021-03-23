@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tutor.tutorSetCourses">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tutorSelectSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Select subject:"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/tutorSubjectSelect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.959" />
+
+        <Spinner
+            android:id="@+id/tutorSubjectSelect"
+            android:layout_width="200dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="150dp"
+            android:background="#C8C8C8"
+            android:popupBackground="#C8C8C8"
+            android:spinnerMode="dropdown"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tutorSelectCourses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="16dp"
+            android:text="Select Courses:"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/courseList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tutorSubjectSelect" />
+
+        <ListView
+            android:id="@+id/courseList"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/tutorSubjectSelect"
+            tools:layout_editor_absoluteX="5dp" />
+
+        <Button
+            android:id="@+id/tutorSubjectConfirm"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="25dp"
+            android:text="Confirm selections"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseList" />
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="213dp"-->
+        <!--            android:layout_height="33dp"-->
+        <!--            android:layout_marginTop="144dp"-->
+        <!--            android:orientation="vertical"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+
+        <!--        </LinearLayout>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
