@@ -1,14 +1,5 @@
 package com.example.myapplication.ui.login;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,21 +9,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.example.myapplication.R;
-import com.example.myapplication.student.StudentActivity;
-import com.example.myapplication.studentandtutor.StudentAndTutor;
-import com.example.myapplication.tutor.TutorActivity;
+import com.example.myapplication.databases.UsersDBHelper;
 
 public class LoginFragment extends Fragment {
 
     Button button_login;
 
     private LoginViewModel loginViewModel;
+    UsersDBHelper users = new UsersDBHelper(getContext());
+    User user = new User(null,null,false,false);
 
     @Nullable
     @Override
@@ -50,8 +50,12 @@ public class LoginFragment extends Fragment {
 
         final EditText usernameEditText = view.findViewById(R.id.username);
         final EditText passwordEditText = view.findViewById(R.id.password);
+        final EditText nameEditText = view.findViewById(R.id.name);
         final Button loginButton = view.findViewById(R.id.login);
+        final Button registerButton = view.findViewById(R.id.register);
         final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
+        final CheckBox tutor = view.findViewById(R.id.Tutor);
+        final CheckBox student = view.findViewById(R.id.StudentC);
 
         final Button studentButton = view.findViewById(R.id.student);
         final Button tutorButton = view.findViewById(R.id.tutorButton);
@@ -136,6 +140,47 @@ public class LoginFragment extends Fragment {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                user.setNetID(usernameEditText.getText().toString());
+                user.setPassword(passwordEditText.getText().toString());
+                // TODO: Check if user is actually what they checked
+                if (tutor.isChecked()) {user.setTutor(true);}
+                if (student.isChecked()) {user.setStudent(true);}
+                Bundle userData = new Bundle();
+                userData.putSerializable("user", user);
+                // Check if student or tutor
+                // Example nav
+                // TODO: decide which fragment to send to based on database results
+                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_studentHome,userData);
+            }
+        });
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (tutor.isChecked() && student.isChecked()) {
+                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                                true, true);
+                    } else if (student.isChecked()) {
+                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                                false, true);
+                    } else if (tutor.isChecked()) {
+                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                                true, false);
+                    } else {
+                        // TODO: handle incorrect login
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                user.setNetID(usernameEditText.getText().toString());
+                user.setPassword(passwordEditText.getText().toString());
+                if (tutor.isChecked()) {user.setTutor(true);}
+                if (student.isChecked()) {user.setStudent(true);}
+                // TODO: send to fragment based on user inputs results
+                //loadingProgressBar.setVisibility(View.VISIBLE);
+                // loginViewModel.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
             }
         });
 
