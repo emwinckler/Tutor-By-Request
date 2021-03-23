@@ -8,7 +8,11 @@
         android:id="@+id/loginFragment"
         android:name="com.example.myapplication.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_StudentMain"
+            app:destination="@id/StudentMain" />
+    </fragment>
     <fragment
         android:id="@+id/get_A_Tutor"
         android:name="com.example.myapplication.Get_A_Tutor.Get_A_Tutor"

@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.R;
 
@@ -114,8 +115,9 @@ public class LoginFragment extends Fragment {
                     user.setPassword(passwordEditText.getText().toString());
                     if (tutor.isChecked()) {user.setTutor(true);}
                     if (student.isChecked()) {user.setStudent(true);}
-                Bundle args = new Bundle();
-                args.putSerializable("user", user);
+                    Bundle userData = new Bundle();
+                    userData.putSerializable("user", user);
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this).navigate(R.id.action_loginFragment_to_StudentMain,userData);
 
 
 
