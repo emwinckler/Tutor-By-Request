@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -61,14 +61,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
-        android:enabled="false"
-        android:text="@string/action_sign_in"
+        android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.88"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.368" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -120,5 +119,55 @@
         app:layout_constraintStart_toEndOf="@+id/tutorButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.957" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/register"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.367" />
+
+    <CheckBox
+        android:id="@+id/Tutor"
+        android:layout_width="71dp"
+        android:layout_height="48dp"
+        android:text="Tutor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/StudentC"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <CheckBox
+        android:id="@+id/StudentC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.667"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.109" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="275dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.806" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
