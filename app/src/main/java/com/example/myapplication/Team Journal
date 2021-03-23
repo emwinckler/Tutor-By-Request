@@ -23,6 +23,20 @@ Edwin:
 
 Harrison:
 
+3/21/2021
+Had to restart the login screen backend to work with the current verison of the database. 
+Finished setting up the full test directory
+
+3/19/2021 
+Created the test directory and set up the automated testing for the database. Constructed a few
+simple tests to ensure the database is functional at this point. Started the backend set up for 
+the login activity 
+
+3/18/2021
+Started and completed the front end for the login screen.
+
+
+
 
 Evan:
 3/20/2021 - 9:20
