@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class UsersDBHelper extends SQLiteOpenHelper {
 
-    public static final String TAG = "StudentDBHelper";
+    public static final String TAG = "usersDBHelper";
 
-    public static final String TABLE_NAME = "student_table";
+    public static final String TABLE_NAME = "user_table";
     public static final String COL_1 = "NetID";
     public static final String COL_2 = "password";
     public static final String COL_3 = "name";
