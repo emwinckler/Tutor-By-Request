@@ -8,12 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
-    public static final String TAG = "StudentDBHelper";
+    public static final String TAG = "TutorAvailabilityDBHelper";
 
     public static final String TABLE_NAME = "tutor_availability_table";
     public static final String COL_1  = "TutorID";
     public static final String COL_2  = "Date"; // FORMAT: "MM/DD/YYYY"
     public static final String COL_3  = "StartTime"; // FORMAT: "HH:MM"
+    public static final String COL_4  = "IsBooked"; // FORMAT: "1" or "0"
 
 
     public TutorAvailabilityDBHelper(Context context) {
@@ -27,6 +28,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
                 COL_1  +" VARCHAR(30) PRIMARY KEY, "+
                 COL_2  +" VARCHAR(10), "+
                 COL_3  +" VARCHAR(5), "+
+                COL_4  +" VARCHAR(1), "+
                 ")";
         db.execSQL(createTable);
     }
@@ -49,6 +51,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
             contentValues.put(COL_1, TutorID);
             contentValues.put(COL_2, Date);
             contentValues.put(COL_3, TimeBlock);
+            contentValues.put(COL_4, "0");
 
             result = db.insert(TABLE_NAME,null,contentValues);
 
@@ -65,7 +68,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            result = db.delete(TABLE_NAME, COL_1 + " = ?" + " AND " + COL_2 + " = ?" + " AND " + " = ?", new String[] {TutorID, Date, StartTime});
+            result = db.delete(TABLE_NAME, COL_1 + " = ?" + " AND " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {TutorID, Date, StartTime});
 
         }
         catch (Exception e) {
@@ -73,6 +76,34 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
         }
 
         return result;
+    }
+
+    public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, String isAvailable) {
+        long result;
+
+        try {
+            if ( isAvailable.length() != 1 ) { // TODO: still some work to do to check input but im sleepy rn
+                return false;
+            }
+
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1, TutorID);
+            contentValues.put(COL_2, Date);
+            contentValues.put(COL_3, TimeBlock);
+            contentValues.put(COL_4, isAvailable);
+
+
+
+            result = db.update(TABLE_NAME, contentValues, COL_1 + " =?" + " AND " + COL_2 + " =?" + " AND " + COL_3 + " =?", new String[] {TutorID, Date, StartTime});
+
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -96,7 +127,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {TutorID});
+            result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {TutorID});
 
         }
         catch (Exception e) {
@@ -111,7 +142,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?" + " AND " + COL_2 + " = ?", new String[] {TutorID, Date};
+            result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?" + " AND " + COL_2 + " = ?", new String[] {TutorID, Date};
 
         }
         catch (Exception e) {
