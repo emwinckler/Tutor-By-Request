@@ -5,8 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private String password, netID;
-    private boolean Tutor;
-    private boolean Student;
+    private boolean Tutor,Student;
 
     public User(String netID, String password, boolean tutor, boolean student) {
         this.netID = netID;

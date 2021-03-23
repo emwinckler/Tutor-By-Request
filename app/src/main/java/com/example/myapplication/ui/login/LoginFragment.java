@@ -3,6 +3,7 @@ package com.example.myapplication.ui.login;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     UsersDBHelper users = new UsersDBHelper(getContext());
-    User user = new User(null,null,false,false);
+     User user = new User(null,null,false,false);
 
     @Nullable
     @Override
@@ -150,8 +151,18 @@ public class LoginFragment extends Fragment {
                 // Check if student or tutor
                 // Example nav
                 // TODO: decide which fragment to send to based on database results
-                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                        .navigate(R.id.action_loginFragment_to_studentHome,userData);
+                if (user.isTutor() && user.isStudent()) {
+                    Log.d("my", String.valueOf(user.isTutor()));
+                    Log.d("12", String.valueOf(user.isStudent()));
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
+                } else if (user.isStudent()) {
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_studentHome,userData);
+                }else if (user.isTutor()) {
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_tutorHome,userData);
+                }
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +189,21 @@ public class LoginFragment extends Fragment {
                 user.setPassword(passwordEditText.getText().toString());
                 if (tutor.isChecked()) {user.setTutor(true);}
                 if (student.isChecked()) {user.setStudent(true);}
+                Bundle userData = new Bundle();
+                userData.putSerializable("user", user);
                 // TODO: send to fragment based on user inputs results
+                if (user.isTutor() && user.isStudent()) {
+                    Log.d("my", String.valueOf(user.isTutor()));
+                    Log.d("12", String.valueOf(user.isStudent()));
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
+                } else if (user.isStudent()) {
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_studentHome,userData);
+                }else if (user.isTutor()) {
+                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                            .navigate(R.id.action_loginFragment_to_tutorHome,userData);
+                }
                 //loadingProgressBar.setVisibility(View.VISIBLE);
                 // loginViewModel.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
             }
