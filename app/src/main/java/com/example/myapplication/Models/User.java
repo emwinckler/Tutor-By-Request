@@ -20,4 +20,39 @@ public class User {
         this.tutor = tutor;
         this.tutee = tutee;
     }
+
+    // Getters for the users
+    public String getNetID() { return netID; }
+    public String getPassword() { return password; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public boolean isTutor() { return tutor; }
+    public boolean isTutee() { return tutee; }
+
+    // Setters for the users
+    // Have to update the database
+
+    public void setNetID(String netID) {
+        this.netID = netID;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTutor(boolean tutor) {
+        this.tutor = tutor;
+    }
+
+    public void setTutee(boolean tutee) {
+        this.tutee = tutee;
+    }
 }
