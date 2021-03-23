@@ -1,7 +1,4 @@
-package com.example.myapplication.Models;
-
-com.example.myapplication.Models.Session;
-
+package com.example.myapplication.models;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
@@ -9,8 +6,7 @@ import com.example.myapplication.databases.UsersDBHelper;
 import com.example.myapplication.databases.MySessionsDBHelper;
 import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
-
-
+import com.example.myapplication.models.User;
 
 
 /*
@@ -34,10 +30,6 @@ public class Tutor extends User {
 
     public Tutor(String netID, String password, String name, String email, boolean tutor, boolean tutee){
         super(netID, password, name, email, tutor, tutee);
-        MainActivity ma = (MainActivity) getActivity();
-        db_availability_table = ma.getDBAvailabilityTable(); // hasnt been implemented yet. will this work?
-        db_mysessions_table = ma.getDBMySessionsAvailabilityTable(); // hasnt been implemented yet. will this work?
-        db_tutorcourses_table = ma.getDBTutorCoursesTable();
     }
 
     // Getters for the Tutor
@@ -75,29 +67,6 @@ public class Tutor extends User {
         this.tutee = tutee;
     }
 
-    public boolean addAvailability(String Date, String StartTime) {
-        return db_availability_table.addAvailability(this.netid, Date, StartTime);
-    }
-
-    public boolean deleteAvailability(String Date, String StartTime) {
-        return db_availability_table.deleteAvailability(this.netid, Date, StartTime);
-    }
-
-
-    /*
-        public static final String TABLE_NAME = "courses_table";
-        public static final String COL_1 = "subject";
-        public static final String COL_2 = "course";
-        public static final String COL_3 = "course_num";
-    */
-    public boolean addCourse(String subject, String course_num) {
-        return db_tutorcourses_table.addTutorCourse(this.netid, subject, course_num);
-    }
-
-    public boolean removeCourse(String subject, String course_num) {
-        return db_tutorcourses_table.deleteTutorCourse(this.netid, subject, course_num);
-    }
-
 
 
     /*
@@ -122,28 +91,5 @@ public class Tutor extends User {
             private String description;
             private String sessionID;
     */
-
-    public boolean scheduleSession( String studentID,
-                                    String Date,
-                                    String StartTime,
-                                    String subject,
-                                    String courseNo,
-                                    String location,
-                                    String description) {
-
-        String string_sessionID = "" + this.sessionID;
-        this.sessionID++;
-
-        return db_mysessions_table.addData(studentID, this.netID, date, time,
-                                   subject, courseNum, location,
-                                   description, string_sessionID);
-    }
-
-    public boolean sessionIsBooked() {
-
-    }
-
-
-
 
 }

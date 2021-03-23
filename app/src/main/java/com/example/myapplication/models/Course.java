@@ -1,9 +1,13 @@
 package com.example.myapplication.models;
 
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.databases.CoursesDBHelper;
+
 public class Course {
     private String subject;
     private String course;
     private int courseNo;
+    private CoursesDBHelper coursesDB;
 
     public Course(String subject, String course, int courseNo) {
         this.subject = subject;
