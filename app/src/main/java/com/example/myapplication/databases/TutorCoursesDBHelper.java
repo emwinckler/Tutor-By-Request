@@ -27,7 +27,7 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
                 " ("+
                 COL_1  +" VARCHAR(30) PRIMARY KEY, "+
                 COL_2  +" VARCHAR(5), "+
-                COL_3  +" VARCHAR(5), "+
+                COL_3  +" VARCHAR(5) "+
                 ")";
         db.execSQL(createTable);
     }
@@ -61,20 +61,20 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteTutorCourse(String TutorID, String Subject, String CourseNumber) {
-        Integer result;
-
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            result = db.delete(TABLE_NAME, COL_1 + " = ?" + " AND " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {TutorID, Date, StartTime});
-
-        }
-        catch (Exception e) {
-            return null;
-        }
-
-        return result;
-    }
+//    public Integer deleteTutorCourse(String TutorID, String Subject, String CourseNumber) {
+//        Integer result;
+//
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            result = db.delete(TABLE_NAME, COL_1 + " = ?" + " AND " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {TutorID, Date, StartTime});
+//
+//        }
+//        catch (Exception e) {
+//            return null;
+//        }
+//
+//        return result;
+//    }
 
 
     public Cursor getAllTutorCourses() {
@@ -92,33 +92,33 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getTutorCourses(String TutorID) {
-        Cursor result;
+//    public Cursor getTutorCourses(String TutorID) {
+//        Cursor result;
+//
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[]{TutorID});
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
+//
+//        return result;
+//    }
 
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[]{TutorID});
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return result;
-    }
-
-    public Cursor getCourseTutors(String Subject, String CourseNumber) {
-        Cursor result;
-
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {Subject, CourseNumber});
-
-        } catch (Exception e) {
-            return null;
-        }
-
-        return result;
-    }
+//    public Cursor getCourseTutors(String Subject, String CourseNumber) {
+//        Cursor result;
+//
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            result = db.db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?" + " AND " + COL_3 + " = ?", new String[] {Subject, CourseNumber});
+//
+//        } catch (Exception e) {
+//            return null;
+//        }
+//
+//        return result;
+//    }
 
 
 }

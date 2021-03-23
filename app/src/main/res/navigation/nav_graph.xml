@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_tutorHome_to_logoutConfirmation"
             app:destination="@id/logoutConfirmation" />
+        <action
+            android:id="@+id/action_tutorHome_to_addCourseTutor"
+            app:destination="@id/addCourseTutor" />
     </fragment>
     <fragment
         android:id="@+id/studentTutorHome"
@@ -167,5 +170,10 @@
             android:id="@+id/action_my_sessions_student_to_logout"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addCourseTutor"
+        android:name="com.example.myapplication.tutor.AddCourseTutor"
+        android:label="fragment_add_course_tutor"
+        tools:layout="@layout/fragment_add_course_tutor" />
 
 </navigation>
