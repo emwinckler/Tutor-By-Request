@@ -21,6 +21,10 @@ public class Course {
 
     public int getCourseNo() { return courseNo; }
 
+    public String toString(){
+        return course + " " + Integer.toString(courseNo);
+    }
+
     public void setSubject(String subject) {
         this.subject = subject;
     }

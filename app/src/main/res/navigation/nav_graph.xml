@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_tutorHome_to_addCourseTutor"
             app:destination="@id/addCourseTutor" />
+        <action
+            android:id="@+id/action_tutorHome_to_tutorSetClasses"
+            app:destination="@id/tutorSetClasses" />
     </fragment>
     <fragment
         android:id="@+id/studentTutorHome"
@@ -175,5 +178,10 @@
         android:name="com.example.myapplication.tutor.AddCourseTutor"
         android:label="fragment_add_course_tutor"
         tools:layout="@layout/fragment_add_course_tutor" />
+    <fragment
+        android:id="@+id/tutorSetClasses"
+        android:name="com.example.myapplication.tutor.TutorSetClasses"
+        android:label="fragment_tutor_set_classes"
+        tools:layout="@layout/fragment_tutor_set_classes" />
 
 </navigation>

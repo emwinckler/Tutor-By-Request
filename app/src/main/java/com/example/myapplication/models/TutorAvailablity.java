@@ -8,14 +8,16 @@ public class TutorAvailablity {
     private Date date;
     private int time;
     private Course course;
+    private boolean booked;
 
     public TutorAvailablity(String tutorId, Date date, int time, String subject, String course,
                             int courseNo) {
         this.tutorId = tutorId;
         this.date = date;
         this.time = time;
-
         this.course = new Course(subject, course, courseNo);
+        this.booked = true;
+
 
     }
 

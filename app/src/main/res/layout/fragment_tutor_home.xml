@@ -14,9 +14,10 @@
             android:id="@+id/tutorReminders"
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="56dp"
             android:text="Reminders"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +44,17 @@
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_marginTop="108dp"
+            android:text="Add Course"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tutorSessions" />
+
+        <Button
+            android:id="@+id/tutorSetCourse"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="224dp"
             android:text="Add Course"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
