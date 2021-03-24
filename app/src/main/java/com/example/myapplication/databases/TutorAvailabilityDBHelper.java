@@ -27,10 +27,11 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 " ("+
-                COL_1  +" VARCHAR(30) PRIMARY KEY, "+
+                COL_1  +" VARCHAR(30), "+
                 COL_2  +" VARCHAR(10), "+
                 COL_3  +" VARCHAR(5), "+
-                COL_4  +" CHAR(5) "+
+                COL_4  +" CHAR(5), "+
+                "PRIMARY KEY(tutor_id, date, time)"+
                 ")";
         db.execSQL(createTable);
     }

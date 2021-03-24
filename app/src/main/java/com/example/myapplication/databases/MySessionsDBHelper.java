@@ -32,7 +32,7 @@ public class MySessionsDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 "("+
-                COL_1 +" VARCHAR(30) PRIMARY KEY, "+
+                COL_1 +" VARCHAR(30), "+
                 COL_2 +" VARCHAR(30), "+
                 COL_3 +" VARCHAR(30), "+
                 COL_4 +" CHAR(30), "+
@@ -40,7 +40,8 @@ public class MySessionsDBHelper extends SQLiteOpenHelper {
                 COL_6 +" INTEGER(3), "+
                 COL_7 +" VARCHAR(30), "+
                 COL_8 +" TEXT, "+
-                COL_9 +" INTEGER(8) "+
+                COL_9 +" INTEGER(8), "+
+                "PRIMARY KEY(student_id, tutor_id, date, time)"+
                 ")";
         db.execSQL(createTable);
     }
