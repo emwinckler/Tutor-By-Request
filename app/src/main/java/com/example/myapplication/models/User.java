@@ -1,9 +1,11 @@
 package com.example.myapplication.models;
 
+import java.io.Serializable;
+
 /*
 This class is a model that is meant to represent the users of the application
 * */
-public class User {
+public class User implements Serializable {
     private String netID;
     private String password;
     private String name;
