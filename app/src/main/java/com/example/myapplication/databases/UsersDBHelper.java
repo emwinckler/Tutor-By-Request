@@ -11,12 +11,13 @@ public class UsersDBHelper extends SQLiteOpenHelper {
     public static final String TAG = "usersDBHelper";
 
     public static final String TABLE_NAME = "user_table";
-    public static final String COL_1 = "NetID";
-    public static final String COL_2 = "password";
-    public static final String COL_3 = "name";
-    public static final String COL_4 = "email";
-    public static final String COL_5 = "tutor";
-    public static final String COL_6= "tutee";
+    public static final String COL_1 = "net_id";
+    public static final String COL_2 = "username";
+    public static final String COL_3 = "password";
+    public static final String COL_4 = "name";
+    public static final String COL_5 = "email";
+    public static final String COL_6 = "tutor";
+    public static final String COL_7 = "tutee";
 
 
 
@@ -30,11 +31,12 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 "("+
                 COL_1 +" VARCHAR(30) PRIMARY KEY, "+
-                COL_2 +" VARCHAR(30), "+
+                COL_2 +" INTEGER(10), "+
                 COL_3 +" VARCHAR(30), "+
                 COL_4 +" VARCHAR(30), "+
-                COL_5 +" CHAR(5), "+
-                COL_6 +" VARCHAR(5) "+
+                COL_5 +" VARCHAR(30), "+
+                COL_6 +" CHAR(5), "+
+                COL_7 +" CHAR(5) "+
                 ")";
         db.execSQL(createTable);
     }
@@ -46,7 +48,7 @@ public class UsersDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addData(String NetID, String password, String name, String email,
+    public boolean addData(int NetID, String username, String password, String name, String email,
             boolean tutor, boolean tutee) throws Exception {
 
         long result;
@@ -55,11 +57,12 @@ public class UsersDBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_1, NetID);
-            contentValues.put(COL_2, password);
-            contentValues.put(COL_3, name);
-            contentValues.put(COL_4, email);
-            contentValues.put(COL_5, Boolean.toString(tutor));
-            contentValues.put(COL_6, Boolean.toString(tutee));
+            contentValues.put(COL_2, username);
+            contentValues.put(COL_3, password);
+            contentValues.put(COL_4, name);
+            contentValues.put(COL_5, email);
+            contentValues.put(COL_6, Boolean.toString(tutor));
+            contentValues.put(COL_7, Boolean.toString(tutee));
 
             result = db.insert(TABLE_NAME,null,contentValues);
 
