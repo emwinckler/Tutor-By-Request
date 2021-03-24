@@ -42,6 +42,11 @@ Edwin:
 
 
 Harrison:
+3/23/2021
+Finished the navigation between the login screen and the various user screens. Added
+Testing for various login scenarios. Began creating database methods to access information
+for login.
+
 
 3/21/2021
 Had to restart the login screen backend to work with the current verison of the database. 
