@@ -52,7 +52,7 @@ public class MySessionsDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addData(String studentID, String tutorID, Date date, String time,
+    public boolean addData(String studentID, String tutorID, String date, String time,
                            String subject, int courseNum, String location,
                            String description, int sessionID) throws Exception {
 
@@ -63,7 +63,7 @@ public class MySessionsDBHelper extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_1, studentID);
             contentValues.put(COL_2, tutorID);
-            contentValues.put(COL_3, date.toString());
+            contentValues.put(COL_3, date);
             contentValues.put(COL_4, time);
             contentValues.put(COL_5, subject);
             contentValues.put(COL_6, courseNum);
