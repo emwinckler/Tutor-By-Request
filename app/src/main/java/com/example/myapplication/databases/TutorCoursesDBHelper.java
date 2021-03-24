@@ -11,9 +11,9 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
     public static final String TAG = "TutorCourseDBHelper";
 
     public static final String TABLE_NAME = "tutor_courses_table";
-    public static final String COL_1  = "TutorID";
-    public static final String COL_2  = "Subject";
-    public static final String COL_3  = "CourseNumber";
+    public static final String COL_1  = "tutor_id";
+    public static final String COL_2  = "subject";
+    public static final String COL_3  = "course_num";
     // public static final String COL_4 = "ComfortLevel"; // stretch goal
 
 
@@ -25,9 +25,10 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 " ("+
-                COL_1  +" VARCHAR(30) PRIMARY KEY, "+
-                COL_2  +" VARCHAR(5), "+
-                COL_3  +" VARCHAR(5) "+
+                COL_1  +" INTEGER(10), "+
+                COL_2  +" VARCHAR(30), "+
+                COL_3  +" INTEGER(3), "+
+                "PRIMARY KEY(tutor_id,subject,course_num)"+
                 ")";
         db.execSQL(createTable);
     }
@@ -39,7 +40,7 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addTutorCourse(String TutorID, String Subject, String CourseNumber) {
+    public boolean addTutorCourse(int TutorID, String Subject, int CourseNum) throws Exception {
         long result;
 
         try {
@@ -49,13 +50,17 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_1, TutorID);
             contentValues.put(COL_2, Subject);
-            contentValues.put(COL_3, CourseNumber);
+            contentValues.put(COL_3, CourseNum);
 
             result = db.insert(TABLE_NAME,null,contentValues);
 
         }
         catch (Exception e) {
-            return false;
+            result =-1;
+        }
+
+        if (result == -1){
+            throw new Exception("You can't add a student like that");
         }
 
         return true;

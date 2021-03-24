@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databases.CoursesDBHelper;
+import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.models.Course;
 
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class TutorSetClasses extends Fragment {
         Button classButton = view.findViewById(R.id.selectClasses);
         ma = (MainActivity) getActivity();
         CoursesDBHelper coursesDBHelper = ma.getCoursesDB();
+        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
         ArrayList<Course> courses = coursesDBHelper.getData();
         this.listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         ArrayAdapter<Course> courseArrayAdapter =
@@ -99,33 +101,22 @@ public class TutorSetClasses extends Fragment {
                 SparseBooleanArray sp = listView.getCheckedItemPositions();
                 StringBuilder sb= new StringBuilder();
 
-                for(int i=0;i<sp.size();i++){
-                    if(sp.valueAt(i)==true){
-                        Course course= (Course) listView.getItemAtPosition(i);
-                        String s= course.toString();
-                        sb = sb.append(" "+s);
+                try {
+                    for (int i = 0; i < sp.size(); i++) {
+                        if (sp.valueAt(i) == true) {
+                            Course course = (Course) listView.getItemAtPosition(i);
+                            tutorCoursesDBHelper.addTutorCourse(1000, course.getSubject(),course.getCourseNo());
+                        }
                     }
+                    Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
+
+                }catch(Exception e){
+                    Toast.makeText(ma, "Course selection not saved! Try again", Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(ma, sb, Toast.LENGTH_LONG).show();
 
             }
         });
 
     }
 
-
-    public void printSelectedItems()  {
-
-        SparseBooleanArray sp = listView.getCheckedItemPositions();
-        StringBuilder sb= new StringBuilder();
-
-        for(int i=0;i<sp.size();i++){
-            if(sp.valueAt(i)==true){
-                Course course= (Course) listView.getItemAtPosition(i);
-                String s= course.toString();
-                sb = sb.append(" "+s);
-            }
-        }
-        Toast.makeText(ma, "Selected items are: "+sb.toString(), Toast.LENGTH_LONG).show();
-    }
 }

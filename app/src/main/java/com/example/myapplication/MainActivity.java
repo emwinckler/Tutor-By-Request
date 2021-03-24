@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import com.example.myapplication.databases.CoursesDBHelper;
+import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity {
     private CoursesDBHelper coursesDB;
+    private TutorCoursesDBHelper tutorCourseDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         coursesDB = new CoursesDBHelper(this);
+        tutorCourseDB = new TutorCoursesDBHelper(this);
         setSupportActionBar(toolbar);
     }
 
@@ -51,4 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public CoursesDBHelper getCoursesDB() { return coursesDB; }
+
+    public TutorCoursesDBHelper getTutorCourseDB() { return tutorCourseDB; }
 }
