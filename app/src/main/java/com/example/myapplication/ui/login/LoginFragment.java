@@ -170,13 +170,13 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (tutor.isChecked() && student.isChecked()) {
-                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                        users.addData(1000, usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
                                 true, true);
                     } else if (student.isChecked()) {
-                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                        users.addData(1000, usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
                                 false, true);
                     } else if (tutor.isChecked()) {
-                        users.addData(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
+                        users.addData(1000, usernameEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), usernameEditText.getText().toString(),
                                 true, false);
                     } else {
                         // TODO: handle incorrect login
