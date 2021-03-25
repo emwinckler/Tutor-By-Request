@@ -13,9 +13,9 @@ import com.example.myapplication.models.User;
 This class is a model that is meant to represent the users of the application
 * */
 public class Tutor extends User {
-    private String netID;
+    private String studentID;
     private String password;
-    private String name;
+    private String netID;
     private String email;
     private boolean tutor;
     private boolean tutee;
@@ -28,14 +28,14 @@ public class Tutor extends User {
     private MySessionsDBHelper db_mysessions_table;
     private TutorCoursesDBHelper db_tutorcourses_table;
 
-    public Tutor(String netID, String password, String name, String email, boolean tutor, boolean tutee){
-        super(netID, password, name, email, tutor, tutee);
+    public Tutor(String studentID, String password, String netID, String email, boolean tutor, boolean tutee){
+        super(studentID, password, netID, email, tutor, tutee);
     }
 
     // Getters for the Tutor
-    public String getNetID() { return super.getNetID(); }
+    public String getStudentID() { return super.getStudentID(); }
     public String getPassword() { return super.getPassword(); }
-    public String getName() { return super.getName(); }
+    public String getNetID() { return super.getNetID(); }
     public String getEmail() { return super.getEmail(); }
     public boolean isTutor() { return super.isTutor(); }
     public boolean isTutee() { return super.isTutee(); }
@@ -43,16 +43,16 @@ public class Tutor extends User {
     // Setters for the users
     // Have to update the database
 
-    public void setNetID(String netID) {
-        this.netID = netID;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNetID(String netID) {
+        this.netID = netID;
     }
 
     public void setEmail(String email) {
@@ -70,7 +70,7 @@ public class Tutor extends User {
 
 
     /*
-        public static final String TABLE_NAME = "sessions_table";
+        public static final String TABLE_netID = "sessions_table";
         public static final String COL_1 = "student_id";
         public static final String COL_2 = "tutor_id";
         public static final String COL_3 = "date";

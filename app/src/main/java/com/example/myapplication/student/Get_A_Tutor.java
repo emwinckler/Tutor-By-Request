@@ -17,9 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
+
+import com.example.myapplication.databases.TutorAvailabilityDBHelper;
+import com.example.myapplication.models.Session;
+import com.example.myapplication.models.TutorAvailablity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,8 +70,11 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ArrayAdapter<String> adapter_course_MATH;
 
     ListView listView_session;
-    ArrayList<String> available_session;
-    ArrayAdapter<String> adapter_session;
+    ArrayList<TutorAvailablity> available_session;
+    ArrayAdapter<TutorAvailablity> adapter_session;
+    TutorAvailabilityDBHelper availableTutorsDB;
+
+    private MainActivity ma;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -134,6 +142,18 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
         spinner_course        = (Spinner) view.findViewById(R.id.spinner_course);
 
+
+//        ListView listView_session;
+//        ArrayList<String> available_session;
+//        ArrayAdapter<String> adapter_session;
+
+        listView_session = view.findViewById(R.id.listView_timeblock);
+        ma = (MainActivity) getActivity();
+        availableTutorsDB = ma.getTutorAvailabilityDB();
+        available_session = availableTutorsDB.getAllTutorAvailability();
+        this.listView_session.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        adapter_session = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, available_session);
+        this.listView_session.setAdapter(adapter_session);
 
 
         // BEGIN WEEK BUTTONS

@@ -6,27 +6,27 @@ import java.io.Serializable;
 This class is a model that is meant to represent the users of the application
 * */
 public class User implements Serializable {
-    private String netID;
+    private String studentID;
     private String password;
-    private String name;
+    private String netID;
     private String email;
     private boolean tutor;
     private boolean tutee;
 
 
-    public User(String netID, String password, String name, String email, boolean tutor, boolean tutee){
-        this.netID = netID;
+    public User(String studentID, String password, String netID, String email, boolean tutor, boolean tutee){
+        this.studentID = studentID;
         this.password = password;
-        this.name = name;
+        this.netID = netID;
         this.email = email;
         this.tutor = tutor;
         this.tutee = tutee;
     }
 
     // Getters for the users
-    public String getNetID() { return netID; }
+    public String getStudentID() { return studentID; }
     public String getPassword() { return password; }
-    public String getName() { return name; }
+    public String getNetID() { return netID; }
     public String getEmail() { return email; }
     public boolean isTutor() { return tutor; }
     public boolean isTutee() { return tutee; }
@@ -34,16 +34,16 @@ public class User implements Serializable {
     // Setters for the users
     // Have to update the database
 
-    public void setNetID(String netID) {
-        this.netID = netID;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNetID(String netID) {
+        this.netID = netID;
     }
 
     public void setEmail(String email) {
