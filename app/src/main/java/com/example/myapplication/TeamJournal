@@ -42,6 +42,14 @@ Edwin:
 
 
 Harrison:
+3/25/2021
+Merging and testing the five databases into one database with multiple tables. Started on
+cleaning up the overal design to improve visual aesthetic.
+
+3/24/2021 
+Expanded testing for all new database methods. Finished full testing for the login screen.
+Starting more general database testing
+
 3/23/2021
 Finished the navigation between the login screen and the various user screens. Added
 Testing for various login scenarios. Began creating database methods to access information
