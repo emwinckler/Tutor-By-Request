@@ -126,7 +126,9 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         Log.d("net",NetID);
         Cursor data = db.rawQuery("SELECT " +COL_3+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?", new String[] {NetID});
         data.moveToFirst();
-        return data.getString(0);
+        Log.d("names length", String.valueOf(data.getCount()));
+        if (data.getCount() > 0) return data.getString(0);
+        else return "__ERROR__";
     }
 
     public Cursor getAddress(String NetID){

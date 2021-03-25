@@ -29,12 +29,9 @@ import com.example.myapplication.databases.UsersDBHelper;
 import com.example.myapplication.models.User;
 
 public class LoginFragment extends Fragment {
-
-    Button button_login;
-
     private LoginViewModel loginViewModel;
     UsersDBHelper users;
-    User user = new User(null, null, null, null, false, false);
+    User user;
 
     @Nullable
     @Override
@@ -48,24 +45,18 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        user = new User(null, null, null, null, false, false);
         super.onViewCreated(view, savedInstanceState);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
-        final EditText netIDEditText = view.findViewById(R.id.net_ID);
-      //  final EditText emailEditText = view.findViewById(R.id.email);
-        final EditText passwordEditText = view.findViewById(R.id.password);
-       // final EditText nameEditText = view.findViewById(R.id.name);
-        final Button loginButton = view.findViewById(R.id.login);
-        //final Button registerButton = view.findViewById(R.id.register);
-        final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
-       // final CheckBox tutor = view.findViewById(R.id.Tutor);
-       // final CheckBox student = view.findViewById(R.id.StudentC);
 
+        final EditText netIDEditText = view.findViewById(R.id.net_ID);
+        final EditText passwordEditText = view.findViewById(R.id.password);
+        final Button loginButton = view.findViewById(R.id.login);
+        final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
         final Button studentButton = view.findViewById(R.id.student);
         final Button tutorButton = view.findViewById(R.id.tutorButton);
         final Button studentAndTutorButton = view.findViewById(R.id.studentAndTutorButton);
-
-//        button_login = view.findViewById(R.id.button_login);
 
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
@@ -94,7 +85,7 @@ public class LoginFragment extends Fragment {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    //updateUiWithUser(loginResult.getSuccess());
                 }
             }
         });
@@ -130,14 +121,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-//        button_login.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-//                       .navigate(R.id.action_loginFragment_to_home_student);
-//            }
-//        });
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,30 +132,31 @@ public class LoginFragment extends Fragment {
                     Log.d("tag","true");
                     login = true;
                 }
-                user.setNetID(netIDEditText.getText().toString());
-                // TODO: Check if user is actually what they checked
-                String tutorCheck = users.getTutor(netIDEditText.getText().toString());
-                String tuteeCheck = users.getStudent(netIDEditText.getText().toString());
-                Log.d("True", tutorCheck);
-                Log.d("False", tuteeCheck);
-                if (Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
-                if (Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
-                Bundle userData = new Bundle();
-                userData.putSerializable("user", user);
                 if (login) {
+                    user.setNetID(netIDEditText.getText().toString());
+                    String tutorCheck = users.getTutor(netIDEditText.getText().toString());
+                    String tuteeCheck = users.getStudent(netIDEditText.getText().toString());
+                    Log.d("True", tutorCheck);
+                    Log.d("False", tuteeCheck);
+                    if (Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
+                    if (Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
+                    Bundle userData = new Bundle();
+                    userData.putSerializable("user", user);
+
                     if (user.isTutor() && user.isTutee()) {
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
-                } else if (user.isTutee()) {
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_studentHome,userData);
-                }else if (user.isTutor()) {
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_tutorHome,userData);
-                }
+                        NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                                .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
+                    } else if (user.isTutee()) {
+                        NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                                .navigate(R.id.action_loginFragment_to_studentHome,userData);
+                    }else if (user.isTutor()) {
+                        NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+                                .navigate(R.id.action_loginFragment_to_tutorHome,userData);
+                    }
                 }
             }
         });
+
 //        registerButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -215,7 +199,7 @@ public class LoginFragment extends Fragment {
 //                // loginViewModel.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
 //            }
 //        });
-
+        // TODO: Remove all these buttons
         studentButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
