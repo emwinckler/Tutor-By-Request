@@ -7,14 +7,18 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.MainActivity;
@@ -88,6 +92,26 @@ public class AddCourseTutor extends Fragment {
         final EditText courseName = view.findViewById(R.id.courseNameButton);
         final EditText courseNo = view.findViewById(R.id.courseNoButton);
         final Button addCourseButton = view.findViewById(R.id.addCourseButton);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        final Button courseAdd = view.findViewById(R.id.addCourse);
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+        courseAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupWindow popup =new PopupWindow(inflater.inflate(R.layout.popup, null, false),1000,500,true);
+                popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+        });
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         MainActivity ma = (MainActivity) getActivity();
         CoursesDBHelper coursesDBHelper = ma.getCoursesDB();
 

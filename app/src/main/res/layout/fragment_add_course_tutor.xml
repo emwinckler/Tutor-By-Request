@@ -10,11 +10,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="315dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="Tutor Preferences"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.095" />
+
+
+        <Button
+            android:id="@+id/addCourse"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="356dp"
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="300dp"
+            android:layout_height="206dp"
+            android:layout_marginTop="144dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.558"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="New Text" />
+
+            </LinearLayout>
+        </ScrollView>
+
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="287dp"
             android:layout_height="42dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="408dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +74,7 @@
             android:id="@+id/courseNameButton"
             android:layout_width="287dp"
             android:layout_height="42dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="468dp"
             android:ems="10"
             android:hint="Insert Course Name"
             android:inputType="textPersonName"
@@ -35,7 +86,7 @@
             android:id="@+id/courseNoButton"
             android:layout_width="287dp"
             android:layout_height="42dp"
-            android:layout_marginTop="212dp"
+            android:layout_marginTop="532dp"
             android:ems="10"
             android:hint="Insert Course Number"
             android:inputType="textPersonName"
@@ -47,9 +98,10 @@
             android:id="@+id/addCourseButton"
             android:layout_width="287dp"
             android:layout_height="42dp"
-            android:layout_marginTop="280dp"
+            android:layout_marginTop="592dp"
             android:text="Button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.54"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
