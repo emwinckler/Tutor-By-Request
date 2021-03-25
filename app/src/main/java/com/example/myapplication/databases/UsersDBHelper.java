@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class UsersDBHelper extends SQLiteOpenHelper {
 
@@ -121,11 +122,12 @@ public class UsersDBHelper extends SQLiteOpenHelper {
 
 
 
-    public Cursor getPassword(String NetID) {
+    public String getPassword(String NetID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT password FROM " + TABLE_NAME + "  WHERE " + COL_1 + NetID + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        Log.d("net",NetID);
+        Cursor data = db.rawQuery("SELECT " +COL_3+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?", new String[] {NetID});
+        data.moveToFirst();
+        return data.getString(0);
     }
 
     public Cursor getAddress(String NetID){
@@ -141,15 +143,15 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-    public String getTutor(int net_id){
+    public String getTutor(String NetID){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT " +COL_6+" FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {String.valueOf(net_id)});
-        data.moveToFirst();
+        Cursor data = db.rawQuery("SELECT " +COL_6+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?", new String[] {NetID});
+        data.moveToNext();
         return data.getString(0);
     }
-    public String getStudent(int net_id){
+    public String getStudent(String NetID){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT " +COL_7+" FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {String.valueOf(net_id)});
+        Cursor data = db.rawQuery("SELECT " +COL_7+" FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?", new String[] {NetID});
         data.moveToFirst();
         return data.getString(0);
     }
@@ -159,6 +161,8 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+
+
 }
 
 

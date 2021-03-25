@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     UsersDBHelper users;
-     User user = new User(null, null, null, null, false, false);
+    User user = new User(null, null, null, null, false, false);
 
     @Nullable
     @Override
@@ -53,14 +52,14 @@ public class LoginFragment extends Fragment {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
         final EditText netIDEditText = view.findViewById(R.id.net_ID);
-        final EditText emailEditText = view.findViewById(R.id.email);
+      //  final EditText emailEditText = view.findViewById(R.id.email);
         final EditText passwordEditText = view.findViewById(R.id.password);
-        final EditText nameEditText = view.findViewById(R.id.name);
+       // final EditText nameEditText = view.findViewById(R.id.name);
         final Button loginButton = view.findViewById(R.id.login);
-        final Button registerButton = view.findViewById(R.id.register);
+        //final Button registerButton = view.findViewById(R.id.register);
         final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
-        final CheckBox tutor = view.findViewById(R.id.Tutor);
-        final CheckBox student = view.findViewById(R.id.StudentC);
+       // final CheckBox tutor = view.findViewById(R.id.Tutor);
+       // final CheckBox student = view.findViewById(R.id.StudentC);
 
         final Button studentButton = view.findViewById(R.id.student);
         final Button tutorButton = view.findViewById(R.id.tutorButton);
@@ -76,7 +75,7 @@ public class LoginFragment extends Fragment {
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
-                    emailEditText.setError(getString(loginFormState.getUsernameError()));
+                    netIDEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -113,18 +112,18 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(emailEditText.getText().toString(),
+                loginViewModel.loginDataChanged(netIDEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        emailEditText.addTextChangedListener(afterTextChangedListener);
+        netIDEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailEditText.getText().toString(),
+                    loginViewModel.login(netIDEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -143,22 +142,25 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailEditText.getText().toString(),
+                loginViewModel.login(netIDEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                user.setNetID(emailEditText.getText().toString());
-                user.setPassword(passwordEditText.getText().toString());
+                boolean login = false;
+                if (users.getPassword(netIDEditText.getText().toString()).equals(passwordEditText.getText().toString())) {
+                    Log.d("tag","true");
+                    login = true;
+                }
+                user.setNetID(netIDEditText.getText().toString());
                 // TODO: Check if user is actually what they checked
-                String tutorCheck = users.getTutor(Integer.parseInt(netIDEditText.getText().toString()));
-                String tuteeCheck = users.getStudent(Integer.parseInt(netIDEditText.getText().toString()));
+                String tutorCheck = users.getTutor(netIDEditText.getText().toString());
+                String tuteeCheck = users.getStudent(netIDEditText.getText().toString());
                 Log.d("True", tutorCheck);
                 Log.d("False", tuteeCheck);
-                if (tutor.isChecked() && Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
-                if (student.isChecked() && Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
+                if (Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
+                if (Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
                 Bundle userData = new Bundle();
                 userData.putSerializable("user", user);
-                if (user.isTutor() && user.isTutee()) {
-                    Log.d("my", String.valueOf(user.isTutor()));
-                    Log.d("12", String.valueOf(user.isTutee()));
+                if (login) {
+                    if (user.isTutor() && user.isTutee()) {
                     NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
                             .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
                 } else if (user.isTutee()) {
@@ -168,50 +170,51 @@ public class LoginFragment extends Fragment {
                     NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
                             .navigate(R.id.action_loginFragment_to_tutorHome,userData);
                 }
+                }
             }
         });
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    if (tutor.isChecked() && student.isChecked()) {
-                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
-                                true, true);
-                    } else if (student.isChecked()) {
-                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
-                                false, true);
-                    } else if (tutor.isChecked()) {
-                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
-                                true, false);
-                    } else {
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                user.setNetID(emailEditText.getText().toString());
-                user.setPassword(passwordEditText.getText().toString());
-                if (tutor.isChecked()) {user.setTutor(true);}
-                if (student.isChecked()) {user.setTutee(true);}
-                Bundle userData = new Bundle();
-                userData.putSerializable("user", user);
-
-                if (user.isTutor() && user.isTutee()) {
-                    Log.d("my", String.valueOf(user.isTutor()));
-                    Log.d("12", String.valueOf(user.isTutee()));
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
-                } else if (user.isTutee()) {
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_studentHome,userData);
-                }else if (user.isTutor()) {
-                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
-                            .navigate(R.id.action_loginFragment_to_tutorHome,userData);
-                }
-                //loadingProgressBar.setVisibility(View.VISIBLE);
-                // loginViewModel.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
-            }
-        });
+//        registerButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    if (tutor.isChecked() && student.isChecked()) {
+//                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+//                                true, true);
+//                    } else if (student.isChecked()) {
+//                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+//                                false, true);
+//                    } else if (tutor.isChecked()) {
+//                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+//                                true, false);
+//                    } else {
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                user.setNetID(emailEditText.getText().toString());
+//                user.setPassword(passwordEditText.getText().toString());
+//                if (tutor.isChecked()) {user.setTutor(true);}
+//                if (student.isChecked()) {user.setTutee(true);}
+//                Bundle userData = new Bundle();
+//                userData.putSerializable("user", user);
+//
+//                if (user.isTutor() && user.isTutee()) {
+//                    Log.d("my", String.valueOf(user.isTutor()));
+//                    Log.d("12", String.valueOf(user.isTutee()));
+//                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+//                            .navigate(R.id.action_loginFragment_to_studentTutorHome,userData);
+//                } else if (user.isTutee()) {
+//                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+//                            .navigate(R.id.action_loginFragment_to_studentHome,userData);
+//                }else if (user.isTutor()) {
+//                    NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
+//                            .navigate(R.id.action_loginFragment_to_tutorHome,userData);
+//                }
+//                //loadingProgressBar.setVisibility(View.VISIBLE);
+//                // loginViewModel.login(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+//            }
+//        });
 
         studentButton.setOnClickListener(new View.OnClickListener(){
             @Override
