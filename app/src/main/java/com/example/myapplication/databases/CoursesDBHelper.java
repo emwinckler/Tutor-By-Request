@@ -84,69 +84,37 @@ public class CoursesDBHelper extends SQLiteOpenHelper {
         return courseList;
     }
 
+    public ArrayList<String> getAllSubjects(){
+        ArrayList<String> subjectList;
+        Cursor data;
+        SQLiteDatabase db;
 
+        db = this.getWritableDatabase();
+        data = db.rawQuery("SELECT DISTINCT " + COL_1 + " FROM " + TABLE_NAME, null);
 
-    public boolean modifyData(String NetID, String COL, ContentValues cv) {
+        subjectList = new ArrayList<String>();
+        while(data.moveToNext()){
+            String subject = data.getString(0);
+            subjectList.add(subject);
+        }
+
+        return subjectList;
+    }
+
+    public ArrayList<Course> getAllCoursesBySubject(String subjectQuery){
+        Cursor data;
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(TABLE_NAME, cv,  "" + COL + " = ? ", new String[] { NetID } );
-        return true; // TODO: what should we return?
+
+        data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[]{subjectQuery});
+
+        ArrayList<Course> courseList = new ArrayList<Course>();
+        while(data.moveToNext()){
+            String subject = data.getString(0);
+            String course = data.getString(1);
+            int courseNo = Integer.parseInt(data.getString(2));
+            courseList.add(new Course(subject,course,courseNo));
+        }
+        return courseList;
     }
 
-    public boolean modifyName(String NetID, String newName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_3, newName);
-        return modifyData(NetID, COL_3, contentValues);
-    }
-
-    public boolean modifyPassword(String NetID, String newPassword) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, newPassword);
-        return modifyData(NetID, COL_2, contentValues);
-    }
-
-    public boolean modifyAccountTYpe(String NetID, String newPassword) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, newPassword);
-        return modifyData(NetID, COL_2, contentValues);
-    }
-
-    public Cursor checkLogin2(String NetID, String password){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String[] selectionArgs = {NetID,password};
-        Cursor cursor = db.query(TABLE_NAME, new String[]{"NetID", "password"}, "NetID=? and password=?", selectionArgs , null, null, null);
-        return cursor;
-    }
-
-
-    public Cursor getPassword(String NetID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT password FROM "+TABLE_NAME+"  WHERE " + COL_1 + NetID +"'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
-    public Cursor getAddress(String NetID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT address FROM "+TABLE_NAME+"  WHERE " + COL_1 + NetID +"'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
-    public Cursor getPhone(String NetID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT phoneNumber FROM "+TABLE_NAME+"  WHERE " + COL_1 + NetID +"'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
-    public Cursor getUserType(String NetID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT userType FROM "+TABLE_NAME + " WHERE "  + COL_1 + NetID +"'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
 }
-
-
-
-

@@ -81,33 +81,33 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-//    public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, String isAvailable) {
-//        long result;
-//
-//        try {
-//            if ( isAvailable.length() != 1 ) { // TODO: still some work to do to check input but im sleepy rn
-//                return false;
-//            }
-//
-//            SQLiteDatabase db = this.getWritableDatabase();
-//
-//            ContentValues contentValues = new ContentValues();
-//            contentValues.put(COL_1, TutorID);
-//            contentValues.put(COL_2, Date);
-//            contentValues.put(COL_3, TimeBlock);
-//            contentValues.put(COL_4, isAvailable);
-//
-//
-//
-//            result = db.update(TABLE_NAME, contentValues, COL_1 + " =?" + " AND " + COL_2 + " =?" + " AND " + COL_3 + " =?", new String[] {TutorID, Date, StartTime});
-//
-//        }
-//        catch (Exception e) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, String isAvailable) {
+        long result;
+
+        try {
+            if ( isAvailable.length() != 1 ) { // TODO: still some work to do to check input but im sleepy rn
+                return false;
+            }
+
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1, TutorID);
+            contentValues.put(COL_2, Date);
+            contentValues.put(COL_3, StartTime);
+            contentValues.put(COL_4, isAvailable);
+
+
+
+            result = db.update(TABLE_NAME, contentValues, COL_1 + " =?" + " AND " + COL_2 + " =?" + " AND " + COL_3 + " =?", new String[] {TutorID, Date, StartTime});
+
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
 
 
     public Cursor getAllTutorAvailability() {
@@ -140,21 +140,20 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-//    public Cursor getTutorAvailabilityOnDate(String TutorID, String Date) {
-//        Cursor result;
-//
-//        try {
-//            SQLiteDatabase db = this.getWritableDatabase();
-//            result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?" + " AND " + COL_2 + " = ?", new String[] {TutorID, Date};
-//
-//        }
-//        catch (Exception e) {
-//            return null;
-//        }
-//
-//        return result;
-//    }
+    public Cursor getTutorAvailabilityOnDate(String TutorID, String Date) {
+        Cursor result;
 
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?" + " AND " + COL_2 + " = ?", new String[] {TutorID, Date});
+
+        }
+        catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
 
 }
 
