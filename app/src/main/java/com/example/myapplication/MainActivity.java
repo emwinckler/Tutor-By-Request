@@ -1,20 +1,17 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.MySessionsDBHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.databases.UsersDBHelper;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private CoursesDBHelper coursesDB;
@@ -33,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         tutorAvailabilityDB = new TutorAvailabilityDBHelper(this);
         usersDB = new UsersDBHelper(this);
         mySessionsDB = new MySessionsDBHelper(this);
-        populateSessions();
-        populateCourses();
-        populateAvailability();
+//        populateSessions();
+//        populateCourses();
+//        populateAvailability();
         populateUsers();
 
         setSupportActionBar(toolbar);

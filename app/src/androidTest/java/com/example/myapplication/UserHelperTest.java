@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.database.Cursor;
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -31,8 +30,8 @@ public class UserHelperTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new UsersDBHelper(appContext);
         try {
-            db.addData("String NetID", "String password", "String name", "String email",
-                    false, true);
+            db.addData("123", "String username", "String password", "String name", "String email",
+                    false, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,45 +42,12 @@ public class UserHelperTest {
     }
     @Test
     public void searchPassword() {
-        try {
-            Cursor cursor = db.getPassword("String NetID");
-            String str;
-            if (cursor.moveToFirst()) {
-                str = cursor.getString(cursor.getColumnIndex("password"));
-                assertTrue(str.equals("String password"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String password = db.getPassword("String NetID");
+        assertTrue(password.equals("String password"));
     }
-    @Test
-    public void searchAddress() {
-        try {
-            Cursor cursor = db.getAddress("String NetID");
-            String str;
-            if (cursor.moveToFirst()) {
-                str = cursor.getString(cursor.getColumnIndex("address"));
-                // Not sure what address is supposed to be
-                assertTrue(str.equals("String name"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    @Test
-    public void searchTutor() {
-        try {
-            Cursor cursor = db.getUserType("String NetID");
-            String str;
-            if (cursor.moveToFirst()) {
-                // Not sure where this is being stored
-               // str = cursor.getString(cursor.getColumnIndex("name"));
-                //assertTrue(str.equals("String name"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
 
     // More Tests to be added
 }
