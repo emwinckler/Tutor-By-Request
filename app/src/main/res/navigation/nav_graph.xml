@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_tutorHome_to_tutorSetClasses"
             app:destination="@id/tutorSetClasses" />
+        <action
+            android:id="@+id/action_tutorHome_to_tutorSetDateAndTime2"
+            app:destination="@id/tutorSetDateAndTime2" />
     </fragment>
     <fragment
         android:id="@+id/studentTutorHome"
@@ -81,6 +84,12 @@
         <action
             android:id="@+id/action_studentTutorHome_to_logoutConfirmation"
             app:destination="@id/logoutConfirmation" />
+        <action
+            android:id="@+id/action_studentTutorHome_to_tutorSetClasses"
+            app:destination="@id/tutorSetClasses" />
+        <action
+            android:id="@+id/action_studentTutorHome_to_tutorSetDateAndTime2"
+            app:destination="@id/tutorSetDateAndTime2" />
     </fragment>
     <fragment
         android:id="@+id/my_Sessions"

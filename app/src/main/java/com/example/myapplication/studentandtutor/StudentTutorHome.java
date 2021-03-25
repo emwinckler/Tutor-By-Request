@@ -71,17 +71,18 @@ public class StudentTutorHome extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
 //        super.onViewCreated(view, savedInstanceState);
-        final Button reminders = view.findViewById(R.id.sAndTReminders);
+//        final Button reminders = view.findViewById(R.id.sAndTReminders);
         final Button sessions = view.findViewById(R.id.sAndTSessions);
         final Button getTutor = view.findViewById(R.id.sAndTGetTutor);
         final Button availability = view.findViewById(R.id.sAndTAvailability);
         final Button tutorLogout = view.findViewById(R.id.sAndTLogout);
+        final Button setCourses = view.findViewById(R.id.sAndTSelectCourses);
 
-        reminders.setOnClickListener(new View.OnClickListener() {
+        setCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_reminders);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetClasses);
             }
         });
         sessions.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,7 @@ public class StudentTutorHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_setTutorAvailability);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetDateAndTime2);
             }
         });
 

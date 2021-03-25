@@ -71,20 +71,20 @@ public class TutorHome extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
 //        super.onViewCreated(view, savedInstanceState);
-        final Button tutorReminders = view.findViewById(R.id.tutorReminders);
+//        final Button tutorReminders = view.findViewById(R.id.tutorReminders);
         final Button tutorSessions = view.findViewById(R.id.tutorSessions);
         final Button tutorAvailability = view.findViewById(R.id.tutorAvailability);
         final Button tutorLogout = view.findViewById(R.id.tutorLogout);
-        final Button tutorAddCourse = view.findViewById(R.id.tutorAddCourse);
+//        final Button tutorAddCourse = view.findViewById(R.id.tutorAddCourse);
         final Button tutorSetCourse = view.findViewById(R.id.tutorSetCourse);
 
-        tutorReminders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
-                        .navigate(R.id.action_tutorHome_to_reminders);
-            }
-        });
+//        tutorReminders.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
+//                        .navigate(R.id.action_tutorHome_to_reminders);
+//            }
+//        });
         tutorSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +96,7 @@ public class TutorHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
-                        .navigate(R.id.action_tutorHome_to_setTutorAvailability);
+                        .navigate(R.id.action_tutorHome_to_tutorSetDateAndTime2);
             }
         });
         tutorLogout.setOnClickListener(new View.OnClickListener() {
@@ -107,13 +107,13 @@ public class TutorHome extends Fragment {
             }
         });
 
-        tutorAddCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
-                        .navigate(R.id.action_tutorHome_to_addCourseTutor);
-            }
-        });
+//        tutorAddCourse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
+//                        .navigate(R.id.action_tutorHome_to_addCourseTutor);
+//            }
+//        });
 
         tutorSetCourse.setOnClickListener(new View.OnClickListener() {
             @Override

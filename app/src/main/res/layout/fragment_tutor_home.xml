@@ -11,24 +11,15 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/tutorReminders"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="56dp"
-            android:text="Reminders"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
             android:id="@+id/tutorSessions"
             android:layout_width="150dp"
             android:layout_height="100dp"
+            android:layout_marginTop="160dp"
             android:text="My Sessions"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tutorReminders" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/tutorAvailability"
@@ -40,21 +31,10 @@
             app:layout_constraintTop_toBottomOf="@+id/tutorSessions" />
 
         <Button
-            android:id="@+id/tutorAddCourse"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="108dp"
-            android:text="Add Course"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tutorSessions" />
-
-        <Button
             android:id="@+id/tutorSetCourse"
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:layout_marginTop="224dp"
+            android:layout_marginTop="100dp"
             android:text="Select Tutor Courses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

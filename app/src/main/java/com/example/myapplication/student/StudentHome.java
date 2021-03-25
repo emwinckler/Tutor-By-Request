@@ -71,18 +71,18 @@ public class StudentHome extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
 //        super.onViewCreated(view, savedInstanceState);
-        final Button studentReminders = view.findViewById(R.id.studentReminders);
+//        final Button studentReminders = view.findViewById(R.id.studentReminders);
         final Button studentSessions = view.findViewById(R.id.studentSessions);
         final Button studentGetATutor = view.findViewById(R.id.studentGetATutor);
         final Button studentLogout = view.findViewById(R.id.studentLogout);
 
-        studentReminders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.student.StudentHome.this)
-                        .navigate(R.id.action_studentHome_to_reminders);
-            }
-        });
+//        studentReminders.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.student.StudentHome.this)
+//                        .navigate(R.id.action_studentHome_to_reminders);
+//            }
+//        });
         studentSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

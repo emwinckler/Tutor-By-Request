@@ -11,23 +11,25 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/sAndTReminders"
+            android:id="@+id/sAndTSelectCourses"
             android:layout_width="150dp"
             android:layout_height="100dp"
-            android:layout_marginTop="100dp"
-            android:text="Reminders"
+            android:layout_marginTop="4dp"
+            android:text="Select Tutor courses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/sAndTAvailability" />
 
         <Button
             android:id="@+id/sAndTSessions"
             android:layout_width="150dp"
             android:layout_height="100dp"
+            android:layout_marginTop="125dp"
             android:text="my sessions"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sAndTReminders" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/sAndTGetTutor"
