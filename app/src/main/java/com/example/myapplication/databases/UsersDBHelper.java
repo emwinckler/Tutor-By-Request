@@ -11,8 +11,8 @@ public class UsersDBHelper extends SQLiteOpenHelper {
     public static final String TAG = "usersDBHelper";
 
     public static final String TABLE_NAME = "user_table";
-    public static final String COL_1 = "net_id";
-    public static final String COL_2 = "username";
+    public static final String COL_1 = "student_id";
+    public static final String COL_2 = "net_id";
     public static final String COL_3 = "password";
     public static final String COL_4 = "name";
     public static final String COL_5 = "email";
@@ -48,7 +48,7 @@ public class UsersDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addData(int NetID, String username, String password, String name, String email,
+    public boolean addData(String studentID, String netID, String password, String name, String email,
             boolean tutor, boolean tutee) throws Exception {
 
         long result;
@@ -56,8 +56,8 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COL_1, NetID);
-            contentValues.put(COL_2, username);
+            contentValues.put(COL_1, studentID);
+            contentValues.put(COL_2, netID);
             contentValues.put(COL_3, password);
             contentValues.put(COL_4, name);
             contentValues.put(COL_5, email);

@@ -104,37 +104,37 @@ public class MainActivity extends AppCompatActivity {
 //_______Populate users database__________________________________________________________________________________
     public void populateUsers(){
         try {
-            usersDB.addData(0000000000, "student", "student", "Stu Dent", "student@wisc.edu", false, true);
+            usersDB.addData("0000000000", "student", "student", "Stu Dent", "student@wisc.edu", false, true);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
 
         try {
-            usersDB.addData(1111111111, "tutor1", "tutor1", "Super Smart", "tutor1@wisc.edu", true, false);
+            usersDB.addData("1111111111", "tutor1", "tutor1", "Super Smart", "tutor1@wisc.edu", true, false);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
 
         try {
-            usersDB.addData(1111111112, "tutor2", "tutor2", "Also Smart", "tutor2@wisc.edu", true, false);
+            usersDB.addData("1111111112", "tutor2", "tutor2", "Also Smart", "tutor2@wisc.edu", true, false);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
 
         try {
-            usersDB.addData(1111111113, "tutor3", "tutor3", "Kindof Smart", "tutor3@wisc.edu", true, false);
+            usersDB.addData("1111111113", "tutor3", "tutor3", "Kindof Smart", "tutor3@wisc.edu", true, false);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
 
         try {
-            usersDB.addData(1111111114, "tutor4", "tutor4", "Notso Smart", "tutor4@wisc.edu", true, false);
+            usersDB.addData("1111111114", "tutor4", "tutor4", "Notso Smart", "tutor4@wisc.edu", true, false);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
 
         try {
-            usersDB.addData(0000011111, "stutor", "stutor", "Student Tutor", "stutor@wisc.edu", true, true);
+            usersDB.addData("0000011111", "stutor", "stutor", "Student Tutor", "stutor@wisc.edu", true, true);
         } catch (Exception e) {
             // La di da I have nothing to say.
         }

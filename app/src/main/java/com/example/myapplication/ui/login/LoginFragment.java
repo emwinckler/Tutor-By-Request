@@ -175,13 +175,13 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (tutor.isChecked() && student.isChecked()) {
-                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
                                 true, true);
                     } else if (student.isChecked()) {
-                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
                                 false, true);
                     } else if (tutor.isChecked()) {
-                        users.addData(1000, emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
+                        users.addData("1000", emailEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), emailEditText.getText().toString(),
                                 true, false);
                     } else {
                     }
