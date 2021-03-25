@@ -43,7 +43,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addAvailability(String TutorID, Date date, String time) {
+    public boolean addAvailability(String TutorID, String date, String time) {
         long result;
 
         try {
@@ -52,9 +52,9 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_1, TutorID);
-            contentValues.put(COL_2, String.valueOf(date));
+            contentValues.put(COL_2, date);
             contentValues.put(COL_3, time);
-            contentValues.put(COL_4, "TRUE");
+            contentValues.put(COL_4, "FALSE");
 
             result = db.insert(TABLE_NAME,null,contentValues);
 

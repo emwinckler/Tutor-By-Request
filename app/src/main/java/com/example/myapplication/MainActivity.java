@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         tutorAvailabilityDB = new TutorAvailabilityDBHelper(this);
         usersDB = new UsersDBHelper(this);
         mySessionsDB = new MySessionsDBHelper(this);
-        poplulateSessions();
+        populateSessions();
         populateCourses();
         populateAvailability();
         populateUsers();
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //_______Populate sessions database__________________________________________________________________________
-    public void poplulateSessions(){
+    public void populateSessions(){
         try {
             mySessionsDB.addData("0000000000", "1111111111", "03/28/2021", "09:00", "Mathematics", 341, "Liberry", "Do.  The.  Math.", 0);
         } catch (Exception e) {
