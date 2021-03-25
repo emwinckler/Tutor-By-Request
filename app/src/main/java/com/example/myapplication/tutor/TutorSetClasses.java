@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databases.CoursesDBHelper;
+import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.models.Course;
 
@@ -88,9 +89,9 @@ public class TutorSetClasses extends Fragment {
         listView = (ListView) view.findViewById(R.id.classesList);
         Button classButton = view.findViewById(R.id.selectClasses);
         ma = (MainActivity) getActivity();
-        CoursesDBHelper coursesDBHelper = ma.getCoursesDB();
-        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
-        ArrayList<Course> courses = coursesDBHelper.getData();
+        DatabaseHelper db = ma.getDatabase();
+//        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
+        ArrayList<Course> courses = db.getDataCourses();
         this.listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         ArrayAdapter<Course> courseArrayAdapter =
                 new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_multiple_choice,courses);
@@ -105,7 +106,7 @@ public class TutorSetClasses extends Fragment {
                     for (int i = 0; i < sp.size(); i++) {
                         if (sp.valueAt(i) == true) {
                             Course course = (Course) listView.getItemAtPosition(i);
-                            tutorCoursesDBHelper.addTutorCourse(1000, course.getSubject(),course.getCourseNo());
+                            db.addTutorCourse(1000, course.getSubject(),course.getCourseNo());
                         }
                     }
                     Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();

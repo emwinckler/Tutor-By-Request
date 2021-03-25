@@ -22,6 +22,7 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
 import com.example.myapplication.models.Session;
 import com.example.myapplication.models.TutorAvailablity;
@@ -72,8 +73,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ListView listView_session;
     ArrayList<TutorAvailablity> available_session;
     ArrayAdapter<TutorAvailablity> adapter_session;
-    TutorAvailabilityDBHelper availableTutorsDB;
+//    TutorAvailabilityDBHelper availableTutorsDB;
 
+    DatabaseHelper db;
     private MainActivity ma;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -150,7 +152,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         listView_session = view.findViewById(R.id.listView_timeblock);
         ma = (MainActivity) getActivity();
 //        availableTutorsDB = ma.getTutorAvailabilityDB();
-        available_session = availableTutorsDB.getAllTutorAvailability();
+        available_session = db.getAllTutorAvailability();
         this.listView_session.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adapter_session = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, available_session);
         this.listView_session.setAdapter(adapter_session);

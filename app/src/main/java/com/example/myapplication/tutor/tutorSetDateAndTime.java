@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.data.model.LoggedInUser;
+import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class tutorSetDateAndTime extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TutorAvailabilityDBHelper dbHelper;
+    DatabaseHelper dbHelper;
     // Required empty public constructor
     private String tutorID;
     private Spinner spinner_week;
@@ -142,7 +143,7 @@ public class tutorSetDateAndTime extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         MainActivity ma = (MainActivity) getActivity();
-        dbHelper = ma.getTutorAvailabilityDB();
+        dbHelper = ma.getDatabase();
         return inflater.inflate(R.layout.fragment_tutor_set_date_and_time, container, false);
 
 
