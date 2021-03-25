@@ -26,13 +26,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databases.DatabaseHelper;
-import com.example.myapplication.databases.UsersDBHelper;
 import com.example.myapplication.models.User;
 
 public class LoginFragment extends Fragment {
     private LoginViewModel loginViewModel;
-    UsersDBHelper users;
-    DatabaseHelper Users;
+    DatabaseHelper users;
     User user;
 
     @Nullable
@@ -41,7 +39,7 @@ public class LoginFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         MainActivity ma = (MainActivity) getActivity();
-        users = ma.getUsersDB();
+        users = ma.getDatabase();
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
