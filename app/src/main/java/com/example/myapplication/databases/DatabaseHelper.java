@@ -506,6 +506,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*SECTION FOR USERS START*/
 
+    public boolean addData(String studentID, String netID, String password, String name, String email,
+                           boolean tutor, boolean tutee) throws Exception {
+
+        long result;
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1_USERS, studentID);
+            contentValues.put(COL_2_USERS, netID);
+            contentValues.put(COL_3_USERS, password);
+            contentValues.put(COL_4_USERS, name);
+            contentValues.put(COL_5_USERS, email);
+            contentValues.put(COL_6_USERS, Boolean.toString(tutor));
+            contentValues.put(COL_7_USERS, Boolean.toString(tutee));
+
+            result = db.insert(TABLE_NAME_USERS,null,contentValues);
+
+        }
+        catch (Exception e) {
+            result = -1;
+        }
+
+
+        if (result == -1){
+            Exception e = new Exception("You can't add a student like that");
+            throw e;
+        }
+        return true;
+    }
+
     public String getPassword(String NetID) {
         SQLiteDatabase db = this.getWritableDatabase();
         Log.d("net",NetID);

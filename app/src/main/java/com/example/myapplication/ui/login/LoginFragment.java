@@ -25,12 +25,14 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.UsersDBHelper;
 import com.example.myapplication.models.User;
 
 public class LoginFragment extends Fragment {
     private LoginViewModel loginViewModel;
     UsersDBHelper users;
+    DatabaseHelper Users;
     User user;
 
     @Nullable
