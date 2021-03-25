@@ -31,7 +31,9 @@ public class UserHelperTest {
         db = new UsersDBHelper(appContext);
         try {
             db.addData("123", "String username", "String password", "String name", "String email",
-                    false, false);
+                    false, true);
+            db.addData("1234", "username", "password", "name", "email",
+                    false, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,8 +44,24 @@ public class UserHelperTest {
     }
     @Test
     public void searchPassword() {
-        String password = db.getPassword("String NetID");
+        String password = db.getPassword("String username");
         assertTrue(password.equals("String password"));
+    }
+    @Test
+    public void checkTutor() {
+        String tutor = db.getTutor("String username");
+        assertTrue(tutor.equals("false"));
+    }
+    @Test
+    public void checkTutee() {
+        String tutee = db.getStudent("username");
+        assertTrue(tutee.equals("true"));
+    }
+    @Test
+    public void passwordChange() {
+        db.modifyPassword("String username", "pass");
+        String password = db.getPassword("String username");
+        assertTrue(password.equals("pass"));
     }
 
 

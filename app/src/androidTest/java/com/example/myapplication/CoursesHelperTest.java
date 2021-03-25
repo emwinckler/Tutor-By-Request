@@ -1,17 +1,19 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.database.Cursor;
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.myapplication.databases.CoursesDBHelper;
+import com.example.myapplication.models.Course;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
@@ -31,7 +33,10 @@ public class CoursesHelperTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new CoursesDBHelper(appContext);
         try {
-            db.addData("String subject", "String course", 1);
+            db.addData("subject", "course", 1);
+            db.addData("math", "intro", 2);
+            db.addData("math", "to", 3);
+            db.addData("geo", "death", 4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,30 +46,14 @@ public class CoursesHelperTest {
         db.close();
     }
     @Test
-    public void searchCourses() {
-        try {
-            Cursor cursor = db.getPassword("String subject");
-            String str;
-            if (cursor.moveToFirst()) {
-                str = cursor.getString(cursor.getColumnIndex("course"));
-                assertTrue(str.equals("String course"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void searchSubjects() {
+        ArrayList<String> subjects = db.getAllSubjects();
+        assertTrue(subjects.get(0).equals("subject"));
+        assertTrue(subjects.get(1).equals("math"));
     }
     @Test
-    public void getSubject() {
-        try {
-            // Create a get subject method
-            Cursor cursor = db.getPassword("String course");
-            String str;
-            if (cursor.moveToFirst()) {
-                str = cursor.getString(cursor.getColumnIndex("subject"));
-                assertTrue(str.equals("String subject"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void searchCourses() {
+        ArrayList<Course> courses = db.getAllCoursesBySubject("math");
+        assertTrue(courses.get(0).toString().equals("intro 2"));
     }
 }

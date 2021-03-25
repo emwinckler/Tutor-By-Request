@@ -90,14 +90,14 @@ public class UsersDBHelper extends SQLiteOpenHelper {
 
     public boolean modifyName(String NetID, String newName) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_3, newName);
-        return modifyData(NetID, COL_3, contentValues);
+        contentValues.put(COL_4, newName);
+        return modifyData(NetID, COL_4, contentValues);
     }
 
     public boolean modifyPassword(String NetID, String newPassword) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, newPassword);
-        return modifyData(NetID, COL_2, contentValues);
+        contentValues.put(COL_3, newPassword);
+        return modifyData(NetID, COL_3, contentValues);
     }
 
     public boolean modifyAccountTYpe(String NetID, String newPassword) {
@@ -113,14 +113,13 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+
     public Cursor checkLogin2(String NetID, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] selectionArgs = {NetID,password};
         Cursor cursor = db.query(TABLE_NAME, new String[]{"NetID", "password"}, "NetID=? and password=?", selectionArgs , null, null, null);
         return cursor;
     }
-
-
 
     public String getPassword(String NetID) {
         SQLiteDatabase db = this.getWritableDatabase();
