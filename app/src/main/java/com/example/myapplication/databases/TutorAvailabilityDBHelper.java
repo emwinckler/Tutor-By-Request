@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.myapplication.models.Course;
+import com.example.myapplication.models.TutorAvailablity;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
@@ -110,19 +114,37 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getAllTutorAvailability() {
-        Cursor result;
+//    public Cursor getAllTutorAvailability() {
+//        Cursor result;
+//
+//        try {
+//            SQLiteDatabase db = this.getWritableDatabase();
+//            result = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+//
+//        }
+//        catch (Exception e) {
+//            return null;
+//        }
+//
+//        return result;
+//    }
+    public ArrayList<TutorAvailablity> getAllTutorAvailability() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM "+TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<TutorAvailablity> tutorAvailabilityList = new ArrayList<TutorAvailablity>();
+        while(data.moveToNext()){
+            String tutorID = data.getString(0);
+            String date = data.getString(1);
+            String time = data.getString(2);
+//            String course = data.getString(3);
+            String booked = data.getString(3);
 
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            result = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
+//            int courseNo = Integer.parseInt(data.getString(2));
+            tutorAvailabilityList.add(new TutorAvailablity(tutorID, date,
+                    time, booked));
         }
-        catch (Exception e) {
-            return null;
-        }
-
-        return result;
+        return tutorAvailabilityList;
     }
 
     public Cursor getTutorAvailability(String TutorID) {

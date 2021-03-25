@@ -5,25 +5,25 @@ import java.util.Date;
 public class TutorAvailablity {
 
     private String tutorId;
-    private Date date;
-    private int time;
+    private String date;
+    private String time;
     private Course course;
     private boolean booked;
 
-    public TutorAvailablity(String tutorId, Date date, int time, String subject, String course,
-                            int courseNo) {
+    public TutorAvailablity(String tutorId, String date, String time, String booked
+                            ) { //String course, int courseNo
         this.tutorId = tutorId;
         this.date = date;
         this.time = time;
-        this.course = new Course(subject, course, courseNo);
+//        this.course = new Course(subject, course, courseNo);
         this.booked = true;
 
 
     }
 
     public String getTutorId() { return tutorId; }
-    public Date getDate() { return date; }
-    public int getTime() { return time; }
+    public String getDate() { return date; }
+    public String getTime() { return time; }
     public Course getCourse() { return course; }
 
 
@@ -32,12 +32,12 @@ public class TutorAvailablity {
     }
 
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
