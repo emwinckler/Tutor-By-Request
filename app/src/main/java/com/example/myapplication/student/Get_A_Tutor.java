@@ -149,7 +149,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         listView_session = view.findViewById(R.id.listView_timeblock);
         ma = (MainActivity) getActivity();
-        availableTutorsDB = ma.getTutorAvailabilityDB();
+//        availableTutorsDB = ma.getTutorAvailabilityDB();
         available_session = availableTutorsDB.getAllTutorAvailability();
         this.listView_session.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adapter_session = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, available_session);

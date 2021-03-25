@@ -113,7 +113,7 @@ public class AddCourseTutor extends Fragment {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         MainActivity ma = (MainActivity) getActivity();
-        CoursesDBHelper coursesDBHelper = ma.getCoursesDB();
+//        CoursesDBHelper coursesDBHelper = ma.getCoursesDB();
 
         ArrayList<String> subjects = new ArrayList<String>();
         subjects.add("Biomedical Engineering");
@@ -142,7 +142,7 @@ public class AddCourseTutor extends Fragment {
 
                 try {
                     int courseNum = Integer.parseInt(courseNo.getText().toString());
-                    coursesDBHelper.addData(subject, course, courseNum);
+//                    coursesDBHelper.addData(subject, course, courseNum);
                 } catch (NumberFormatException e){
                     Toast.makeText(ma, "Course number needs to be a 3 digit integer!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
