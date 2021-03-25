@@ -121,9 +121,9 @@ public class UsersDBHelper extends SQLiteOpenHelper {
 
 
 
-    public Cursor getPassword(String NetID){
+    public Cursor getPassword(String NetID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT password FROM "+TABLE_NAME+"  WHERE " + COL_1 + NetID +"'";
+        String query = "SELECT password FROM " + TABLE_NAME + "  WHERE " + COL_1 + NetID + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
@@ -141,7 +141,18 @@ public class UsersDBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-
+    public String getTutor(int net_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT " +COL_6+" FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {String.valueOf(net_id)});
+        data.moveToFirst();
+        return data.getString(0);
+    }
+    public String getStudent(int net_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT " +COL_7+" FROM " + TABLE_NAME + " WHERE " + COL_1 + " = ?", new String[] {String.valueOf(net_id)});
+        data.moveToFirst();
+        return data.getString(0);
+    }
     public Cursor getUserType(String NetID){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT userType FROM "+TABLE_NAME + " WHERE "  + COL_1 + NetID +"'";
