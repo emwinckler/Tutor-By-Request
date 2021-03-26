@@ -51,19 +51,19 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
-        return true;
-//        if (username == null) {
-//            return false;
-//        }
-//        if (username.contains("@")) {
-//            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-//        } else {
-//            return !username.trim().isEmpty();
-//        }
+        if (username == null || username.isEmpty()){
+            return false;
+        }
+        if ( username.length() > 15 || !username.matches("^[a-zA-Z0-9]*$")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        return (password != null) && (password.trim().length() > 5)
+                && password.matches("^[a-zA-Z0-9]*$");
     }
 }

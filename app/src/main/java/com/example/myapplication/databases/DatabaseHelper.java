@@ -581,7 +581,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         data.moveToFirst();
         Log.d("names length", String.valueOf(data.getCount()));
         if (data.getCount() > 0) return data.getString(0);
-        else return "__ERROR__";
+        else return "___________________ERROR__________________";
     }
 
     public String getTutor(String NetID){
