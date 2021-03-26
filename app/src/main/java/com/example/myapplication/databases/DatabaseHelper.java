@@ -402,7 +402,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            result = db.rawQuery("SELECT * FROM " + TABLE_NAME_TUTOR_A + " WHERE " + COL_1_TUTOR_A + " = ?" + " AND " + COL_2_TUTOR_A + " = ?", new String[] {TutorID, Date});
+//            result = db.rawQuery("SELECT * FROM " + TABLE_NAME_TUTOR_A + " WHERE " + COL_1_TUTOR_A + " = ?" + " AND " + COL_2_TUTOR_A + " = ?", new String[] {TutorID, Date});
+            result = db.rawQuery("SELECT u.name, t.date, t.time, t.booked FROM user_table u, " + TABLE_NAME_TUTOR_A + " t WHERE " + COL_1_TUTOR_A + " = ?" + " AND " + COL_2_TUTOR_A + " = ? and t.tutor_id = u.student_id", new String[] {TutorID, Date});
 
         }
         catch (Exception e) {

@@ -79,7 +79,8 @@ public class StudentHome extends Fragment {
         final Button studentGetATutor = view.findViewById(R.id.studentGetATutor);
         final Button studentLogout = view.findViewById(R.id.studentLogout);
 
-        user = (User) this.getArguments().getSerializable("user");
+//        user = (User) this.getArguments().getSerializable("user");
+        user = (User) getActivity().getIntent().getSerializableExtra("user");
 
         Bundle userData = new Bundle();
         userData.putSerializable("user", user);

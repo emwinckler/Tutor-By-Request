@@ -153,7 +153,8 @@ public class tutorSetDateAndTime extends Fragment {
         MainActivity ma = (MainActivity) getActivity();
         dbHelper = ma.getDatabase();
         Bundle bundle = this.getArguments();
-        user = (User) bundle.getSerializable("user");
+//        user = (User) bundle.getSerializable("user");
+        user = (User) getActivity().getIntent().getSerializableExtra("user");
         return inflater.inflate(R.layout.fragment_tutor_set_date_and_time, container, false);
 
 

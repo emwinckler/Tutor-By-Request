@@ -80,7 +80,8 @@ public class TutorHome extends Fragment {
         // Inflate the layout for this fragment
 
         Bundle bundle = this.getArguments();
-        user = (User) bundle.getSerializable("user");
+//        user = (User) bundle.getSerializable("user");
+        user = (User) getActivity().getIntent().getSerializableExtra("user");
         return inflater.inflate(R.layout.fragment_tutor_home, container, false);
     }
 

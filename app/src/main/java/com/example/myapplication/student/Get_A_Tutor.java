@@ -146,7 +146,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        user = (User) this.getArguments().getSerializable("user");
+//        user = (User) this.getArguments().getSerializable("user");
+        user = (User) getActivity().getIntent().getSerializableExtra("user");
 
         Bundle userData = new Bundle();
         userData.putSerializable("user", user);
