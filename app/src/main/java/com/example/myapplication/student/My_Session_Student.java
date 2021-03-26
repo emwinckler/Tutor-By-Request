@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,7 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.common.Sessions;
+import com.example.myapplication.databases.DatabaseHelper;
+import com.example.myapplication.models.User;
+import com.example.myapplication.common.Sessions;
 
 import java.util.ArrayList;
 
@@ -28,6 +34,14 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class My_Session_Student extends Fragment {
+
+    DatabaseHelper dbHelper;
+    private User user;
+    private ListView sessions;
+    static String[][] listSessions;
+
+
+
 
     // UPPER MENU BEGIN
     Button button_home;
@@ -82,8 +96,10 @@ public class My_Session_Student extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_my__session__student, container, false);
-
+        MainActivity ma = (MainActivity) getActivity();
+        dbHelper = ma.getDatabase();
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my__session__student, container, false);
     }
@@ -92,6 +108,27 @@ public class My_Session_Student extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////Import from list from database and populate//////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        Sessions adapter = new Sessions(getContext(),listSessions);
+        sessions =(ListView) view.findViewById(R.id.listView_date);
+        sessions.setAdapter(adapter);
+        sessions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Show list details
+
+            }
+        });
+
+
 
         // UPPER MENU BEGIN
         button_home        = (Button) view.findViewById(R.id.button_home);
