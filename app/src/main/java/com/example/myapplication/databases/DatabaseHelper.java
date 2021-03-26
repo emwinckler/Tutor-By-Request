@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.models.Course;
 import com.example.myapplication.models.TutorAvailablity;
+import com.example.myapplication.models.User;
 
 import java.util.ArrayList;
 
@@ -596,6 +597,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery("SELECT " +COL_7_USERS+" FROM " + TABLE_NAME_USERS + " WHERE " + COL_2_USERS + " = ?", new String[] {NetID});
         data.moveToFirst();
         return data.getString(0);
+    }
+
+
+    /*
+    // USERS TABLE
+    public static final String TABLE_NAME_USERS = "user_table";
+    public static final String COL_1_USERS = "student_id";
+    public static final String COL_2_USERS = "net_id";
+    public static final String COL_3_USERS = "password";
+    public static final String COL_4_USERS = "name";
+    public static final String COL_5_USERS = "email";
+    public static final String COL_6_USERS = "tutor";
+    public static final String COL_7_USERS = "tutee";
+    public static final String CREATE_TABLE_USERS = "CREATE TABLE "+ TABLE_NAME_USERS +
+
+    // user object fields
+    private String studentID;
+    private String netID;
+    private String password;
+    private String email;
+    private boolean tutor;
+    private boolean tutee;
+
+     */
+    public User getUser(String NetID){
+        User user;
+        String studentID;
+        String netID;
+        String password;
+        String email;
+        boolean tutor;
+        boolean tutee;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME_USERS + " WHERE " + COL_2_USERS + " = ?", new String[] {NetID});
+        data.moveToFirst();
+        studentID = data.getString(0);
+        netID = data.getString(1);
+
+        email = data.getString(4);
+        tutor = (data.getString(5).equals("TRUE")) ? true : false;
+        tutee = (data.getString(6).equals("TRUE")) ? true : false;
+
+        user = new User(studentID, null, netID, email, tutor, tutee);
+        return user;
     }
 
     /*SECTION FOR USERS END*/
