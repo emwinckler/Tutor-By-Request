@@ -3,7 +3,6 @@ package com.example.myapplication.ui.login;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,15 +128,12 @@ public class LoginFragment extends Fragment {
                         passwordEditText.getText().toString());
                 boolean login = false;
                 if (users.getPassword(netIDEditText.getText().toString()).equals(passwordEditText.getText().toString())) {
-                    Log.d("tag","true");
                     login = true;
                 }
                 if (login) {
                     user.setNetID(netIDEditText.getText().toString());
                     String tutorCheck = users.getTutor(netIDEditText.getText().toString());
                     String tuteeCheck = users.getStudent(netIDEditText.getText().toString());
-                    Log.d("True", tutorCheck);
-                    Log.d("False", tuteeCheck);
                     if (Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
                     if (Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
                     Bundle userData = new Bundle();
@@ -153,6 +149,8 @@ public class LoginFragment extends Fragment {
                         NavHostFragment.findNavController(com.example.myapplication.ui.login.LoginFragment.this)
                                 .navigate(R.id.action_loginFragment_to_tutorHome,userData);
                     }
+                } else {
+                    Toast.makeText(getContext().getApplicationContext(), "NetID or Password is incorrect", Toast.LENGTH_LONG).show();
                 }
             }
         });

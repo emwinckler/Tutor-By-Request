@@ -2,18 +2,18 @@ package com.example.myapplication.student;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.R;
+import com.example.myapplication.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +28,7 @@ public class Home_Student extends Fragment {
     Button button_my_sessions;
     Button button_logout;
 
+    User user;
     // UPPER MENU END
 
     // TODO: Rename parameter arguments, choose names that match
@@ -64,6 +65,9 @@ public class Home_Student extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
+        Log.d("Test", user.getNetID());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
