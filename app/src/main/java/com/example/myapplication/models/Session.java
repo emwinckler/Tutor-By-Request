@@ -15,11 +15,12 @@ public class Session implements Serializable {
     private int courseNo;
     private String location;
     private String description;
-    private String sessionID;
+    private int sessionID;
 
 
     public Session(String studentID, String tutorID, String date, String time, String subject,
-                   int courseNo, String location, String description, String sessionID){
+                   int courseNo, String location, String description, int sessionID){
+
         this.studentID = studentID;
         this.tutorID = tutorID;
         this.date = date;
@@ -34,7 +35,7 @@ public class Session implements Serializable {
     // Getters for the model
     public String getStudentID(){ return this.studentID; }
     public String getTutorID(){ return this.tutorID; }
-    public String getSessionID(){ return this.sessionID; }
+    public int getSessionID(){ return this.sessionID; }
     public String getDate(){ return this.date;}
     public String getTime() { return time; }
     public String getSubject() { return subject; }
@@ -44,6 +45,16 @@ public class Session implements Serializable {
 
     // Setters for the model
     // This needs to update the database
+
+    public String toString(){
+        return date + " - " + time + ": " + subject + " " + courseNo;
+    }
+
+    public String sessionDetails(){
+        return "Date: " + date+"\n"+"Time: " + time+"\n"+"Tutor ID: " + tutorID+"\n"+
+                "Student ID: " + studentID+"\n"+ "Course: " + subject + " " + courseNo +"\n"+
+                "Location: " + location+"\n"+ "Description: " + studentID;
+    }
 
 
     public void setStudentID(String studentID) {
@@ -78,7 +89,7 @@ public class Session implements Serializable {
         this.description = description;
     }
 
-    public void setSessionID(String sessionID) {
+    public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
     }
 }

@@ -131,6 +131,129 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /* SECTION FOR SESSIONS START */
 
+    public boolean addDataSession(Session session) throws Exception {
+        long result;
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1_SESSION, session.getStudentID());
+            contentValues.put(COL_2_SESSION, session.getTutorID());
+            contentValues.put(COL_3_SESSION, session.getDate());
+            contentValues.put(COL_4_SESSION, session.getTime());
+            contentValues.put(COL_5_SESSION, session.getSubject());
+            contentValues.put(COL_6_SESSION, session.getCourseNo());
+            contentValues.put(COL_7_SESSION, session.getLocation());
+            contentValues.put(COL_8_SESSION, session.getDescription());
+            contentValues.put(COL_9_SESSION, session.getSessionID());
+            result = db.insert(TABLE_NAME_SESSION,null,contentValues);
+
+        }
+        catch (Exception e) {
+            result = -1;
+        }
+
+
+        if (result == -1){
+            Exception e = new Exception("You can't add a session like that");
+            throw e;
+        }
+        return true;
+    }
+
+    public Integer deleteDataSession(Session session) throws Exception {
+        Integer result;
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            result = db.delete(TABLE_NAME_SESSION, COL_1_SESSION + " = ?", new String[] {"" + session.getSessionID()});
+
+        }
+        catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
+
+    public Integer deleteDataSession(int sessionID) throws Exception {
+        Integer result;
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            result = db.delete(TABLE_NAME_SESSION, COL_1_SESSION + " = ?", new String[] {"" + sessionID});
+
+        }
+        catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
+
+
+    /*
+
+    contentValues.put(COL_1_SESSION, session.getStudentID());
+            contentValues.put(COL_2_SESSION, session.getTutorID());
+            contentValues.put(COL_3_SESSION, session.getDate());
+            contentValues.put(COL_4_SESSION, session.getTime());
+            contentValues.put(COL_5_SESSION, session.getSubject());
+            contentValues.put(COL_6_SESSION, session.getCourseNo());
+            contentValues.put(COL_7_SESSION, session.getLocation());
+            contentValues.put(COL_8_SESSION, session.getDescription());
+            contentValues.put(COL_9_SESSION, session.getSessionID());
+     */
+    public ArrayList<Session> getSessionsByStudentID(String studentID){
+        Cursor data;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        data = db.rawQuery("SELECT * FROM " + TABLE_NAME_SESSION + " WHERE " + COL_1_SESSION + " = ?", new String[]{studentID});
+
+        ArrayList<Session> sessionList = new ArrayList<Session>();
+        while(data.moveToNext()){
+            // String studentID = data.getString(0);
+            String tutorID = data.getString(1);
+            ;String date = data.getString(2);
+            String time = data.getString(3);
+            String subject = data.getString(4);
+            int courseNum = Integer.parseInt(data.getString(5));
+            String location = data.getString(6);
+            String description = data.getString(7);
+            int sessionID = Integer.parseInt(data.getString(8));
+
+
+            sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNum,location,description,sessionID));
+        }
+        return sessionList;
+    }
+
+    public ArrayList<Session> getSessionsByTutorID(String tutorID){
+        Cursor data;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        data = db.rawQuery("SELECT * FROM " + TABLE_NAME_SESSION + " WHERE " + COL_1_SESSION + " = ?", new String[]{tutorID});
+
+        ArrayList<Session> sessionList = new ArrayList<Session>();
+        while(data.moveToNext()){
+            String studentID = data.getString(0);
+            //String tutorID = data.getString(1);
+            ;String date = data.getString(2);
+            String time = data.getString(3);
+            String subject = data.getString(4);
+            int courseNum = Integer.parseInt(data.getString(5));
+            String location = data.getString(6);
+            String description = data.getString(7);
+            int sessionID = Integer.parseInt(data.getString(8));
+
+
+            sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNum,location,description,sessionID));
+        }
+        return sessionList;
+    }
+
+
+
     public boolean addDataSession(String studentID, String tutorID, String date, String time,
                            String subject, int courseNum, String location,
                            String description, int sessionID) throws Exception {
@@ -341,7 +464,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int courseNo = Integer.parseInt(data.getString(5));
             String location = data.getString(6);
             String description = data.getString(7);
-            String sessionId = data.getString(8);
+            int sessionId = Integer.parseInt(data.getString(8));
 
 
             sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNo,location,description,sessionId));
@@ -364,7 +487,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int courseNo = Integer.parseInt(data.getString(5));
             String location = data.getString(6);
             String description = data.getString(7);
-            String sessionId = data.getString(8);
+            int sessionId = Integer.parseInt(data.getString(8));
 
 
             sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNo,location,description,sessionId));
