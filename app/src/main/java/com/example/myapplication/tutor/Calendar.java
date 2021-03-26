@@ -41,7 +41,11 @@ public class Calendar extends BaseAdapter{
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+
+
+
         if (convertView == null) {
+
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.calendar_slot, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);

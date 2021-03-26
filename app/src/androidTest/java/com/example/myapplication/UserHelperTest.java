@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.myapplication.databases.UsersDBHelper;
+import com.example.myapplication.databases.DatabaseHelper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,13 +22,13 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class UserHelperTest {
-    private UsersDBHelper db;
+    private DatabaseHelper db;
 
     @Before
     public void createDb() {
         // Make sure DB is cleared out
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new UsersDBHelper(appContext);
+        db = new DatabaseHelper(appContext);
         try {
             db.addData("123", "String username", "String password", "String name", "String email",
                     false, true);

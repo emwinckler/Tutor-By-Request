@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.myapplication.databases.CoursesDBHelper;
+import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.models.Course;
 
 import org.junit.After;
@@ -25,18 +25,18 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class CoursesHelperTest {
-    private CoursesDBHelper db;
+    private DatabaseHelper db;
 
     @Before
     public void createDb() {
         // Make sure DB is cleared out
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        db = new CoursesDBHelper(appContext);
+        db = new DatabaseHelper(appContext);
         try {
-            db.addData("subject", "course", 1);
-            db.addData("math", "intro", 2);
-            db.addData("math", "to", 3);
-            db.addData("geo", "death", 4);
+            db.addDataCourses("subject", "course", 1);
+            db.addDataCourses("math", "intro", 2);
+            db.addDataCourses("math", "to", 3);
+            db.addDataCourses("geo", "death", 4);
         } catch (Exception e) {
             e.printStackTrace();
         }

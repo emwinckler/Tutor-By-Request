@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         populateSessions();
         populateCourses();
-        populateAvailability();
+       // populateAvailability();
         populateUsers();
         populateTutorCoursesAvailability();
 
