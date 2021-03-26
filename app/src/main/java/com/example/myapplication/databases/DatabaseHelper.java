@@ -583,7 +583,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return "___________________ERROR__________________";
     }
 
+    public boolean modifyPassword(String NetID, String newPassword) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_3_USERS, newPassword);
+        return modifyData(NetID, COL_3_USERS, contentValues);
+    }
 
+    public boolean modifyData(String NetID, String COL, ContentValues cv) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(TABLE_NAME_USERS, cv,  "" + COL + " = ? ", new String[] { NetID } );
+        return true; // TODO: what should we return?
+    }
 
     public String getTutor(String NetID){
         SQLiteDatabase db = this.getWritableDatabase();
