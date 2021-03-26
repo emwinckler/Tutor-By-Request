@@ -89,8 +89,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ArrayList<Course> available_courses_ECE;
     ArrayList<Course> available_courses_MATH;
 
-
+    // tutoravailability for week and subject|course selected
     ListView listView_session;
+    ArrayList<TutorAvailablity> tutorAvailablity_session;
     ArrayList<String> available_session;
     ArrayAdapter<String> adapter_session;
 
@@ -146,8 +147,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        user = (User) this.getArguments().getSerializable("user");
-        user = (User) getActivity().getIntent().getSerializableExtra("user");
+        user = (User) this.getArguments().getSerializable("user");
+        // user = (User) getActivity().getIntent().getSerializableExtra("user");
 
         Bundle userData = new Bundle();
         userData.putSerializable("user", user);
@@ -249,7 +250,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 course = (String) spinner_course.getSelectedItem();
                 course = course.substring(course.lastIndexOf(" ")+1);
 
-                available_session = populateAvailableTutorSessions(week, subject, course);
+                tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
+                available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
                 adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
                 listView_session.setAdapter(adapter_session);
                 listViewHelper();
@@ -314,16 +316,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             course = course.substring(course.lastIndexOf(" ")+1);
 
 
-
-            available_session = populateAvailableTutorSessions(week, subject, course);
+            tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
+            available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
             adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
             listView_session.setAdapter(adapter_session);
 
         }
-        if (parent.getId() == R.id.listView_timeblock) {
-
-        }
-
 
     }
 
@@ -367,39 +365,55 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 String week;
                 String course;
 
+                String courseNum;
+                String listviewsession;
+
+
+                // class variable that stores all tutor avaialbiltity for selected week subject|coursenum
+                //tutorAvailablity_session = new ArrayList<TutorAvailablity>();
+
+                // toString version of tutorAvailablity_session for displaying in listview
+                //available_session = new ArrayList<String>();
+
+
+
+
                 week = (String) spinner_week.getSelectedItem();
                 course = (String) spinner_course.getSelectedItem();
                 course = course.substring(course.lastIndexOf(" ")+1);
 
 
-
-                String courseNum;
-                String listviewsession;
-
                 subject = (String) spinner_subject.getSelectedItem();
                 courseNum = (String) spinner_course.getSelectedItem();
                 courseNum = courseNum.substring(courseNum.lastIndexOf(" ")+1);
-                available_session = new ArrayList<String>();
+
+
                 try {
                     courseNo = Integer.parseInt(courseNum);
 
+                    // we now have to match
 
+                    TutorAvailablity selectedTutorAvailability = tutorAvailablity_session.get(position);
                     listviewsession = (String) parent.getItemAtPosition(position);
-                    String [] availability;
+                    //String [] availability;
 
-                    availability = listviewsession.split(" ");
-                    tutorID = availability[0];
-                    date = availability[1];
-                    time = availability[2];
-                    boolean currentavailability = availability[3].equals("true"); // just for testing the toggling
+                    //availability = listviewsession.split(" ");
+                    tutorID = selectedTutorAvailability.getTutorId();
+                    date = selectedTutorAvailability.getDate();
+                    time = selectedTutorAvailability.getTime();
+                    boolean currentavailability = selectedTutorAvailability.isBooked(); // just for testing the toggling
 
                     database.modifySessionIsAvailable(tutorID, date, time, !currentavailability);
 
-                    available_session = populateAvailableTutorSessions(week, subject, course);
+                    tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
+                    available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
+
+                    adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+                    listView_session.setAdapter(adapter_session);
 
 
                     database.addDataSession(
-                            user.getNetID(), tutorID, date, time,
+                            user.getStudentID(), tutorID, date, time,
                             subject, courseNo, "Virtual",
                             "description", sessionID++);
 
@@ -410,8 +424,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                     System.out.println("ERROR CLICKING ON TIMEBLOCK. COURSE NUMBER DIDNT WORK OUT");
                 }
 
-                adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
-                listView_session.setAdapter(adapter_session);
+
 
             }
         });
@@ -495,15 +508,20 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         return result;
     }
 
-    private ArrayList<String> loadTutorAvailability(String date, String subject, String course) {
+
+//    private TutorAvailablity getTutorAvailabilityByNameDateTime(String tutorName, String ) {
+//
+//    }
+
+    private ArrayList<TutorAvailablity> loadTutorAvailability(String date, String subject, String course) {
         // first load tutors who can tutor that subject and course
-        ArrayList<String> result;
+        ArrayList<TutorAvailablity> result;
 
         ArrayList<String> tutorsIDs_selectedCourse;
         ArrayList<TutorAvailablity> tutorAvailabilityOnDate;
 
 
-        result = new ArrayList<String>();
+        result = new ArrayList<TutorAvailablity>();
         tutorsIDs_selectedCourse = database.getAvailableCourseTutorIDs(subject, course);
 
         for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
@@ -511,7 +529,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
             for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
                 if (!tutorAvailabilityOnDate.get(j).isBooked()) {
-                    result.add(tutorAvailabilityOnDate.get(j).toString());
+                    result.add(tutorAvailabilityOnDate.get(j));
                 }
             }
         }
@@ -520,9 +538,22 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         return result;
     }
 
-    private ArrayList<String> populateAvailableTutorSessions(String week, String subject, String course) {
+    private ArrayList<String> loadTutorAvailabilityToString(ArrayList<TutorAvailablity> availablity) {
         ArrayList<String> result;
-        ArrayList<String> temp;
+
+        result = new ArrayList<String>();
+        for (int i = 0; i < availablity.size(); i++) {
+            result.add(availablity.get(i).toStringTutorName());
+        }
+
+        return result;
+    }
+
+
+    // MAIN METHOD FOR POPULATING TUTOR AVAILABILITY FOR SESSIONS FOR WEEK AND SUBJECT|COURSE
+    private ArrayList<TutorAvailablity> populateAvailableTutorSessions(String week, String subject, String course) {
+        ArrayList<TutorAvailablity> result;
+        ArrayList<TutorAvailablity> temp;
 
         String date_weekStart;
         String date;
@@ -532,7 +563,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         System.out.println("Course = " + course);
 
 
-        result = new ArrayList<String>();
+        result = new ArrayList<TutorAvailablity>();
         try {
             date_weekStart = week.split(" ", 2)[0];
             System.out.println(date_weekStart);
@@ -547,6 +578,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             System.out.println("date_weekStart_MM_int = " + date_weekStart_MM_int);
             System.out.println("date_weekStart_DD_int = " + date_weekStart_DD_int);
 
+            // class variable that stores tutoravailability for selected week and subject|course
+            this.tutorAvailablity_session = new ArrayList<TutorAvailablity>();
 
 
 
@@ -562,7 +595,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 }
             }
             else { // check month to see where conflict should change months
-                // TODO: iteration 1 lets not worry about the new year case. there's no school anyway
+                // TODO: iteration 1 lets only consider year 2021
                 if (date_weekStart_MM_int == 2) { // february case
                     int i = 0;
                     while (date_weekStart_DD_int < 29) { // TODO: iteration 1 so we're just gonna go ahead and assume leap year doesn't exist

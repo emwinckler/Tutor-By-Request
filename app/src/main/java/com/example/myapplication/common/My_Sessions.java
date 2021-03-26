@@ -71,14 +71,14 @@ public class My_Sessions extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
 //        super.onViewCreated(view, savedInstanceState);
-        final Button sessionDetails = view.findViewById(R.id.sessionDetailsButton);
-
-        sessionDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(com.example.myapplication.common.My_Sessions.this)
-                        .navigate(R.id.action_my_Sessions_to_sessionDetails);
-            }
-        });
+//        final Button sessionDetails = view.findViewById(R.id.sessionDetailsButton);
+//
+//        sessionDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavHostFragment.findNavController(com.example.myapplication.common.My_Sessions.this)
+//                        .navigate(R.id.action_my_Sessions_to_sessionDetails);
+//            }
+//        });
     }
 }

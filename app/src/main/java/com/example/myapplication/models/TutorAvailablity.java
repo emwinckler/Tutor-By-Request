@@ -5,26 +5,26 @@ import java.util.Date;
 public class TutorAvailablity {
 
     private String tutorId;
+    private String tutorName;
     private String date;
     private String time;
-    private Course course;
     private boolean booked;
 
-    public TutorAvailablity(String tutorId, String date, String time, boolean booked
+    public TutorAvailablity(String tutorName, String tutorId, String date, String time, boolean booked
                             ) { //String course, int courseNo
+        this.tutorName = tutorName;
         this.tutorId = tutorId;
         this.date = date;
         this.time = time;
-//        this.course = new Course(subject, course, courseNo);
         this.booked = booked;
 
 
     }
 
+    public String getTutorName() { return this.tutorName; }
     public String getTutorId() { return tutorId; }
     public String getDate() { return date; }
     public String getTime() { return time; }
-    public Course getCourse() { return course; }
     public boolean isBooked() { return this.booked; }
 
 
@@ -43,12 +43,12 @@ public class TutorAvailablity {
     }
 
 
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
     public String toString() {
         return "" + this.getTutorId() + " " + this.getDate() + " " + this.getTime() + " " + this.isBooked();
+    }
+
+    public String toStringTutorName() {
+        return "" + this.getTutorName() + " " + this.getDate() + " " + this.getTime() + " " + this.isBooked();
     }
 
 }

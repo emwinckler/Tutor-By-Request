@@ -128,24 +128,24 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 //
 //        return result;
 //    }
-    public ArrayList<TutorAvailablity> getAllTutorAvailability() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+TABLE_NAME;
-        Cursor data = db.rawQuery(query, null);
-        ArrayList<TutorAvailablity> tutorAvailabilityList = new ArrayList<TutorAvailablity>();
-        while(data.moveToNext()){
-            String tutorID = data.getString(0);
-            String date = data.getString(1);
-            String time = data.getString(2);
-//            String course = data.getString(3);
-            String booked = data.getString(3);
-
-//            int courseNo = Integer.parseInt(data.getString(2));
-            tutorAvailabilityList.add(new TutorAvailablity(tutorID, date,
-                    time, booked.equals("true")));
-        }
-        return tutorAvailabilityList;
-    }
+//    public ArrayList<TutorAvailablity> getAllTutorAvailability() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "SELECT * FROM "+TABLE_NAME;
+//        Cursor data = db.rawQuery(query, null);
+//        ArrayList<TutorAvailablity> tutorAvailabilityList = new ArrayList<TutorAvailablity>();
+//        while(data.moveToNext()){
+//            String tutorID = data.getString(0);
+//            String date = data.getString(1);
+//            String time = data.getString(2);
+////            String course = data.getString(3);
+//            String booked = data.getString(3);
+//
+////            int courseNo = Integer.parseInt(data.getString(2));
+//            tutorAvailabilityList.add(new TutorAvailablity(tutorID, date,
+//                    time, booked.equals("true")));
+//        }
+//        return tutorAvailabilityList;
+//    }
 
     public Cursor getTutorAvailability(String TutorID) {
         Cursor result;
