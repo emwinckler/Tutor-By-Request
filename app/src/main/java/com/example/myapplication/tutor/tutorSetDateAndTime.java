@@ -23,9 +23,11 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.model.LoggedInUser;
 import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
+import com.example.myapplication.models.TutorAvailablity;
 import com.example.myapplication.models.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +52,34 @@ public class tutorSetDateAndTime extends Fragment {
     private ArrayList<String> available_week;
     private ArrayAdapter<String> adapter_week;
     private GridView calendar;
+    int[][] emptyArr = {
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0}
+    };
     static int[][] selectedSlot2 = {
             {0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0},
@@ -139,12 +169,6 @@ public class tutorSetDateAndTime extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        user = (User) getActivity().getIntent().getSerializableExtra("user");
-//        Context c = getContext();
-//        Bundle bundle = c.getArguments();
-//        User obj = (User) bundle.getSerializable("user");
-
-//        user = (User) getArguments().getSerializable("user");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -156,10 +180,6 @@ public class tutorSetDateAndTime extends Fragment {
 //        user = (User) bundle.getSerializable("user");
         user = (User) getActivity().getIntent().getSerializableExtra("user");
         return inflater.inflate(R.layout.fragment_tutor_set_date_and_time, container, false);
-
-
-
-
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -167,11 +187,6 @@ public class tutorSetDateAndTime extends Fragment {
         Calendar adapter = new Calendar(getContext(),slotText);
 
         Button confirm = (Button) view.findViewById(R.id.confirm_availability);
-
-//        Context c = getContext();
-//        Bundle bundle = c.getArguments();
-//        User obj = (User) bundle.getSerializable("user");
-
 
 
         calendar=(GridView) view.findViewById(R.id.calendar);
@@ -182,41 +197,30 @@ public class tutorSetDateAndTime extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Toast.makeText(getContext(), "You Clicked at " +slotText[+ position], Toast.LENGTH_SHORT).show();
-                int row = (position / 8);
-                int col = position % 8;
-                if(selectedSlot2[row][col]==1) {
-                    selectedSlot2[row][col] = 0;
-                }else{
-                    selectedSlot2[row][col] = 1;
+                if(!spinner_week.getSelectedItem().toString().equals("Select a week")) {
+                    int row = (position / 8);
+                    int col = position % 8;
+                    if (selectedSlot2[row][col] == 1) {
+                        selectedSlot2[row][col] = 0;
+                    } else if(selectedSlot2[row][col] == 0) {
+                        selectedSlot2[row][col] = 1;
+                    }else if(selectedSlot2[row][col] == 2){
+                        selectedSlot2[row][col] = 3;
+                    }else if(selectedSlot2[row][col] == 3) {
+                        selectedSlot2[row][col] = 2;
+                    }else{
+
+                    }
+                    adapter.notifyDataSetChanged();
+
                 }
-                adapter.notifyDataSetChanged();
-
-
             }
         });
 
 
         spinner_week          = (Spinner) view.findViewById(R.id.selectWeek);
-        weekHelper();
+        //////////////////////////////////////////////////////////////////////////////////
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for(int i = 0; i < 8; i++){
-                    for(int j= 0; j < 26; j++){
-                        if(selectedSlot2[i][j]==1){
-                            String time = slotText[i*8];
-                            String date = spinner_week.getSelectedItem().toString();
-                            String tutorID = user.getStudentID();
-                            dbHelper.addAvailability(tutorID,date,time);
-                        }
-                    }
-                }
-            }
-        });
-
-    }
-    public void weekHelper() {
         // BEGIN WEEK
         available_week = new ArrayList<String>();
         // TODO: NEED A GOOD WAY TO LOAD THESE FOR ONLY VALID WEEKS EACH SEMESTER
@@ -240,11 +244,174 @@ public class tutorSetDateAndTime extends Fragment {
         available_week.add("05/02 - 05/08");
 
         adapter_week = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, available_week);
-        adapter_week.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter_week.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_week.setAdapter(adapter_week);
+        spinner_week.setSelection(0);
         spinner_week.setEnabled(true);
+        spinner_week.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                for (int[] row : selectedSlot2) {
+                    Arrays.fill(row, 0);
+                }
+                adapter.notifyDataSetChanged();
+                if(!spinner_week.getSelectedItem().toString().equals("Select a week")) {
+//                    03/28 - 04/03
+                    String[] week = weekConverter(spinner_week.getSelectedItem().toString());
+                    for (String date : week) {
+                        ArrayList<TutorAvailablity> availList = dbHelper.getTutorAvailabilityOnDate(user.getStudentID(), date);
+                        try {
+                            for (TutorAvailablity avail : availList) {
+                                String tempDate = avail.getDate();
+                                String tempTime = avail.getTime();
+                                Boolean tempBooked = avail.isBooked();
+                                if (!tempBooked) {
+                                    int col = dayToColumn(tempDate, spinner_week.getSelectedItem().toString());
+                                    int row = timeToRow(tempTime);
+                                    selectedSlot2[row][col] = 2;
+                                } else {
+                                    int col = dayToColumn(tempDate, spinner_week.getSelectedItem().toString());
+                                    int row = timeToRow(tempTime);
+                                    selectedSlot2[row][col] = 4;
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+
+        if(!spinner_week.getSelectedItem().toString().equals("Select a week")){
+            Toast.makeText(getContext(), "You selected a week", Toast.LENGTH_SHORT).show();
+        }
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0; i < 26; i++){
+                    for(int j= 0; j < 8; j++){
+                        if(selectedSlot2[i][j]==1){
+                            String time = timeConverter(slotText[i*8]);
+                            String date = dateConverter(spinner_week.getSelectedItem().toString(), j);
+//                            String date = spinner_week.getSelectedItem().toString();
+                            String tutorID = user.getStudentID();
+                            dbHelper.addAvailability(tutorID,date,time);
+                            selectedSlot2[i][j] = 2;
+                        }else if(selectedSlot2[i][j]==3){
+                            String time = timeConverter(slotText[i*8]);
+                            String date = dateConverter(spinner_week.getSelectedItem().toString(), j);
+//                            String date = spinner_week.getSelectedItem().toString();
+                            String tutorID = user.getStudentID();
+                            dbHelper.deleteAvailability(tutorID,date,time);
+                            selectedSlot2[i][j] = 0;
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+
+    }
+    public String dateConverter(String week, int col){
+//        03/28 - 04/03
+        String toReturn = "";
+        int daysLeft = 7 - Integer.parseInt(week.substring(8,10));
+        if(!week.substring(0,2).equals(week.substring(8,10)) && daysLeft < col-1) {
+            int date = col - daysLeft -1;
+            if(date >= 10) {
+                toReturn = week.substring(8, 11) + String.valueOf(date) + "/2021";
+            }else{
+                toReturn = week.substring(8, 11) + "0" + String.valueOf(date) + "/2021";
+            }
+        }else{
+            int date = Integer.parseInt(week.substring(3,5)) + col - 1;
+            if(date>=10){
+                toReturn = week.substring(0,3) + String.valueOf(date) + "/2021";
+            }else{
+                toReturn = week.substring(0,3) + "0" + String.valueOf(date) + "/2021";
+            }
+        }
+
+        return toReturn;
+    }
+
+    public String timeConverter(String time){
+        int hour = Integer.parseInt(time.substring(0,2));
+        if(time.substring(5).equals("pm") && hour != 12){
+            hour += 12;
+        }
+        String toReturn;
+        if(hour >= 10) {
+            toReturn = String.valueOf(hour) + ":" + time.substring(3, 5);
+        }else{
+            toReturn = "0" + String.valueOf(hour) + ":" + time.substring(3, 5);
+        }
+        return toReturn;
+    }
+    public int timeToRow(String time){
+//        13:30
+        int row = Integer.parseInt(time.substring(0,2)) - 7;
+        if(time.substring(3).equals("30")){
+            row += 1;
+        }
+        return row;
+    }
+    public int dayToColumn(String day, String week){
+        //        03/28 - 04/03
+        //        03/30
+        //        04/01
+        int col = 0;
+        if(week.substring(0,2).equals(day.substring(0,2))){
+            int start = Integer.parseInt(week.substring(3,5));
+            col = Integer.parseInt(day.substring(3,5)) - start + 1;
+        }else{
+            int diff = Integer.parseInt(week.substring(11)) - Integer.parseInt(day.substring(3,5));
+            col = 8 - diff;
+        }
+        return col;
+    }
+    public String[] weekConverter(String week){
+//        03/28 - 04/03
+        String[] toReturn = new String[7];
+        int day = Integer.parseInt(week.substring(11));
+        int i = 0;
+        while(day!=0 && i!=7){
+            String sDay;
+            if(day >= 10){
+                sDay = String.valueOf(day);
+            }else{
+                sDay = "0" + String.valueOf(day);
+            }
+            toReturn[6-i] = week.substring(8,11)+ sDay + "/2021";
+            i++;
+            day--;
+        }
+
+        if(day==0 && i!=7){
+            int day2 = Integer.parseInt(week.substring(3,5));
+
+            for(int j=0; j< 7-i; j++) {
+                String sDay = sDay = String.valueOf(day2);
+                toReturn[j] = week.substring(0, 3) + sDay + "/2021";
+                day2++;
+            }
+        }
+
+        return toReturn;
     }
 
 

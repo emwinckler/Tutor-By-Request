@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.example.myapplication.R;
 
 public class Calendar extends BaseAdapter{
@@ -43,21 +41,26 @@ public class Calendar extends BaseAdapter{
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
         if (convertView == null) {
-
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.calendar_slot, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
             textView.setText(slot[position]);
-            if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 1){
-                textView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
-                textView.setText("asdasd");
-            }
         } else {
             grid = (View) convertView;
+            TextView textView = (TextView) grid.findViewById(R.id.grid_text);
+            if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 1){
+                textView.setBackgroundResource(R.drawable.select);
+            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 2){
+                textView.setBackgroundResource(R.drawable.selected);
+            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 3) {
+                textView.setBackgroundResource(R.drawable.cancellable);
+            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 4){
+                    textView.setBackgroundResource(R.drawable.booked);
+            }else{
+                textView.setBackgroundResource(R.drawable.border);
+            }
         }
-
         return grid;
     }
 

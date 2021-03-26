@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="315dp"
@@ -21,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.01" />
+            app:layout_constraintVertical_bias="0.079" />
 
         <Spinner
             android:id="@+id/selectWeek"
@@ -32,8 +33,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.095" />
-
+            app:layout_constraintVertical_bias="0.15" />
 
         <ScrollView
             android:id="@+id/calendarScroller"
@@ -54,10 +54,11 @@
                     android:id="@+id/calendar"
                     android:numColumns="8"
                     android:layout_width="match_parent"
-                    android:layout_height="1000dp"
+                    android:layout_height="1330dp"
                     android:columnWidth="45dp"
                     android:gravity="center"
-                    android:stretchMode="columnWidth" />
+                    android:stretchMode="columnWidth"
+                    android:listSelector="#0f0"/>
             </LinearLayout>
         </ScrollView>
 
