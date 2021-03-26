@@ -126,16 +126,14 @@ public class LoginFragment extends Fragment {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(netIDEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
                 boolean login = false;
                 if (users.getPassword(netIDEditText.getText().toString()).equals(passwordEditText.getText().toString())) {
                     login = true;
                 }
                 if (login) {
-                    user.setNetID(netIDEditText.getText().toString());
-                    String tutorCheck = users.getTutor(netIDEditText.getText().toString());
-                    String tuteeCheck = users.getStudent(netIDEditText.getText().toString());
-                    if (Boolean.parseBoolean(tutorCheck)) {user.setTutor(true);}
-                    if (Boolean.parseBoolean(tuteeCheck)) {user.setTutee(true);}
+                    user = users.getUser(netIDEditText.getText().toString());
+
                     Bundle userData = new Bundle();
                     userData.putSerializable("user", user);
 

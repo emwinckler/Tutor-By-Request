@@ -637,8 +637,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         netID = data.getString(1);
 
         email = data.getString(4);
-        tutor = (data.getString(5).equals("TRUE")) ? true : false;
-        tutee = (data.getString(6).equals("TRUE")) ? true : false;
+        tutor = (data.getString(5).equals("true")) ? true : false;
+        tutee = (data.getString(6).equals("true")) ? true : false;
 
         user = new User(studentID, null, netID, email, tutor, tutee);
         return user;
