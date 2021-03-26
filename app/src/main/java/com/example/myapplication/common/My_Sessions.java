@@ -9,8 +9,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -98,11 +100,22 @@ public class My_Sessions extends Fragment {
         }
 
 
-
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         ArrayAdapter<Session> sessionArrayAdapter =
                 new ArrayAdapter<Session>(getContext(), android.R.layout.simple_selectable_list_item, sessions);
         listView.setAdapter(sessionArrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+                Session session =(Session) (listView.getItemAtPosition(myItemInt));
+                Bundle sessionDetails = new Bundle();
+                sessionDetails.putSerializable("session", session);
+                NavHostFragment.findNavController(com.example.myapplication.common.My_Sessions.this)
+                        .navigate(R.id.action_my_Sessions_to_sessionDetails, sessionDetails);
+
+
+            }
+        });
 
     }
 }
