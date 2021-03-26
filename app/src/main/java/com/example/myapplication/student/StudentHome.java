@@ -97,7 +97,7 @@ public class StudentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.student.StudentHome.this)
-                        .navigate(R.id.action_studentHome_to_my_Sessions);
+                        .navigate(R.id.action_studentHome_to_my_Sessions, userData);
             }
         });
         studentGetATutor.setOnClickListener(new View.OnClickListener() {

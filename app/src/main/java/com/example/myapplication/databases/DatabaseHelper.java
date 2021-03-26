@@ -475,7 +475,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Session> getStudentSession(String student){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM sessions_table WHERE tutor_id='"+student+"'";
+        String query = "SELECT * FROM sessions_table WHERE student_id='"+student+"'";
         Cursor data = db.rawQuery(query, null);
         ArrayList<Session> sessionList = new ArrayList<Session>();
         while(data.moveToNext()){
