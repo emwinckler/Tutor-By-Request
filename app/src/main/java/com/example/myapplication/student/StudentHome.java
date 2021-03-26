@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,8 @@ import com.example.myapplication.R;
  * create an instance of this fragment.
  */
 public class StudentHome extends Fragment {
+
+    User user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,10 +79,16 @@ public class StudentHome extends Fragment {
         final Button studentGetATutor = view.findViewById(R.id.studentGetATutor);
         final Button studentLogout = view.findViewById(R.id.studentLogout);
 
+        user = (User) this.getArguments().getSerializable("user");
+
+        Bundle userData = new Bundle();
+        userData.putSerializable("user", user);
+
 //        studentReminders.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                NavHostFragment.findNavController(com.example.myapplication.student.StudentHome.this)
+//                NavHostFragment.findNavController
+//                (com.example.myapplication.student.StudentHome.this)
 //                        .navigate(R.id.action_studentHome_to_reminders);
 //            }
 //        });
@@ -93,8 +102,10 @@ public class StudentHome extends Fragment {
         studentGetATutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 NavHostFragment.findNavController(com.example.myapplication.student.StudentHome.this)
-                        .navigate(R.id.action_studentHome_to_get_A_Tutor);
+                        .navigate(R.id.action_studentHome_to_get_A_Tutor, userData);
             }
         });
         studentLogout.setOnClickListener(new View.OnClickListener() {

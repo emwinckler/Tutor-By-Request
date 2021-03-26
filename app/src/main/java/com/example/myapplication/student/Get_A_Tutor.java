@@ -20,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import com.example.myapplication.databases.CoursesDBHelper;
@@ -29,6 +30,7 @@ import com.example.myapplication.databases.TutorAvailabilityDBHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 
 import com.example.myapplication.models.Course;
+import com.example.myapplication.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,10 +38,12 @@ import com.example.myapplication.models.Course;
  * create an instance of this fragment.
  */
 public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedListener {
+    String YEAR = "2021";
 
     MainActivity ma;
     DatabaseHelper database;
 
+    User user;
     // UPPER MENU BEGIN
     Button button_home;
     Button button_get_a_tutor;
@@ -90,8 +94,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "userID";
+    private static final String ARG_PARAM2 = "userID";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -139,6 +143,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        user = (User) this.getArguments().getSerializable("user");
+
+        Bundle userData = new Bundle();
+        userData.putSerializable("user", user);
+
 
         ma = (MainActivity) getActivity();
         database = ma.getDatabase();
@@ -213,7 +223,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
             } else {
                 if(test) {
-                    available_week.remove(0);
+                    // available_week.remove(0);
                     test = false;
                 }
                 spinner_subject.setEnabled(true);
@@ -224,6 +234,21 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 button_nextWeek.setEnabled(true);
                 button_nextWeek.setClickable(true);
                 button_nextWeek.setBackgroundColor(Color.RED);
+
+
+                String week;
+                String subject;
+                String course;
+
+                week = (String) spinner_week.getSelectedItem();
+                subject = (String) spinner_subject.getSelectedItem();
+                course = (String) spinner_course.getSelectedItem();
+                course = course.substring(course.lastIndexOf(" ")+1);
+
+                available_session = populateAvailableTutorSessions(week, subject, course);
+                adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+                listView_session.setAdapter(adapter_session);
+
             }
         }
 
@@ -273,19 +298,19 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         }
         if (parent.getId() == R.id.spinner_course) {
+            String week;
             String subject;
             String course;
-            String date;
-            date = "01/26/2021";
 
+            week = (String) spinner_week.getSelectedItem();
             subject = (String) spinner_subject.getSelectedItem();
             course = (String) spinner_course.getSelectedItem();
             course = course.substring(course.lastIndexOf(" ")+1);
 
-            available_session = loadTutorAvailability(date, subject, course);
 
+
+            available_session = populateAvailableTutorSessions(week, subject, course);
             adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
-
             listView_session.setAdapter(adapter_session);
 
         }
@@ -410,10 +435,151 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
             String tutorID = tutorsIDs_selectedCourse.get(i);
             tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate_String(tutorID, date);
-            result.add(tutorAvailabilityOnDate.get(i));
+            for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
+                result.add(tutorAvailabilityOnDate.get(j));
+            }
         }
 
         // then from these tutors, load their time and availability
+        return result;
+    }
+
+    private ArrayList<String> populateAvailableTutorSessions(String week, String subject, String course) {
+        ArrayList<String> result;
+        ArrayList<String> temp;
+
+        String date_weekStart;
+        String date;
+
+        System.out.println("Week = " + week);
+        System.out.println("Subject = " + subject);
+        System.out.println("Course = " + course);
+
+
+        result = new ArrayList<String>();
+        try {
+            date_weekStart = week.split(" ", 2)[0];
+            System.out.println(date_weekStart);
+            String date_weekStart_MM = date_weekStart.split("/", 2)[0];
+            System.out.println(date_weekStart_MM);
+            String date_weekStart_DD = date_weekStart.split("/", 2)[1];
+            System.out.println(date_weekStart_DD);
+            int date_weekStart_MM_int = 0;
+            int date_weekStart_DD_int = 0;
+            date_weekStart_MM_int = Integer.parseInt(date_weekStart_MM);
+            date_weekStart_DD_int = Integer.parseInt(date_weekStart_DD);
+            System.out.println("date_weekStart_MM_int = " + date_weekStart_MM_int);
+            System.out.println("date_weekStart_DD_int = " + date_weekStart_DD_int);
+
+
+
+
+            if (date_weekStart_DD_int < 23) { // no date month overflow conflict possible. february 22-28 worst case
+                for (int i = 0; i < 7; i++) {
+                    date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                    System.out.println("Current Date = " + date);
+                    temp = loadTutorAvailability(date, subject, course);
+                    for (int j = 0; j < temp.size(); j++) {
+                        result.add(temp.get(j));
+                    }
+                    date_weekStart_DD_int++;
+                }
+            }
+            else { // check month to see where conflict should change months
+                // TODO: iteration 1 lets not worry about the new year case. there's no school anyway
+                if (date_weekStart_MM_int == 2) { // february case
+                    int i = 0;
+                    while (date_weekStart_DD_int < 29) { // TODO: iteration 1 so we're just gonna go ahead and assume leap year doesn't exist
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+
+                    date_weekStart_MM_int++;
+                    date_weekStart_DD_int = 1;
+
+                    while ( i < 7 ) {
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+                }
+                else if (date_weekStart_MM_int % 2 == 1) { // 31 day months case
+                    int i = 0;
+                    while (date_weekStart_DD_int < 32) { // TODO: iteration 1 so we're just gonna go ahead and assume leap year doesn't exist
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+
+                    date_weekStart_MM_int++;
+                    date_weekStart_DD_int = 1;
+
+                    while ( i < 7 ) {
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+                }
+                else { // 30 day month case
+                    int i = 0;
+                    while (date_weekStart_DD_int < 31) { // TODO: iteration 1 so we're just gonna go ahead and assume leap year doesn't exist
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+
+                    date_weekStart_MM_int++;
+                    date_weekStart_DD_int = 1;
+
+                    while ( i < 7 ) {
+                        date = "" + ( date_weekStart_MM_int < 10 ? "0" + date_weekStart_MM_int : date_weekStart_MM_int ) + "/" + ( date_weekStart_DD_int < 10 ? "0" + date_weekStart_DD_int : date_weekStart_DD_int ) + "/" + YEAR;
+                        System.out.println("Current Date = " + date);
+                        temp = loadTutorAvailability(date, subject, course);
+                        for (int j = 0; j < temp.size(); j++) {
+                            result.add(temp.get(j));
+                        }
+                        date_weekStart_DD_int++;
+                        i++;
+                    }
+                }
+            }
+
+
+        }
+        catch (NumberFormatException e) {
+            System.out.println("TUTOR DATE LOAD WEIRD FOR LISTVIEW. this is because of start up the select a week entry isn't formatted like the other dates");
+        }
+        catch (Exception e) {
+            System.out.println("TUTOR DATE LOAD WEIRD FOR LISTVIEW. this is because of start up the select a week entry isn't formatted like the other dates");
+        }
+
+
         return result;
     }
 
