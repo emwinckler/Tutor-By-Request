@@ -1,14 +1,15 @@
 package com.example.myapplication.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /*
 This class is a model that is meant to represent the users of the application
 * */
-public class Session {
+public class Session implements Serializable {
     private String studentID;
     private String tutorID;
-    private Date date;
+    private String date;
     private String time;
     private String subject;
     private int courseNo;
@@ -17,7 +18,7 @@ public class Session {
     private String sessionID;
 
 
-    public Session(String studentID, String tutorID, Date date, String time, String subject,
+    public Session(String studentID, String tutorID, String date, String time, String subject,
                    int courseNo, String location, String description, String sessionID){
         this.studentID = studentID;
         this.tutorID = tutorID;
@@ -34,7 +35,7 @@ public class Session {
     public String getStudentID(){ return this.studentID; }
     public String getTutorID(){ return this.tutorID; }
     public String getSessionID(){ return this.sessionID; }
-    public Date getDate(){ return this.date;}
+    public String getDate(){ return this.date;}
     public String getTime() { return time; }
     public String getSubject() { return subject; }
     public int getCourseNo() { return courseNo; }
@@ -53,7 +54,7 @@ public class Session {
         this.tutorID = tutorID;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

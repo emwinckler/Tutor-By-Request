@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.myapplication.models.Course;
+import com.example.myapplication.models.Session;
 import com.example.myapplication.models.TutorAvailablity;
 import com.example.myapplication.models.User;
 
@@ -167,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true; // TODO: what should we return?
     }
 
+
     public boolean modifyNameSession(String NetID, String newName) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_3_SESSION, newName);
@@ -190,7 +192,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_NAME_SESSION;
         Cursor data = db.rawQuery(query, null);
         return data;
-    }public Cursor checkLogin2Session(String NetID, String password){
+    }
+    public Cursor checkLogin2Session(String NetID, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] selectionArgs = {NetID,password};
         Cursor cursor = db.query(TABLE_NAME_SESSION, new String[]{"NetID", "password"}, "NetID=? and password=?", selectionArgs , null, null, null);
@@ -321,6 +324,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return result;
+    }
+    /*SECTION FOR SESSIONS BEGINS*/
+
+    public ArrayList<Session> getTutorSession(String tutor){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM sessions_table WHERE tutor_id='"+tutor+"'";
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<Session> sessionList = new ArrayList<Session>();
+        while(data.moveToNext()){
+            String studentID = data.getString(0);
+            String tutorID = data.getString(1);
+            String date = data.getString(2);
+            String time = data.getString(3);
+            String subject = data.getString(4);
+            int courseNo = Integer.parseInt(data.getString(5));
+            String location = data.getString(6);
+            String description = data.getString(7);
+            String sessionId = data.getString(8);
+
+
+            sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNo,location,description,sessionId));
+        }
+        return sessionList;
+
+    }
+
+    public ArrayList<Session> getStudentSession(String student){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM sessions_table WHERE tutor_id='"+student+"'";
+        Cursor data = db.rawQuery(query, null);
+        ArrayList<Session> sessionList = new ArrayList<Session>();
+        while(data.moveToNext()){
+            String studentID = data.getString(0);
+            String tutorID = data.getString(1);
+            String date = data.getString(2);
+            String time = data.getString(3);
+            String subject = data.getString(4);
+            int courseNo = Integer.parseInt(data.getString(5));
+            String location = data.getString(6);
+            String description = data.getString(7);
+            String sessionId = data.getString(8);
+
+
+            sessionList.add(new Session(studentID,tutorID,date,time,subject,courseNo,location,description,sessionId));
+        }
+        return sessionList;
+
     }
 
     public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, boolean isAvailable) {

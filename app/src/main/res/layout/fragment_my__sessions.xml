@@ -7,19 +7,28 @@
     tools:context=".common.My_Sessions">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="My Sessions" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="633dp"
+        <TextView
+            android:id="@+id/idField"
+            android:layout_width="419dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="120dp"
+            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/sessionsList"
+            android:layout_width="411dp"
+            android:layout_height="424dp"
+            android:layout_marginTop="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
