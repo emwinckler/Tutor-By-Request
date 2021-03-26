@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +29,7 @@ public class TutorHome extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    User user;
 
     public TutorHome() {
         // Required empty public constructor
@@ -48,6 +50,10 @@ public class TutorHome extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
+
+
+
         return fragment;
     }
 
@@ -58,12 +64,23 @@ public class TutorHome extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+//        user = (User) this.getArguments().getSerializable("user");
+//
+//        Bundle bundle = getContext().getArguments();
+//        User obj = (User) bundle.getSerializable("user");
+
+        //user = (User) getArguments().getSerializable("user");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
         return inflater.inflate(R.layout.fragment_tutor_home, container, false);
     }
 
@@ -77,6 +94,11 @@ public class TutorHome extends Fragment {
         final Button tutorLogout = view.findViewById(R.id.tutorLogout);
 //        final Button tutorAddCourse = view.findViewById(R.id.tutorAddCourse);
         final Button tutorSetCourse = view.findViewById(R.id.tutorSetCourse);
+
+
+
+        Bundle userData = new Bundle();
+        userData.putSerializable("user", user);
 
 //        tutorReminders.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -96,7 +118,7 @@ public class TutorHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
-                        .navigate(R.id.action_tutorHome_to_tutorSetDateAndTime2);
+                        .navigate(R.id.action_tutorHome_to_tutorSetDateAndTime2,userData);
             }
         });
         tutorLogout.setOnClickListener(new View.OnClickListener() {

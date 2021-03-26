@@ -44,7 +44,6 @@ public class Calendar extends BaseAdapter{
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
-
         if (convertView == null) {
 
             grid = new View(mContext);
@@ -61,4 +60,5 @@ public class Calendar extends BaseAdapter{
 
         return grid;
     }
+
 }
