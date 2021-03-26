@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="80dp"
+    android:padding="0dp" >
+
+
+    <TextView
+        android:id="@+id/sessionDate"
+        android:layout_width="91dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/border"
+        android:text="Feb 20"
+        android:textSize="20dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/sessionCourse"
+        android:layout_width="152dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/border"
+        android:text="Programing 1"
+        android:textSize="20dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/sessionTutor"
+        android:layout_width="170dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/border"
+        android:text="John Constantine"
+        android:textSize="20sp"
+        android:visibility="visible" />
+
+
+
+
+
+</LinearLayout>

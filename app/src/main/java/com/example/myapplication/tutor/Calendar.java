@@ -11,7 +11,6 @@ import com.example.myapplication.R;
 public class Calendar extends BaseAdapter{
     private Context mContext;
     private final String[] slot;
-    private int[] colorSlot;
 
     public Calendar(Context c, String[] slot) {
         mContext = c;
@@ -67,5 +66,4 @@ public class Calendar extends BaseAdapter{
         }
         return grid;
     }
-
 }

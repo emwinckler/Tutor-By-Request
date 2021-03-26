@@ -1,11 +1,12 @@
 package com.example.myapplication.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /*
 This class is a model that is meant to represent the users of the application
 * */
-public class Session {
+public class Session implements Serializable {
     private String studentID;
     private String tutorID;
     private String date;
@@ -19,6 +20,7 @@ public class Session {
 
     public Session(String studentID, String tutorID, String date, String time, String subject,
                    int courseNo, String location, String description, int sessionID){
+
         this.studentID = studentID;
         this.tutorID = tutorID;
         this.date = date;

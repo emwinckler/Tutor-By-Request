@@ -9,9 +9,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.databases.DatabaseHelper;
+import com.example.myapplication.models.Course;
+import com.example.myapplication.models.Session;
+import com.example.myapplication.models.User;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,16 +79,30 @@ public class My_Sessions extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        View view = inflater.inflate(R.layout.fragment_my__sessions, container, false);
-//        super.onViewCreated(view, savedInstanceState);
-//        final Button sessionDetails = view.findViewById(R.id.sessionDetailsButton);
-//
-//        sessionDetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NavHostFragment.findNavController(com.example.myapplication.common.My_Sessions.this)
-//                        .navigate(R.id.action_my_Sessions_to_sessionDetails);
-//            }
-//        });
+        ListView listView = view.findViewById(R.id.sessionsList);
+        TextView textView = view.findViewById(R.id.idField);
+        Button classButton = view.findViewById(R.id.selectClasses);
+        MainActivity ma = (MainActivity) getActivity();
+        DatabaseHelper db = ma.getDatabase();
+
+        Bundle bundle = this.getArguments();
+        User obj = (User) bundle.getSerializable("user");
+        ArrayList<Session> sessions;
+
+        if (obj.isTutor()){
+            textView.setText("Getting sessions for tutor with student id: " +obj.getStudentID());
+            sessions = db.getTutorSession(obj.getStudentID());
+        } else {
+            textView.setText("Getting sessions for student with student id: " +obj.getStudentID());
+            sessions = db.getStudentSession(obj.getStudentID());
+        }
+
+
+
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ArrayAdapter<Session> sessionArrayAdapter =
+                new ArrayAdapter<Session>(getContext(), android.R.layout.simple_selectable_list_item, sessions);
+        listView.setAdapter(sessionArrayAdapter);
+
     }
 }
