@@ -156,6 +156,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
         spinner_course        = (Spinner) view.findViewById(R.id.spinner_course);
 
+        //LISTVIEW INITIAZLIZATION
+        listView_session = (ListView) view.findViewById(R.id.listView_timeblock);
+
 
 
         // BEGIN WEEK BUTTONS
@@ -270,13 +273,27 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         }
         if (parent.getId() == R.id.spinner_course) {
-            // LOAD TUTOR_AVAILABILITY FROM DATABASE
-            // LOAD CALENDAR STUFF
-            // loadTutorAvailability()
+            String subject;
+            String course;
+            String date;
+            date = "01/26/2021";
+
+            subject = (String) spinner_subject.getSelectedItem();
+            course = (String) spinner_course.getSelectedItem();
+            course = course.substring(course.lastIndexOf(" ")+1);
+
+            available_session = loadTutorAvailability(date, subject, course);
+
+            adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+
+            listView_session.setAdapter(adapter_session);
+
         }
 
 
     }
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -301,7 +318,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     }
 
-    public void weekHelper() {
+    private void weekHelper() {
         // BEGIN WEEK
         available_week = new ArrayList<String>();
         // TODO: NEED A GOOD WAY TO LOAD THESE FOR ONLY VALID WEEKS EACH SEMESTER
@@ -338,7 +355,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     }
 
-    public void subjectHelper(){
+    private void subjectHelper(){
         // BEGIN SUBJECT
         available_subject = database.getAllSubjects();
         available_subject.add(0, "Select a Subject");
@@ -351,7 +368,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // END SUBJECT
     }
 
-    public void courseHelper() {
+    private void courseHelper() {
 
         // BEGIN COURSE
         available_course_Default = new ArrayList<String>();
@@ -368,7 +385,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // END COURSE
     }
 
-    public ArrayList<String> populateCourses(ArrayList<Course> courses) {
+    private ArrayList<String> populateCourses(ArrayList<Course> courses) {
         ArrayList<String> result = new ArrayList<String>();
 
         result.add("Select a Course");
@@ -379,35 +396,26 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         return result;
     }
 
+    private ArrayList<String> loadTutorAvailability(String date, String subject, String course) {
+        // first load tutors who can tutor that subject and course
+        ArrayList<String> result;
 
-    /*
-    final int idIndex = cursor.getColumnIndex(COLUMN_ID);
-    final int nameIndex = cursor.getColumnIndex(COLUMN_NAME);
-    final int descriptionIndex = cursor.getColumnIndex(COLUMN_DESCRIPTION);
-    final int valueIndex = cursor.getColumnIndex(COLUMN_VALUE);
+        ArrayList<String> tutorsIDs_selectedCourse;
+        ArrayList<String> tutorAvailabilityOnDate;
 
 
-    public static final String TABLE_NAME = "courses_table";
-    public static final String COL_1 = "subject";
-    public static final String COL_2 = "course";
-    public static final String COL_3 = "course_num";
-     */
-    private class CoursesDBHelperRow {
-        String subject;
-        String course;
-        String course_num;
+        result = new ArrayList<String>();
+        tutorsIDs_selectedCourse = database.getAvailableCourseTutorIDs(subject, course);
 
-        public CoursesDBHelperRow() {
+        for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
+            String tutorID = tutorsIDs_selectedCourse.get(i);
+            tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate_String(tutorID, date);
+            result.add(tutorAvailabilityOnDate.get(i));
         }
 
-        public String getSubject()  { return this.subject; }
-        public String getCourse()   { return this.course; }
-        public String getCourseNum() { return this.course_num; }
-        public void setSubject(String newSubject) { this.subject = newSubject; }
-        public void setCourse(String newCourse) { this.course = newCourse; }
-        public void setCourseNum(String newCourseNum) { this.course_num = newCourseNum; }
+        // then from these tutors, load their time and availability
+        return result;
     }
-
 
 }
 

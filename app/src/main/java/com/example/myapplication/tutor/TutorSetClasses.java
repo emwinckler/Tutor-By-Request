@@ -106,7 +106,7 @@ public class TutorSetClasses extends Fragment {
                     for (int i = 0; i < sp.size(); i++) {
                         if (sp.valueAt(i) == true) {
                             Course course = (Course) listView.getItemAtPosition(i);
-                            db.addTutorCourse(1000, course.getSubject(),course.getCourseNo());
+                            db.addTutorCourse("1000", course.getSubject(),course.getCourseNo());
                         }
                     }
                     Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();

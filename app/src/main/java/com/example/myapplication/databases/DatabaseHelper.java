@@ -74,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3_TUTOR_C  = "course_num";
     public static final String CREATE_TABLE_TUTOR_C = "CREATE TABLE "+TABLE_NAME_TUTOR_C+
             "("+
-            COL_1_TUTOR_C  +" INTEGER(10), "+
+            COL_1_TUTOR_C  +" VARCHAR(10), "+
             COL_2_TUTOR_C  +" VARCHAR(30), "+
             COL_3_TUTOR_C  +" INTEGER(3), "+
             "PRIMARY KEY(tutor_id,subject,course_num)"+
@@ -414,11 +414,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public ArrayList<String> getTutorAvailabilityOnDate_String(String TutorID, String Date) {
+        ArrayList<String> result;
+        Cursor data;
+        result = new ArrayList<String>();
+        data = this.getTutorAvailabilityOnDate(TutorID, Date);
+        while(data.moveToNext()){
+            String availability;
+            String tutorID = data.getString(0);
+            String date = data.getString(1);
+            String time = data.getString(2);
+//            String course = data.getString(3);
+            String booked = data.getString(3);
+            availability = tutorID + " " + date + " " + time + " " + booked;
+
+//            int courseNo = Integer.parseInt(data.getString(2));
+            result.add(availability);
+        }
+
+
+        return result;
+    }
+
     /*SECTION FOR AVAILABLITY END*/
 
     /*SECTION FOR TUTOR COURSES START*/
 
-    public boolean addTutorCourse(int TutorID, String Subject, int CourseNum) throws Exception {
+    public boolean addTutorCourse(String TutorID, String Subject, int CourseNum) throws Exception {
         long result;
 
         try {
@@ -497,6 +519,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             return null;
+        }
+
+        return result;
+    }
+
+    public ArrayList<String> getAvailableCourseTutorIDs(String Subject, String CourseNumber) {
+        Cursor data;
+        ArrayList<String> result;
+        String tutorID;
+
+        result = new ArrayList<String>();
+        data = this.getCourseTutors(Subject, CourseNumber);
+        while(data.moveToNext()){
+            tutorID = data.getString(0);
+            result.add(tutorID);
         }
 
         return result;

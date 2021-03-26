@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         populateCourses();
         populateAvailability();
         populateUsers();
+        populateTutorCoursesAvailability();
 
         setSupportActionBar(toolbar);
     }
@@ -197,6 +198,60 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    public void populateTutorCoursesAvailability() {
+        try {
+            database.addTutorCourse("1111111111",  "Computer Science", 200);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+        try {
+            database.addTutorCourse("1111111111",  "Computer Science", 300);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+        try {
+            database.addTutorCourse("1111111111",  "Computer Science", 400);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+        try {
+            database.addTutorCourse("1111111111",  "Mathematics", 221);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+
+        try {
+            database.addTutorCourse("1111111112", "Electrical and Computer Engineering", 203);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+        try {
+            database.addTutorCourse("1111111112",  "Electrical and Computer Engineering", 204);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+        try {
+            database.addTutorCourse("1111111112",  "Electrical and Computer Engineering", 210);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+        try {
+            database.addTutorCourse("1111111112",  "Mathematics", 222);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+        }
+
+    }
+
+
+
 
 //_______Populate tutor availability database__________________________________________________________________________________
 
@@ -1053,5 +1108,6 @@ public class MainActivity extends AppCompatActivity {
             // La di da I have nothing to say.
 
         }
+
     }
 }
