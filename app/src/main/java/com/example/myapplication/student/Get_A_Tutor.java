@@ -22,6 +22,7 @@ import com.example.myapplication.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.DatabaseHelper;
@@ -31,6 +32,7 @@ import com.example.myapplication.databases.TutorCoursesDBHelper;
 
 import com.example.myapplication.models.Course;
 import com.example.myapplication.models.User;
+import com.example.myapplication.models.TutorAvailablity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +41,7 @@ import com.example.myapplication.models.User;
  */
 public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedListener {
     String YEAR = "2021";
-
+    static int sessionID = 0;
     MainActivity ma;
     DatabaseHelper database;
 
@@ -203,6 +205,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         weekHelper();
         subjectHelper();
         courseHelper();
+        listViewHelper();
 
 
     }
@@ -248,6 +251,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 available_session = populateAvailableTutorSessions(week, subject, course);
                 adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
                 listView_session.setAdapter(adapter_session);
+                listViewHelper();
+
 
             }
         }
@@ -314,11 +319,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
             listView_session.setAdapter(adapter_session);
 
         }
+        if (parent.getId() == R.id.listView_timeblock) {
+
+        }
 
 
     }
-
-
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -341,6 +347,73 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         }
 
+    }
+
+    private void listViewHelper() {
+        listView_session.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // set up my session
+                String studentID;
+                String tutorID;
+                String date;
+                String time;
+                String subject;
+                int courseNo = 0;
+                String location;
+                String description;
+
+                String week;
+                String course;
+
+                week = (String) spinner_week.getSelectedItem();
+                course = (String) spinner_course.getSelectedItem();
+                course = course.substring(course.lastIndexOf(" ")+1);
+
+
+
+                String courseNum;
+                String listviewsession;
+
+                subject = (String) spinner_subject.getSelectedItem();
+                courseNum = (String) spinner_course.getSelectedItem();
+                courseNum = courseNum.substring(courseNum.lastIndexOf(" ")+1);
+                available_session = new ArrayList<String>();
+                try {
+                    courseNo = Integer.parseInt(courseNum);
+
+
+                    listviewsession = (String) parent.getItemAtPosition(position);
+                    String [] availability;
+
+                    availability = listviewsession.split(" ");
+                    tutorID = availability[0];
+                    date = availability[1];
+                    time = availability[2];
+                    boolean currentavailability = availability[3].equals("true"); // just for testing the toggling
+
+                    database.modifySessionIsAvailable(tutorID, date, time, !currentavailability);
+
+                    available_session = populateAvailableTutorSessions(week, subject, course);
+
+
+                    database.addDataSession(
+                            user.getNetID(), tutorID, date, time,
+                            subject, courseNo, "Virtual",
+                            "description", sessionID++);
+
+
+
+
+                } catch (Exception e) {
+                    System.out.println("ERROR CLICKING ON TIMEBLOCK. COURSE NUMBER DIDNT WORK OUT");
+                }
+
+                adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+                listView_session.setAdapter(adapter_session);
+
+            }
+        });
     }
 
     private void weekHelper() {
@@ -426,7 +499,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         ArrayList<String> result;
 
         ArrayList<String> tutorsIDs_selectedCourse;
-        ArrayList<String> tutorAvailabilityOnDate;
+        ArrayList<TutorAvailablity> tutorAvailabilityOnDate;
 
 
         result = new ArrayList<String>();
@@ -434,9 +507,11 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
             String tutorID = tutorsIDs_selectedCourse.get(i);
-            tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate_String(tutorID, date);
+            tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
             for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
-                result.add(tutorAvailabilityOnDate.get(j));
+                if (!tutorAvailabilityOnDate.get(j).isBooked()) {
+                    result.add(tutorAvailabilityOnDate.get(j).toString());
+                }
             }
         }
 

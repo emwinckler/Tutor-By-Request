@@ -10,13 +10,13 @@ public class TutorAvailablity {
     private Course course;
     private boolean booked;
 
-    public TutorAvailablity(String tutorId, String date, String time, String booked
+    public TutorAvailablity(String tutorId, String date, String time, boolean booked
                             ) { //String course, int courseNo
         this.tutorId = tutorId;
         this.date = date;
         this.time = time;
 //        this.course = new Course(subject, course, courseNo);
-        this.booked = true;
+        this.booked = booked;
 
 
     }
@@ -25,6 +25,7 @@ public class TutorAvailablity {
     public String getDate() { return date; }
     public String getTime() { return time; }
     public Course getCourse() { return course; }
+    public boolean isBooked() { return this.booked; }
 
 
     public void setTutorId(String tutorId) {
@@ -44,6 +45,10 @@ public class TutorAvailablity {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String toString() {
+        return "" + this.getTutorId() + " " + this.getDate() + " " + this.getTime() + " " + this.isBooked();
     }
 
 }

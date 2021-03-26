@@ -142,7 +142,7 @@ public class TutorAvailabilityDBHelper extends SQLiteOpenHelper {
 
 //            int courseNo = Integer.parseInt(data.getString(2));
             tutorAvailabilityList.add(new TutorAvailablity(tutorID, date,
-                    time, booked));
+                    time, booked.equals("true")));
         }
         return tutorAvailabilityList;
     }

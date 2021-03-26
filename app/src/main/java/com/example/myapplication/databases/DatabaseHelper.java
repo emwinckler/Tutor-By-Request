@@ -323,13 +323,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, String isAvailable) {
+    public boolean modifySessionIsAvailable(String TutorID, String Date, String StartTime, boolean isAvailable) {
         long result;
 
         try {
-            if ( isAvailable.length() != 1 ) { // TODO: still some work to do to check input but im sleepy rn
-                return false;
-            }
 
             SQLiteDatabase db = this.getWritableDatabase();
 
@@ -337,7 +334,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COL_1_TUTOR_A, TutorID);
             contentValues.put(COL_2_TUTOR_A, Date);
             contentValues.put(COL_3_TUTOR_A, StartTime);
-            contentValues.put(COL_4_TUTOR_A, isAvailable);
+            contentValues.put(COL_4_TUTOR_A, isAvailable ? "TRUE" : "FALSE");
 
 
 
@@ -380,7 +377,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 //            int courseNo = Integer.parseInt(data.getString(2));
             tutorAvailabilityList.add(new TutorAvailablity(tutorID, date,
-                    time, booked));
+                    time, booked.equals("TRUE")));
         }
         return tutorAvailabilityList;
     }
@@ -400,7 +397,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getTutorAvailabilityOnDate(String TutorID, String Date) {
+    public Cursor getTutorAvailabilityOnDateCursor(String TutorID, String Date) {
         Cursor result;
 
         try {
@@ -415,11 +412,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public ArrayList<String> getTutorAvailabilityOnDate_String(String TutorID, String Date) {
-        ArrayList<String> result;
+    public ArrayList<TutorAvailablity> getTutorAvailabilityOnDate(String TutorID, String Date) {
+        ArrayList<TutorAvailablity> result;
         Cursor data;
-        result = new ArrayList<String>();
-        data = this.getTutorAvailabilityOnDate(TutorID, Date);
+        result = new ArrayList<TutorAvailablity>();
+        data = this.getTutorAvailabilityOnDateCursor(TutorID, Date);
         while(data.moveToNext()){
             String availability;
             String tutorID = data.getString(0);
@@ -427,10 +424,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String time = data.getString(2);
 //            String course = data.getString(3);
             String booked = data.getString(3);
-            availability = tutorID + " " + date + " " + time + " " + booked;
+            // availability = tutorID + " " + date + " " + time + " " + booked;
 
 //            int courseNo = Integer.parseInt(data.getString(2));
-            result.add(availability);
+            result.add(new TutorAvailablity(tutorID, date, time, booked.equals("TRUE") ));
         }
 
 
@@ -639,8 +636,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         netID = data.getString(1);
 
         email = data.getString(4);
-        tutor = (data.getString(5).equals("true")) ? true : false;
-        tutee = (data.getString(6).equals("true")) ? true : false;
+        tutor = data.getString(5).equals("true");
+        tutee = data.getString(6).equals("true");
 
         user = new User(studentID, null, netID, email, tutor, tutee);
         return user;
