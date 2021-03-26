@@ -25,7 +25,7 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE "+TABLE_NAME+
                 " ("+
-                COL_1  +" INTEGER(10), "+
+                COL_1  +" VARCHAR(10), "+
                 COL_2  +" VARCHAR(30), "+
                 COL_3  +" INTEGER(3), "+
                 "PRIMARY KEY(tutor_id,subject,course_num)"+
@@ -40,7 +40,7 @@ public class TutorCoursesDBHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addTutorCourse(int TutorID, String Subject, int CourseNum) throws Exception {
+    public boolean addTutorCourse(String TutorID, String Subject, int CourseNum) throws Exception {
         long result;
 
         try {
