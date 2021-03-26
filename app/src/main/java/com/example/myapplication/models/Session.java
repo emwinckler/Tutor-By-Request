@@ -46,6 +46,16 @@ public class Session implements Serializable {
     // Setters for the model
     // This needs to update the database
 
+    public String toString(){
+        return date + " - " + time + ": " + subject + " " + courseNo;
+    }
+
+    public String sessionDetails(){
+        return "Date: " + date+"\n"+"Time: " + time+"\n"+"Tutor ID: " + tutorID+"\n"+
+                "Student ID: " + studentID+"\n"+ "Course: " + subject + " " + courseNo +"\n"+
+                "Location: " + location+"\n"+ "Description: " + studentID;
+    }
+
 
     public void setStudentID(String studentID) {
         this.studentID = studentID;
