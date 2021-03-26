@@ -22,10 +22,13 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.DatabaseHelper;
+import com.example.myapplication.databases.MySessionsDBHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
-import com.example.myapplication.models.Session;
-import com.example.myapplication.models.TutorAvailablity;
+import com.example.myapplication.databases.TutorCoursesDBHelper;
+
+import com.example.myapplication.models.Course;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +36,9 @@ import com.example.myapplication.models.TutorAvailablity;
  * create an instance of this fragment.
  */
 public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedListener {
+
+    MainActivity ma;
+    DatabaseHelper database;
 
     // UPPER MENU BEGIN
     Button button_home;
@@ -52,6 +58,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     Boolean first = true;
     Boolean test = true;
+
     Button button_prevWeek;
     Button button_nextWeek;
 
@@ -70,13 +77,16 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ArrayList<String> available_course_MATH;
     ArrayAdapter<String> adapter_course_MATH;
 
-    ListView listView_session;
-    ArrayList<TutorAvailablity> available_session;
-    ArrayAdapter<TutorAvailablity> adapter_session;
-//    TutorAvailabilityDBHelper availableTutorsDB;
 
-    DatabaseHelper db;
-    private MainActivity ma;
+    ArrayList<Course> available_courses;
+    ArrayList<Course> available_courses_CS;
+    ArrayList<Course> available_courses_ECE;
+    ArrayList<Course> available_courses_MATH;
+
+
+    ListView listView_session;
+    ArrayList<String> available_session;
+    ArrayAdapter<String> adapter_session;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,11 +107,11 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Get_A_Tutor_Student.
+     * @return A new instance of fragment Get_A_Tutor.
      */
     // TODO: Rename and change types and number of parameters
-    public static Get_A_Tutor_Student newInstance(String param1, String param2) {
-        Get_A_Tutor_Student fragment = new Get_A_Tutor_Student();
+    public static Get_A_Tutor newInstance(String param1, String param2) {
+        Get_A_Tutor fragment = new Get_A_Tutor();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -130,11 +140,13 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ma = (MainActivity) getActivity();
+        database = ma.getDatabase();
+
         textView_get_a_tutor = (TextView) view.findViewById(R.id.textView_get_a_tutor);
         textView_date        = (TextView) view.findViewById(R.id.textView_date);
         textView_subject     = (TextView) view.findViewById(R.id.textView_subject);
         textView_course      = (TextView) view.findViewById(R.id.textView_course);
-
 
         button_prevWeek       = (Button) view.findViewById(R.id.button_prevWeek);
         button_nextWeek       = (Button) view.findViewById(R.id.button_nextWeek);
@@ -144,18 +156,6 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_subject       = (Spinner) view.findViewById(R.id.spinner_subject);
         spinner_course        = (Spinner) view.findViewById(R.id.spinner_course);
 
-
-//        ListView listView_session;
-//        ArrayList<String> available_session;
-//        ArrayAdapter<String> adapter_session;
-
-        listView_session = view.findViewById(R.id.listView_timeblock);
-        ma = (MainActivity) getActivity();
-        db = ma.getDatabase();
-        available_session = db.getAllTutorAvailability();
-        this.listView_session.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        adapter_session = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, available_session);
-        this.listView_session.setAdapter(adapter_session);
 
 
         // BEGIN WEEK BUTTONS
@@ -187,26 +187,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         // END WEEK BUTTONS
         // END WEEK
 
-        // Helper methods for populating spinners and array lists.
-        // Got sick of seeing code that I wasn't using.
         weekHelper();
         subjectHelper();
         courseHelper();
-
-
-
-
-        // BEGIN CALENDAR
-        // FOR FIRST ITERATION, LET'S JUST DO A SIMPLE LISTVIEW
-        // TODO: CHANGE TO A NICE GRID OF BUTTONS
-        // I THINK A 2D GRID OF BUTTONS WOULD BE EASY WAY TO IMPLEMENT THE CALENDAR
-        // CAN DISABLE BUTTONS, SET THEIR VISIBILITY, AND CHANGE THEIR COLOR PROGRAMMATICALLY
-        // CAN USE SET ON CLICK LISTENER TO LAUNCH CONFIRMATION WINDOW FRAGMENT
-//        available_session = new ArrayList<String>();
-//        adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session);
-//        listView_session.setAdapter(adapter_session);
-        // END CALENDAR
-
 
 
     }
@@ -242,24 +225,41 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         }
 
         if (parent.getId() == R.id.spinner_subject) {
-                switch (spinner_subject.getSelectedItemPosition()) {
-                    case 0:
-                        spinner_course.setAdapter(adapter_course_Default);
-                        spinner_course.setSelection(0);
-                        break;
-                    case 1:
-                        spinner_course.setAdapter(adapter_course_ECE);
-                        break;
-                    case 2:
-                        spinner_course.setAdapter(adapter_course_CS);
-                        break;
-                    case 3:
-                        spinner_course.setAdapter(adapter_course_MATH);
-                        break;
-                    default:
-                        spinner_course.setAdapter(adapter_course_Default);
-                        break;
-                }
+
+            switch ( (String) spinner_subject.getSelectedItem() ) {
+                case "Select a Subject":
+                    spinner_course.setAdapter(adapter_course_Default);
+                    System.out.println("adapter_course_Default");
+                    spinner_course.setSelection(0);
+                    break;
+                case "Electrical and Computer Engineering":
+                    System.out.println("adapter_course_ECE");
+                    available_courses_ECE = database.getAllCoursesBySubject("Electrical and Computer Engineering");
+                    available_course_ECE = populateCourses(available_courses_ECE);
+                    adapter_course_ECE = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_ECE);
+                    spinner_course.setAdapter(adapter_course_ECE);
+
+                    break;
+                case "Computer Science":
+                    System.out.println("adapter_course_CS");
+                    available_courses_CS = database.getAllCoursesBySubject("Computer Science");
+                    available_course_CS = populateCourses(available_courses_CS);
+                    adapter_course_CS = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_CS);
+                    spinner_course.setAdapter(adapter_course_CS);
+                    break;
+                case "Mathematics":
+                    System.out.println("adapter_course_MATH");
+                    available_courses_MATH = database.getAllCoursesBySubject("Mathematics");
+                    available_course_MATH = populateCourses(available_courses_MATH);
+                    adapter_course_MATH = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_MATH);
+                    spinner_course.setAdapter(adapter_course_MATH);
+                    break;
+                default:
+                    spinner_course.setAdapter(adapter_course_Default);
+                    break;
+            }
+
+
             if (spinner_subject.getSelectedItemPosition() != 0) { // If a subject is selected
                 spinner_course.setEnabled(true);
                 spinner_course.setClickable(true);
@@ -267,11 +267,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 spinner_course.setEnabled(false);
                 spinner_course.setClickable(false);
             }
-        }
 
+        }
         if (parent.getId() == R.id.spinner_course) {
             // LOAD TUTOR_AVAILABILITY FROM DATABASE
             // LOAD CALENDAR STUFF
+            // loadTutorAvailability()
         }
 
 
@@ -328,6 +329,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_week.setAdapter(adapter_week);
         spinner_week.setEnabled(true);
         spinner_week.setOnItemSelectedListener(this);
+        spinner_week.setSelection(0, true);
 
         button_prevWeek.setEnabled(false);
         button_prevWeek.setClickable(false);
@@ -338,14 +340,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
     public void subjectHelper(){
         // BEGIN SUBJECT
-        available_subject = new ArrayList<String>();
+        available_subject = database.getAllSubjects();
+        available_subject.add(0, "Select a Subject");
         adapter_subject = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_subject);
-        available_subject.add("Select a subject");
-        available_subject.add("ECE: Electrical & Computer Engineering");
-        available_subject.add("CS: Computer Sciences");
-        available_subject.add("MATH: Mathematics");
         spinner_subject.setAdapter(adapter_subject);
         spinner_subject.setOnItemSelectedListener(this);
+        spinner_subject.setSelection(0, true);
         spinner_subject.setEnabled(false);
         spinner_subject.setClickable(false);
         // END SUBJECT
@@ -359,26 +359,56 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         available_course_Default.add("Select a course");
         available_course_Default.add("No courses available");
 
-        available_course_ECE = new ArrayList<String>();
-        adapter_course_ECE = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_ECE);
-        available_course_ECE.add("Select a course");
-        available_course_ECE.add("ECE 552");
-
-        available_course_CS = new ArrayList<String>();
-        adapter_course_CS = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_CS);
-        available_course_CS.add("Select a course");
-        available_course_CS.add("CS 506");
-
-        available_course_MATH = new ArrayList<String>();
-        adapter_course_MATH = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, available_course_MATH);
-        available_course_MATH.add("Select a course");
-        available_course_MATH.add("MATH 577");
-//        available_course.add("ECE 552");
-//        available_course.add("CS 506");
         spinner_course.setAdapter(adapter_course_Default);
+
         spinner_course.setOnItemSelectedListener(this);
+        spinner_course.setSelection(0, true);
         spinner_course.setEnabled(false);
         spinner_course.setClickable(false);
         // END COURSE
     }
+
+    public ArrayList<String> populateCourses(ArrayList<Course> courses) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        result.add("Select a Course");
+        for (int i = 0; i < courses.size(); i++) {
+            result.add(courses.get(i).toString());
+        }
+
+        return result;
+    }
+
+
+    /*
+    final int idIndex = cursor.getColumnIndex(COLUMN_ID);
+    final int nameIndex = cursor.getColumnIndex(COLUMN_NAME);
+    final int descriptionIndex = cursor.getColumnIndex(COLUMN_DESCRIPTION);
+    final int valueIndex = cursor.getColumnIndex(COLUMN_VALUE);
+
+
+    public static final String TABLE_NAME = "courses_table";
+    public static final String COL_1 = "subject";
+    public static final String COL_2 = "course";
+    public static final String COL_3 = "course_num";
+     */
+    private class CoursesDBHelperRow {
+        String subject;
+        String course;
+        String course_num;
+
+        public CoursesDBHelperRow() {
+        }
+
+        public String getSubject()  { return this.subject; }
+        public String getCourse()   { return this.course; }
+        public String getCourseNum() { return this.course_num; }
+        public void setSubject(String newSubject) { this.subject = newSubject; }
+        public void setCourse(String newCourse) { this.course = newCourse; }
+        public void setCourseNum(String newCourseNum) { this.course_num = newCourseNum; }
+    }
+
+
 }
+
+
