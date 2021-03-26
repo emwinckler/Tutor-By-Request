@@ -52,34 +52,8 @@ public class tutorSetDateAndTime extends Fragment {
     private ArrayList<String> available_week;
     private ArrayAdapter<String> adapter_week;
     private GridView calendar;
-    int[][] emptyArr = {
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0}
-    };
+
+
     static int[][] selectedSlot2 = {
             {0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0},
@@ -108,6 +82,7 @@ public class tutorSetDateAndTime extends Fragment {
             {0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0}
     };
+    String[] headerText = {"Time","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     String[] slotText = {
             "07:00am","","","","","","","",
             "07:30am","","","","","","","",
@@ -177,16 +152,20 @@ public class tutorSetDateAndTime extends Fragment {
         MainActivity ma = (MainActivity) getActivity();
         dbHelper = ma.getDatabase();
         Bundle bundle = this.getArguments();
-//        user = (User) bundle.getSerializable("user");
-        user = (User) getActivity().getIntent().getSerializableExtra("user");
+        user = (User) bundle.getSerializable("user");
+//        user = (User) getActivity().getIntent().getSerializableExtra("user");
         return inflater.inflate(R.layout.fragment_tutor_set_date_and_time, container, false);
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Calendar adapter = new Calendar(getContext(),slotText);
+        Calendar headerAdapter = new Calendar(getContext(),headerText);
 
         Button confirm = (Button) view.findViewById(R.id.confirm_availability);
+
+        GridView header = (GridView) view.findViewById(R.id.calendar_header);
+        header.setAdapter(headerAdapter);
 
 
         calendar=(GridView) view.findViewById(R.id.calendar);
@@ -364,10 +343,13 @@ public class tutorSetDateAndTime extends Fragment {
     }
     public int timeToRow(String time){
 //        13:30
-        int row = Integer.parseInt(time.substring(0,2)) - 7;
-        if(time.substring(3).equals("30")){
+//        01234
+        int row = (Integer.parseInt(time.substring(0,2)) - 7)*2;
+
+        if(time.substring(3,5).equals("30")){
             row += 1;
         }
+
         return row;
     }
     public int dayToColumn(String day, String week){
@@ -380,7 +362,7 @@ public class tutorSetDateAndTime extends Fragment {
             col = Integer.parseInt(day.substring(3,5)) - start + 1;
         }else{
             int diff = Integer.parseInt(week.substring(11)) - Integer.parseInt(day.substring(3,5));
-            col = 8 - diff;
+            col = 7 - diff;
         }
         return col;
     }
