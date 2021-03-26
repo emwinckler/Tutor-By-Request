@@ -8,17 +8,17 @@ This class is a model that is meant to represent the users of the application
 public class Session {
     private String studentID;
     private String tutorID;
-    private Date date;
+    private String date;
     private String time;
     private String subject;
     private int courseNo;
     private String location;
     private String description;
-    private String sessionID;
+    private int sessionID;
 
 
-    public Session(String studentID, String tutorID, Date date, String time, String subject,
-                   int courseNo, String location, String description, String sessionID){
+    public Session(String studentID, String tutorID, String date, String time, String subject,
+                   int courseNo, String location, String description, int sessionID){
         this.studentID = studentID;
         this.tutorID = tutorID;
         this.date = date;
@@ -33,8 +33,8 @@ public class Session {
     // Getters for the model
     public String getStudentID(){ return this.studentID; }
     public String getTutorID(){ return this.tutorID; }
-    public String getSessionID(){ return this.sessionID; }
-    public Date getDate(){ return this.date;}
+    public int getSessionID(){ return this.sessionID; }
+    public String getDate(){ return this.date;}
     public String getTime() { return time; }
     public String getSubject() { return subject; }
     public int getCourseNo() { return courseNo; }
@@ -53,7 +53,7 @@ public class Session {
         this.tutorID = tutorID;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -77,7 +77,7 @@ public class Session {
         this.description = description;
     }
 
-    public void setSessionID(String sessionID) {
+    public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
     }
 }

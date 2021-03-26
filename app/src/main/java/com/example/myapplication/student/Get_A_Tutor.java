@@ -2,13 +2,18 @@ package com.example.myapplication.student;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,6 +36,7 @@ import com.example.myapplication.databases.TutorAvailabilityDBHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 
 import com.example.myapplication.models.Course;
+import com.example.myapplication.models.Session;
 import com.example.myapplication.models.User;
 import com.example.myapplication.models.TutorAvailablity;
 
@@ -44,6 +50,8 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     static int sessionID = 0;
     MainActivity ma;
     DatabaseHelper database;
+
+    ViewGroup view_viewGroup;
 
     User user;
     // UPPER MENU BEGIN
@@ -137,10 +145,14 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
+        view_viewGroup = container;
+        View view = inflater.inflate(R.layout.fragment_get__a__tutor, view_viewGroup, false);
+
+        // add popup window items
+        //view = inflater.inflate(R.layout.get_a_tutor_confirm_session_popup, view_viewGroup, false);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_get__a__tutor, container, false);
+        return view;//inflater.inflate(R.layout.fragment_get__a__tutor, view_viewGroup, false);
     }
 
     @Override
@@ -184,6 +196,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                     if (curr_week_pos > 0) {
                         curr_week_pos--;
                         spinner_week.setSelection(curr_week_pos, true);
+                        populateSessionListView();
                     }
                 }
             }
@@ -197,6 +210,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                     if (curr_week_pos < available_week.size() - 1) {
                         curr_week_pos++;
                         spinner_week.setSelection(curr_week_pos, true);
+                        populateSessionListView();
                     }
                 }
             }
@@ -306,23 +320,26 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         }
         if (parent.getId() == R.id.spinner_course) {
-            String week;
-            String subject;
-            String course;
-
-            week = (String) spinner_week.getSelectedItem();
-            subject = (String) spinner_subject.getSelectedItem();
-            course = (String) spinner_course.getSelectedItem();
-            course = course.substring(course.lastIndexOf(" ")+1);
-
-
-            tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
-            available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
-            adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
-            listView_session.setAdapter(adapter_session);
-
+            populateSessionListView();
         }
 
+    }
+
+    private void populateSessionListView() {
+        String week;
+        String subject;
+        String course;
+
+        week = (String) spinner_week.getSelectedItem();
+        subject = (String) spinner_subject.getSelectedItem();
+        course = (String) spinner_course.getSelectedItem();
+        course = course.substring(course.lastIndexOf(" ")+1);
+
+
+        tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
+        available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
+        adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+        listView_session.setAdapter(adapter_session);
     }
 
     @Override
@@ -398,26 +415,11 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                     //String [] availability;
 
                     //availability = listviewsession.split(" ");
-                    tutorID = selectedTutorAvailability.getTutorId();
-                    date = selectedTutorAvailability.getDate();
-                    time = selectedTutorAvailability.getTime();
-                    boolean currentavailability = selectedTutorAvailability.isBooked(); // just for testing the toggling
-
-                    database.modifySessionIsAvailable(tutorID, date, time, !currentavailability);
-
-                    tutorAvailablity_session = populateAvailableTutorSessions(week, subject, course);
-                    available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
-
-                    adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
-                    listView_session.setAdapter(adapter_session);
 
 
-                    database.addDataSession(
-                            user.getStudentID(), tutorID, date, time,
-                            subject, courseNo, "Virtual",
-                            "description", sessionID++);
+                    Session newSession = new Session(user.getStudentID(),selectedTutorAvailability.getTutorId(),selectedTutorAvailability.getDate(),selectedTutorAvailability.getTime(), subject, courseNo, "Virtual", "", sessionID++);
 
-
+                    showSessionConfirmationPopup(view, newSession, selectedTutorAvailability);
 
 
                 } catch (Exception e) {
@@ -692,6 +694,135 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         return result;
     }
 
+
+
+    // CONFIRMATION AND ADD DESCRIPTION FOR CREATE SESSION
+    public void showSessionConfirmationPopup(View view, Session session, TutorAvailablity availablity) {
+        // View popupView = LayoutInflater.from(p.getContext()).inflate(R.layout.popup, null);
+
+        //Fragment popup =
+
+        //View popupView = LayoutInflater.from(view_viewGroup.getContext()).inflate(R.layout.get_a_tutor_confirm_session_popup, null);
+        // newView.getWidth(), newView.getHeight(),
+
+
+        //newView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        //newView.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //newView.setHeight(view.getMeasuredHeight());
+
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.get_a_tutor_confirm_session_popup, view_viewGroup, false);
+
+        PopupWindow popup = new PopupWindow(popupView, 1000,1000, true);
+        popup.setOutsideTouchable(true);
+        //popup.setContentView(view);
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+        //p// opup.update(50, 50, 300, 80);
+        //click = false;
+
+//        final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//        ((TextView)popupWindow.getContentView().findViewById(R.id.text_popup)).setText(order);
+        Spinner spinner_location = (Spinner) popupView.findViewById(R.id.spinner_location);
+        ArrayList<String> available_location;
+        available_location = new ArrayList<String>();
+        available_location.add("Virtual");
+        ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_location );
+        spinner_location.setAdapter(adapter_location);
+        spinner_location.setSelection(0, true);
+
+        EditText editText_description = (EditText) popupView.findViewById(R.id.editText_description);
+        Button button_confirm = (Button) popupView.findViewById(R.id.button_confirm);
+        Button button_cancel = (Button) popupView.findViewById(R.id.button_cancel);
+
+        button_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String description = editText_description.getText().toString();
+                String location = (String) spinner_location.getSelectedItem();
+
+                session.setDescription(description);
+                session.setLocation(location);
+
+                try {
+                    if ( database.addDataSession(session) ) {
+                        // ADD SESSION TO DATABASE SUCCESSFUL
+                        String tutorID = availablity.getTutorId();
+                        String date = availablity.getDate();
+                        String time = availablity.getTime();
+                        //boolean currentavailability = availablity.isBooked(); // just for testing the toggling
+
+                        database.modifySessionIsAvailable(tutorID, date, time, true);
+
+                        // reload tutoravailability listview
+                        tutorAvailablity_session = populateAvailableTutorSessions((String) spinner_week.getSelectedItem(), session.getSubject(), "" + session.getCourseNo());
+                        available_session = loadTutorAvailabilityToString(tutorAvailablity_session);
+
+                        adapter_session = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, available_session );
+                        listView_session.setAdapter(adapter_session);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+
+
+                popup.dismiss();
+            }
+        });
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+
+        // popupWindow.showAtLocation(popupView, Gravity.AXIS_Y_SHIFT, 0, 10);
+    }
+
 }
 
-
+//public class ShowPopUp extends MainActivity {
+//    PopupWindow popUp;
+//    boolean click = true;
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        popUp = new PopupWindow(this);
+//        LinearLayout layout = new LinearLayout(this);
+//        LinearLayout mainLayout = new LinearLayout(this);
+//        TextView tv = new TextView(this);
+//        Button but = new Button(this);
+//        but.setText("Click Me");
+//        but.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (click) {
+//                    popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
+//                    popUp.update(50, 50, 300, 80);
+//                    click = false;
+//                } else {
+//                    popUp.dismiss();
+//                    click = true;
+//                }
+//            }
+//        });
+//
+//        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT);
+//        layout.setOrientation(LinearLayout.VERTICAL);
+//        tv.setText("Hi this is a sample text for popup window");
+//        layout.addView(tv, params);
+//        popUp.setContentView(layout);
+//        // popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
+//        mainLayout.addView(but, params);
+//        setContentView(mainLayout);
+//    }
+//}
