@@ -54,11 +54,7 @@ public class LoginViewModel extends ViewModel {
         if (username == null || username.isEmpty()){
             return false;
         }
-        if ( username.length() > 15 || !username.matches("^[a-zA-Z0-9]*$")) {
-            return false;
-        } else {
-            return true;
-        }
+        return username.length() <= 15 && username.matches("^[a-zA-Z0-9]*$");
     }
 
     // A placeholder password validation check
