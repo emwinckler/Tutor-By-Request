@@ -585,6 +585,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return "___________________ERROR__________________";
     }
 
+
+
     public String getTutor(String NetID){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT " +COL_6_USERS+" FROM " + TABLE_NAME_USERS + " WHERE " + COL_2_USERS + " = ?", new String[] {NetID});

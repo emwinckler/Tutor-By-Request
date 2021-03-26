@@ -23,6 +23,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.data.model.LoggedInUser;
 import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorAvailabilityDBHelper;
+import com.example.myapplication.models.User;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class tutorSetDateAndTime extends Fragment {
 
     DatabaseHelper dbHelper;
     // Required empty public constructor
-    private String tutorID;
+    private User user;
     private Spinner spinner_week;
     private ArrayList<String> available_week;
     private ArrayAdapter<String> adapter_week;
@@ -108,7 +109,6 @@ public class tutorSetDateAndTime extends Fragment {
 
 
     public tutorSetDateAndTime() {
-       // tutorID = LoggedInUser.getUserId();
     }
 
     /**
@@ -126,6 +126,8 @@ public class tutorSetDateAndTime extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
+
         return fragment;
     }
 
@@ -137,6 +139,12 @@ public class tutorSetDateAndTime extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+//        user = (User) getActivity().getIntent().getSerializableExtra("user");
+//        Context c = getContext();
+//        Bundle bundle = c.getArguments();
+//        User obj = (User) bundle.getSerializable("user");
+
+//        user = (User) getArguments().getSerializable("user");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,6 +152,8 @@ public class tutorSetDateAndTime extends Fragment {
         // Inflate the layout for this fragment
         MainActivity ma = (MainActivity) getActivity();
         dbHelper = ma.getDatabase();
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
         return inflater.inflate(R.layout.fragment_tutor_set_date_and_time, container, false);
 
 
@@ -156,6 +166,12 @@ public class tutorSetDateAndTime extends Fragment {
         Calendar adapter = new Calendar(getContext(),slotText);
 
         Button confirm = (Button) view.findViewById(R.id.confirm_availability);
+
+//        Context c = getContext();
+//        Bundle bundle = c.getArguments();
+//        User obj = (User) bundle.getSerializable("user");
+
+
 
         calendar=(GridView) view.findViewById(R.id.calendar);
         calendar.setAdapter(adapter);
@@ -174,6 +190,7 @@ public class tutorSetDateAndTime extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
 
+
             }
         });
 
@@ -189,7 +206,8 @@ public class tutorSetDateAndTime extends Fragment {
                         if(selectedSlot2[i][j]==1){
                             String time = slotText[i*8];
                             String date = spinner_week.getSelectedItem().toString();
-                           // dbHelper.addAvailability(LoggedInUser.getUserId())
+                            String tutorID = user.getStudentID();
+                            dbHelper.addAvailability(tutorID,date,time);
                         }
                     }
                 }
