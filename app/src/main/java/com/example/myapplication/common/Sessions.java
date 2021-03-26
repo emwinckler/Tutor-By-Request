@@ -50,19 +50,7 @@ public class Sessions extends BaseAdapter {
         }else{
 
             list = (View) convertView;
-            /*
-            TextView textView = (TextView) list.findViewById(R.id.grid_text);
-            if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 1){
-                textView.setBackgroundResource(R.drawable.select);
-            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 2){
-                textView.setBackgroundResource(R.drawable.selected);
-            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 3) {
-                textView.setBackgroundResource(R.drawable.cancellable);
-            }else if(tutorSetDateAndTime.selectedSlot2[position /8][position %8] == 4){
-                textView.setBackgroundResource(R.drawable.booked);
-            }else{
-                textView.setBackgroundResource(R.drawable.border);
-            }*/
+
         }
         return list;
     }
