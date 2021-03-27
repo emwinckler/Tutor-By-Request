@@ -167,6 +167,31 @@ public class TutorSetClasses extends Fragment {
                     Toast.makeText(ma, "Course selection not saved! Try again", Toast.LENGTH_LONG).show();
                 }
 
+
+
+
+
+                SparseBooleanArray sp2 = myClasses.getCheckedItemPositions();
+                try {
+
+                    for (int i = 0; i < sp.size(); i++) {
+                        if (sp.valueAt(i) == true) {
+                            String course = (String) selectListView.getItemAtPosition(i);
+                            String subject = course.split(" ",2)[0];
+                            int courseNo = Integer.parseInt(course.split(" ",2)[1].trim());
+
+                            dbHelper.deleteTutorCourse(user.getStudentID(), subject, courseNo);
+                            myClassesAdapter.notifyDataSetChanged();
+                            courseArrayAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
+
+                }catch(Exception e){
+                    Toast.makeText(ma, "Course selection not saved! Try again", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
