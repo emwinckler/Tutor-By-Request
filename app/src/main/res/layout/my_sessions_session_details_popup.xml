@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#D66565"
+    android:layout_width="400dp"
+    android:layout_height="400dp"
+    android:background="#F89797"
     tools:context=".common.SessionDetails">
 
     <!-- TODO: Update blank fragment layout -->
@@ -17,51 +17,35 @@
             android:id="@+id/sessionDetails"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
+            android:background="#F89797"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_marginLeft="100dp">
 
-                <Button
-                    android:id="@+id/button_dismiss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:text="Dismiss"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button_cancelSession"
-                    />
+            <Button
+                android:id="@+id/button_dismiss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
 
-                <Button
-                    android:id="@+id/button_cancelSession"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="Cancel Session"
-                    tools:layout_editor_absoluteX="94dp"
-                    tools:layout_editor_absoluteY="3dp"
-                    tools:ignore="MissingConstraints" />
+                android:text="Dismiss"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_confirm" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
-
 
 
 </FrameLayout>

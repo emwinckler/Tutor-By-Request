@@ -220,7 +220,7 @@ public class My_Sessions extends Fragment {
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.my_sessions_session_details_popup, view_viewGroup, false);
 
-        PopupWindow popup = new PopupWindow(popupView, 1000,1000, true);
+        PopupWindow popup = new PopupWindow(popupView, 1000, 1000, true);
         popup.setOutsideTouchable(true);
         //popup.setContentView(view);
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -229,21 +229,31 @@ public class My_Sessions extends Fragment {
 
         textView.setText(session.sessionDetails());
 
-        Button button_cancelSession = (Button) popupView.findViewById(R.id.button_cancelSession);
+        //Button button_cancelSession = (Button) popupView.findViewById(R.id.button_cancelSession);
+        // button_cancelSession.setVisibility(View.VISIBLE);
+        // button_cancelSession.setEnabled(true);
+        // button_cancelSession.setBackgroundColor(Color.RED);
         Button button_dismiss = (Button) popupView.findViewById(R.id.button_dismiss);
 
-        button_cancelSession.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // button_dismiss.setVisibility(View.VISIBLE);
+        //button_dismiss.setEnabled(true);
+        //button_dismiss.setBackgroundColor(Color.RED);
 
-                TutorAvailablity timeBlock;
+//        button_cancelSession.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // delete session from sessions database
+                  // but also make assosiated tutoravailability false again
 
+//                TutorAvailablity timeBlock;
 
-
-
-                popup.dismiss();
-            }
-        });
+//                  // coming soon
+//
+//
+//
+//                popup.dismiss();
+//            }
+//        });
 
 
         button_dismiss.setOnClickListener(new View.OnClickListener() {

@@ -714,7 +714,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.get_a_tutor_confirm_session_popup, view_viewGroup, false);
 
-        PopupWindow popup = new PopupWindow(popupView, 1000,1000, true);
+        PopupWindow popup = new PopupWindow(popupView, 1000 , 1000, true);
         popup.setOutsideTouchable(true);
         //popup.setContentView(view);
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -734,6 +734,14 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         EditText editText_description = (EditText) popupView.findViewById(R.id.editText_description);
         Button button_confirm = (Button) popupView.findViewById(R.id.button_confirm);
         Button button_cancel = (Button) popupView.findViewById(R.id.button_cancel);
+
+        button_confirm.setVisibility(View.VISIBLE);
+        button_confirm.setEnabled(true);
+        button_confirm.setBackgroundColor(Color.RED);
+
+        button_cancel.setVisibility(View.VISIBLE);
+        button_cancel.setEnabled(true);
+        button_cancel.setBackgroundColor(Color.RED);
 
         button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
