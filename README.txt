@@ -1,4 +1,5 @@
 Instructions for installation and running:
+  Use code tag 1.0 "Iteration 1".
   Currently this is best done by cloning the repo in Android Studio itself.  We've been testing
   with the emulator set to being a Pixel 4 XL API 29.  This can be done by
   going to the AVD Manager -> Create Virtual Device -> Phone Category -> Pixel 4 XL and then simply hitting next.

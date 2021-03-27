@@ -85,6 +85,10 @@ public class StudentTutorHome extends Fragment {
         final Button tutorLogout = view.findViewById(R.id.sAndTLogout);
         final Button setCourses = view.findViewById(R.id.sAndTSelectCourses);
 
+
+        user = (User) this.getArguments().getSerializable("user");
+        // user = (User) getActivity().getIntent().getSerializableExtra("user");
+
         Bundle userData = new Bundle();
         userData.putSerializable("user", user);
 
@@ -107,6 +111,7 @@ public class StudentTutorHome extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
                         .navigate(R.id.action_studentTutorHome_to_get_A_Tutor, userData);
+
             }
         });
         availability.setOnClickListener(new View.OnClickListener() {
