@@ -651,12 +651,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteTutorCourse(String TutorID, String Subject, String CourseNumber) {
+    public Integer deleteTutorCourse(String TutorID, String Subject, int CourseNumber) {
         Integer result;
 
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            result = db.delete(TABLE_NAME_TUTOR_C, COL_1_TUTOR_C + " = ?" + " AND " + COL_2_TUTOR_C + " = ?" + " AND " + COL_3_TUTOR_C + " = ?", new String[] {TutorID, Subject, CourseNumber});
+            result = db.delete(TABLE_NAME_TUTOR_C, COL_1_TUTOR_C + " = ?" + " AND " + COL_2_TUTOR_C + " = ?" + " AND " + COL_3_TUTOR_C + " = ?", new String[] {TutorID, Subject, String.valueOf(CourseNumber)});
 
         }
         catch (Exception e) {
