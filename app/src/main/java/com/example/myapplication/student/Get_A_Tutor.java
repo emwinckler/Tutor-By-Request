@@ -766,12 +766,6 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                     e.printStackTrace();
                 }
 
-
-
-
-
-
-
                 popup.dismiss();
             }
         });

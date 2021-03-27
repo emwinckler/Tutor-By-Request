@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,8 @@ import com.example.myapplication.R;
  * create an instance of this fragment.
  */
 public class StudentTutorHome extends Fragment {
+
+    User user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +57,10 @@ public class StudentTutorHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -78,32 +85,35 @@ public class StudentTutorHome extends Fragment {
         final Button tutorLogout = view.findViewById(R.id.sAndTLogout);
         final Button setCourses = view.findViewById(R.id.sAndTSelectCourses);
 
+        Bundle userData = new Bundle();
+        userData.putSerializable("user", user);
+
         setCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_tutorSetClasses);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetClasses, userData);
             }
         });
         sessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_my_Sessions);
+                        .navigate(R.id.action_studentTutorHome_to_my_Sessions, userData);
             }
         });
         getTutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_get_A_Tutor);
+                        .navigate(R.id.action_studentTutorHome_to_get_A_Tutor, userData);
             }
         });
         availability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_tutorSetDateAndTime2);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetDateAndTime2, userData);
             }
         });
 
