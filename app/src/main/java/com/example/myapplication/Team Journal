@@ -13,7 +13,19 @@ be doing the Tutor Activity.  And Evan will be doing the Student Activity.
 ____________Personal Section______________
 
 Azzed:
-
+3/23/2021
+-Started Implementing frontend for TutorAvailability
+3/24/2021
+-Created a Calendar class to implement tutor calendar
+3/24/2021
+-Implementing clickability into calender
+-Implementing uploading to weeks
+-Implementing downloading data for weeks
+3/26/2021
+-Testing Calendar to to check implementations
+-Adding different colours signifying different modes of selectability
+-Fixing SelectClasses to add the delete courses from database
+-Testing SelectClasses
 
 Ryan:
 3/21/2021 - 8:38PM

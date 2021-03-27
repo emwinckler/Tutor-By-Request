@@ -138,7 +138,7 @@ public class TutorSetClasses extends Fragment {
 
          */
         ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,courseString);
-        ArrayAdapter<String> myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_activated_1,myCourseString);
+        ArrayAdapter<String> myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,myCourseString);
         this.myClasses.setAdapter(myClassesAdapter);
         this.selectListView.setAdapter(courseArrayAdapter);
 
