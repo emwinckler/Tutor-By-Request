@@ -199,6 +199,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                         populateSessionListView();
                     }
                 }
+                else {
+                    spinner_week.setSelection(0, true);
+                }
             }
         });
 
@@ -212,6 +215,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                         spinner_week.setSelection(curr_week_pos, true);
                         populateSessionListView();
                     }
+                }
+                else {
+                    spinner_week.setSelection(0, true);
                 }
             }
         });
@@ -232,12 +238,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         if (parent.getId() == R.id.spinner_week) {
             if (first) {
-                button_prevWeek.setEnabled(false);
-                button_prevWeek.setClickable(false);
-                button_prevWeek.setBackgroundColor(Color.GRAY);
-                button_nextWeek.setEnabled(false);
-                button_nextWeek.setClickable(false);
-                button_nextWeek.setBackgroundColor(Color.GRAY);
+                //button_prevWeek.setEnabled(false);
+                //button_prevWeek.setClickable(false);
+                //button_prevWeek.setBackgroundColor(Color.GRAY);
+                //button_nextWeek.setEnabled(false);
+                //button_nextWeek.setClickable(false);
+                //button_nextWeek.setBackgroundColor(Color.GRAY);
                 first = false;
 
             } else {
@@ -462,10 +468,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_week.setOnItemSelectedListener(this);
         spinner_week.setSelection(0, true);
 
-        button_prevWeek.setEnabled(false);
-        button_prevWeek.setClickable(false);
-        button_nextWeek.setEnabled(false);
-        button_nextWeek.setClickable(false);
+        button_prevWeek.setEnabled(true);
+        button_prevWeek.setClickable(true);
+        button_prevWeek.setBackgroundColor(Color.RED);
+        button_nextWeek.setEnabled(true);
+        button_nextWeek.setClickable(true);
+        button_nextWeek.setBackgroundColor(Color.RED);
 
     }
 
