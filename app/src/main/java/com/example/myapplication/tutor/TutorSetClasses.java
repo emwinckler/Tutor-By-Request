@@ -157,7 +157,8 @@ public class TutorSetClasses extends Fragment {
                             int courseNo = Integer.parseInt(course.split(" ",2)[1].trim());
 
                             dbHelper.addTutorCourse(user.getStudentID(), subject, courseNo);
-
+                            myClassesAdapter.notifyDataSetChanged();
+                            courseArrayAdapter.notifyDataSetChanged();
                         }
                     }
                     Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
