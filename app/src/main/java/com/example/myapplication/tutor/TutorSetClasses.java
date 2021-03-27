@@ -103,6 +103,17 @@ public class TutorSetClasses extends Fragment {
 //        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
         ArrayList<Course> courses = dbHelper.getDataCourses();
         ArrayList<Course> myCourses = dbHelper.getTutorCourses(user.getStudentID());
+
+        ArrayList<String> courseString = new ArrayList<String>();
+        ArrayList<String> myCourseString = new ArrayList<String>();
+
+        for(Course c : courses) {
+            courseString.add(c.toStringSubjectCourseNo());
+        }
+        for(Course c : myCourses){
+            myCourseString.add(c.toStringSubjectCourseNo());
+            courseString.remove(c.toStringSubjectCourseNo());
+        }
         this.selectListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         /*int numItems = listView.getAdapter().getCount();
@@ -126,8 +137,8 @@ public class TutorSetClasses extends Fragment {
         });
 
          */
-        ArrayAdapter<Course> courseArrayAdapter = new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_multiple_choice,courses);
-        ArrayAdapter<Course> myClassesAdapter = new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_activated_1,myCourses);
+        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,courseString);
+        ArrayAdapter<String> myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_activated_1,myCourseString);
         this.myClasses.setAdapter(myClassesAdapter);
         this.selectListView.setAdapter(courseArrayAdapter);
 

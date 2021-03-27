@@ -32,6 +32,8 @@ public class Course implements Serializable {
         return course + " " + Integer.toString(courseNo);
     }
 
+    public String toStringSubjectCourseNo(){ return  subject + " " + Integer.toString(courseNo); }
+
     public void setSubject(String subject) {
         this.subject = subject;
     }
