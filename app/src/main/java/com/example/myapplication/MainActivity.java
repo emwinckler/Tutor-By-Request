@@ -116,23 +116,23 @@ public class MainActivity extends AppCompatActivity {
         // BEGIN STUTOR SESSIONS
             // tutor sessions
         try {
-            database.addDataSession(stutorID, tutor1ID, "04/21/2021", "10:30", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -4);
+            database.addDataSession(studentID, stutorID, "04/21/2021", "10:30", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -4);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
         }
 
         try {
-            database.addDataSession(stutorID, tutor2ID, "04/22/2021", "07:00", "Computer Science", 400, "Memorial Union", "Red black trees", -5);
+            database.addDataSession(studentID, stutorID, "04/22/2021", "07:00", "Computer Science", 400, "Memorial Union", "Red black trees", -5);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
         }
 
 
-            // tutor sessions
+            // student sessions
         try {
-            database.addDataSession(stutorID, studentID, "04/23/2021", "07:00", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -6);
+            database.addDataSession(stutorID, tutor1ID, "04/23/2021", "07:00", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -6);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
+
 
     }
 

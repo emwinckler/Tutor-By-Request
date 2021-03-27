@@ -53,7 +53,7 @@ public class Session implements Serializable {
     public String sessionDetails(){
         return "Date: " + date+"\n"+"Time: " + time+"\n"+"Tutor ID: " + tutorID+"\n"+
                 "Student ID: " + studentID+"\n"+ "Course: " + subject + " " + courseNo +"\n"+
-                "Location: " + location+"\n"+ "Description: " + studentID;
+                "Location: " + location+"\n"+ "Description: " + description;
     }
 
 

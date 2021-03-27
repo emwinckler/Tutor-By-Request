@@ -54,6 +54,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ViewGroup view_viewGroup;
 
     User user;
+    boolean isTutor;
     // UPPER MENU BEGIN
     Button button_home;
     Button button_get_a_tutor;
@@ -160,6 +161,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         super.onViewCreated(view, savedInstanceState);
 
         user = (User) this.getArguments().getSerializable("user");
+        boolean isTutor = user.isTutor(); // use this to erase entries of self
+
+
         // user = (User) getActivity().getIntent().getSerializableExtra("user");
 
         Bundle userData = new Bundle();
@@ -534,14 +538,18 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         result = new ArrayList<TutorAvailablity>();
         tutorsIDs_selectedCourse = database.getAvailableCourseTutorIDs(subject, course);
 
+
         for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
-            String tutorID = tutorsIDs_selectedCourse.get(i);
-            tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
-            for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
-                if (!tutorAvailabilityOnDate.get(j).isBooked()) {
-                    result.add(tutorAvailabilityOnDate.get(j));
+            if ( !tutorsIDs_selectedCourse.get(i).equals(user.getStudentID()) ) { // skip over your own TutorID if your a stutor
+                String tutorID = tutorsIDs_selectedCourse.get(i);
+                tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
+                for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
+                    if (!tutorAvailabilityOnDate.get(j).isBooked()) {
+                        result.add(tutorAvailabilityOnDate.get(j));
+                    }
                 }
             }
+
         }
 
         // then from these tutors, load their time and availability
