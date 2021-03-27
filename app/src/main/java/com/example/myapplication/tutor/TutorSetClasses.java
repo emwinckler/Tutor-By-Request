@@ -23,6 +23,7 @@ import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.models.Course;
+import com.example.myapplication.models.User;
 
 import java.util.ArrayList;
 
@@ -42,8 +43,11 @@ public class TutorSetClasses extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView listView;
+    private ListView selectListView;
+    private ListView myClasses;
     private MainActivity ma;
+    private DatabaseHelper dbHelper;
+    private User user;
 
 
     public TutorSetClasses() {
@@ -81,32 +85,66 @@ public class TutorSetClasses extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        MainActivity ma = (MainActivity) getActivity();
+        dbHelper = ma.getDatabase();
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
         return inflater.inflate(R.layout.fragment_tutor_set_classes, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = (ListView) view.findViewById(R.id.classesList);
+        selectListView = (ListView) view.findViewById(R.id.listView_availableClasses);
+        myClasses = (ListView) view.findViewById(R.id.listView_myClasses);
+
         Button classButton = view.findViewById(R.id.selectClasses);
         ma = (MainActivity) getActivity();
-        DatabaseHelper db = ma.getDatabase();
+
 //        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
-        ArrayList<Course> courses = db.getDataCourses();
-        this.listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<Course> courseArrayAdapter =
-                new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_multiple_choice,courses);
-        this.listView.setAdapter(courseArrayAdapter);
+        ArrayList<Course> courses = dbHelper.getDataCourses();
+        ArrayList<Course> myCourses = dbHelper.getTutorCourses(user.getStudentID());
+        this.selectListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        /*int numItems = listView.getAdapter().getCount();
+        for(int i=0; i<numItems; i++){
+            String tempCourse = listView.getItemAtPosition(i).toString();
+            for(Course c : myCourses){
+                int subLength = c.getSubject().length();
+                if(tempCourse.substring(0,subLength).equals(c.getSubject()) && tempCourse.substring(subLength+1).equals(c.getCourseNo())){
+                   CheckedTextView check = (CheckedTextView) listView.getItemAtPosition(i);
+                    check.setChecked(!check.isChecked());
+                }
+            }
+        }*/
+        /*
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = listView.getItemAtPosition(position).toString();
+                Toast.makeText(getContext(), "You Clicked at " +item +"asd", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+         */
+        ArrayAdapter<Course> courseArrayAdapter = new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_multiple_choice,courses);
+        ArrayAdapter<Course> myClassesAdapter = new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_activated_1,myCourses);
+        this.myClasses.setAdapter(myClassesAdapter);
+        this.selectListView.setAdapter(courseArrayAdapter);
+
         classButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SparseBooleanArray sp = listView.getCheckedItemPositions();
+                SparseBooleanArray sp = selectListView.getCheckedItemPositions();
                 StringBuilder sb= new StringBuilder();
 
                 try {
+                    for (Course c : myCourses){
+                        dbHelper.deleteTutorCourse(user.getStudentID(),c.getSubject(),String.valueOf(c.getCourseNo()));
+                    }
                     for (int i = 0; i < sp.size(); i++) {
                         if (sp.valueAt(i) == true) {
-                            Course course = (Course) listView.getItemAtPosition(i);
-                            db.addTutorCourse("1000", course.getSubject(),course.getCourseNo());
+                            Course course = (Course) selectListView.getItemAtPosition(i);
+                            dbHelper.addTutorCourse(user.getStudentID(), course.getSubject(),course.getCourseNo());
                         }
                     }
                     Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();

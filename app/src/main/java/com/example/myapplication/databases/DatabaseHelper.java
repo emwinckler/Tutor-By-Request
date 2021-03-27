@@ -373,6 +373,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return courseList;
     }
+    public ArrayList<Course> getTutorCourses(String tutorID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = getTutorCoursesCursor(tutorID);
+        ArrayList<Course> courseList = new ArrayList<Course>();
+        while(data.moveToNext()){
+            String subject = data.getString(1);
+            String course = null;
+            int courseNo = Integer.parseInt(data.getString(2));
+            courseList.add(new Course(subject,course,courseNo));
+        }
+        return courseList;
+    }
 
     public ArrayList<String> getAllSubjects(){
         ArrayList<String> subjectList;
@@ -668,7 +681,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor getTutorCourses(String TutorID) {
+    public Cursor getTutorCoursesCursor(String TutorID) {
         Cursor result;
 
         try {
@@ -681,6 +694,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+
 
     public Cursor getCourseTutors(String Subject, String CourseNumber) {
         Cursor result;
