@@ -149,13 +149,15 @@ public class TutorSetClasses extends Fragment {
                 StringBuilder sb= new StringBuilder();
 
                 try {
-                    for (Course c : myCourses){
-                        dbHelper.deleteTutorCourse(user.getStudentID(),c.getSubject(),String.valueOf(c.getCourseNo()));
-                    }
+
                     for (int i = 0; i < sp.size(); i++) {
                         if (sp.valueAt(i) == true) {
-                            Course course = (Course) selectListView.getItemAtPosition(i);
-                            dbHelper.addTutorCourse(user.getStudentID(), course.getSubject(),course.getCourseNo());
+                            String course = (String) selectListView.getItemAtPosition(i);
+                            String subject = course.split(" ",2)[0];
+                            int courseNo = Integer.parseInt(course.split(" ",2)[1].trim());
+
+                            dbHelper.addTutorCourse(user.getStudentID(), subject, courseNo);
+
                         }
                     }
                     Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
