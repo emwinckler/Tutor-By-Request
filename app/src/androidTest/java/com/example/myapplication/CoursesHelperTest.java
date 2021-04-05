@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -32,14 +33,14 @@ public class CoursesHelperTest {
         // Make sure DB is cleared out
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new DatabaseHelper(appContext);
-        try {
-            db.addDataCourses("subject", "course", 1);
-            db.addDataCourses("math", "intro", 2);
-            db.addDataCourses("math", "to", 3);
-            db.addDataCourses("geo", "death", 4);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            db.addDataCourses("subject", "course", 1);
+//            db.addDataCourses("math", "intro", 2);
+//            db.addDataCourses("math", "to", 3);
+//            db.addDataCourses("geo", "death", 4);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
     @After
     public void tearDown() throws Exception {
@@ -48,12 +49,12 @@ public class CoursesHelperTest {
     @Test
     public void searchSubjects() {
         ArrayList<String> subjects = db.getAllSubjects();
-        assertTrue(subjects.get(0).equals("subject"));
-        assertTrue(subjects.get(1).equals("math"));
+        assertTrue(subjects.get(0).equals("Computer Science"));
+        assertTrue(subjects.get(1).equals("Electrical and Computer Engineering"));
     }
     @Test
     public void searchCourses() {
-        ArrayList<Course> courses = db.getAllCoursesBySubject("math");
-        assertTrue(courses.get(0).toString().equals("intro 2"));
+        ArrayList<Course> courses = db.getAllCoursesBySubject("Computer Science");
+        assertTrue(courses.get(0).toString().equals("Programming 1 200"));
     }
 }

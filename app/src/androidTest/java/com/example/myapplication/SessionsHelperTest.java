@@ -27,12 +27,12 @@ public class SessionsHelperTest {
         // Make sure DB is cleared out
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new DatabaseHelper(appContext);
-        try {
-            db.addDataSession("studentID",  "tutorID",  "date",  "time",  "subject",
-             0,  "location",  "description", 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            db.addDataSession("studentID",  "tutorID",  "date",  "time",  "subject",
+//             0,  "location",  "description", 1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
     @After
     public void tearDown() throws Exception {
