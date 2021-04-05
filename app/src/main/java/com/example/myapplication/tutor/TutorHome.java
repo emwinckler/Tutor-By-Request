@@ -143,7 +143,7 @@ public class TutorHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.tutor.TutorHome.this)
-                        .navigate(R.id.action_tutorHome_to_tutorSetClasses);
+                        .navigate(R.id.action_tutorHome_to_tutorSetClasses,userData);
             }
         });
 

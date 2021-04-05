@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#ED8A8A"
+    android:layout_width="400dp"
+    android:layout_height="350dp"
+    android:background="#F89797"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10px">
@@ -13,13 +13,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CONFIRM SESSION"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:text="CONFIRM SESSION" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LOCATION:" />
+
     <Spinner
         android:id="@+id/spinner_location"
         android:layout_width="287dp"

@@ -57,6 +57,10 @@ public class StudentTutorHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -81,6 +85,7 @@ public class StudentTutorHome extends Fragment {
         final Button tutorLogout = view.findViewById(R.id.sAndTLogout);
         final Button setCourses = view.findViewById(R.id.sAndTSelectCourses);
 
+
         user = (User) this.getArguments().getSerializable("user");
         // user = (User) getActivity().getIntent().getSerializableExtra("user");
 
@@ -91,28 +96,29 @@ public class StudentTutorHome extends Fragment {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_tutorSetClasses);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetClasses, userData);
             }
         });
         sessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_my_Sessions,userData);
+                        .navigate(R.id.action_studentTutorHome_to_my_Sessions, userData);
             }
         });
         getTutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_get_A_Tutor,userData);
+                        .navigate(R.id.action_studentTutorHome_to_get_A_Tutor, userData);
+
             }
         });
         availability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(com.example.myapplication.studentandtutor.StudentTutorHome.this)
-                        .navigate(R.id.action_studentTutorHome_to_tutorSetDateAndTime2,userData);
+                        .navigate(R.id.action_studentTutorHome_to_tutorSetDateAndTime2, userData);
             }
         });
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.tutor;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.example.myapplication.databases.CoursesDBHelper;
 import com.example.myapplication.databases.DatabaseHelper;
 import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.models.Course;
+import com.example.myapplication.models.User;
 
 import java.util.ArrayList;
 
@@ -42,8 +44,23 @@ public class TutorSetClasses extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView listView;
+    private ListView selectListView;
+    private ListView myClasses;
     private MainActivity ma;
+    private DatabaseHelper dbHelper;
+    private User user;
+
+    Button button_addClasses;
+    Button button_removeClasses;
+
+    ArrayList<Course> courses;
+    ArrayList<Course> myCourses;
+
+    ArrayList<String> courseString;
+    ArrayList<String> myCourseString;
+
+    ArrayAdapter<String> courseArrayAdapter;
+    ArrayAdapter<String> myClassesAdapter;
 
 
     public TutorSetClasses() {
@@ -81,43 +98,174 @@ public class TutorSetClasses extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ma = (MainActivity) getActivity();
+        dbHelper = ma.getDatabase();
+        Bundle bundle = this.getArguments();
+        user = (User) bundle.getSerializable("user");
         return inflater.inflate(R.layout.fragment_tutor_set_classes, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = (ListView) view.findViewById(R.id.classesList);
-        Button classButton = view.findViewById(R.id.selectClasses);
+        selectListView = (ListView) view.findViewById(R.id.listView_availableClasses);
+        myClasses = (ListView) view.findViewById(R.id.listView_myClasses);
+
+        button_addClasses = view.findViewById(R.id.button_addTutorClasses);
+        button_removeClasses = view.findViewById(R.id.button_removeTutorClasses);
+
+        button_addClasses.setEnabled(true);
+        button_addClasses.setClickable(true);
+        button_addClasses.setBackgroundColor(Color.RED);
+        button_removeClasses.setEnabled(true);
+        button_removeClasses.setClickable(true);
+        button_removeClasses.setBackgroundColor(Color.RED);
+
+
         ma = (MainActivity) getActivity();
-        DatabaseHelper db = ma.getDatabase();
+
 //        TutorCoursesDBHelper tutorCoursesDBHelper = ma.getTutorCourseDB();
-        ArrayList<Course> courses = db.getDataCourses();
-        this.listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<Course> courseArrayAdapter =
-                new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_multiple_choice,courses);
-        this.listView.setAdapter(courseArrayAdapter);
-        classButton.setOnClickListener(new View.OnClickListener() {
+        courses = dbHelper.getDataCourses();
+        myCourses = dbHelper.getTutorCourses(user.getStudentID());
+
+        courseString = new ArrayList<String>();
+        myCourseString = new ArrayList<String>();
+
+        for(Course c : courses) {
+            courseString.add(c.toStringSubjectCourseNo());
+        }
+        for(Course c : myCourses){
+            myCourseString.add(c.toStringSubjectCourseNo());
+            courseString.remove(c.toStringSubjectCourseNo());
+        }
+        this.selectListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        this.myClasses.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        courseArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,courseString);
+        myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,myCourseString);
+        this.myClasses.setAdapter(myClassesAdapter);
+        this.selectListView.setAdapter(courseArrayAdapter);
+
+        button_addClasses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SparseBooleanArray sp = listView.getCheckedItemPositions();
-                StringBuilder sb= new StringBuilder();
+                SparseBooleanArray sp = selectListView.getCheckedItemPositions();
+                StringBuilder sb = new StringBuilder();
 
                 try {
-                    for (int i = 0; i < sp.size(); i++) {
-                        if (sp.valueAt(i) == true) {
-                            Course course = (Course) listView.getItemAtPosition(i);
-                            db.addTutorCourse("1000", course.getSubject(),course.getCourseNo());
-                        }
-                    }
-                    Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
 
-                }catch(Exception e){
+                    for (int i = 0; i < sp.size(); i++) {
+                        int currIndex;
+                        if (sp.valueAt(i)) {
+                             currIndex = sp.keyAt(i);
+                            //String currSelection = sp.toString();
+                            //int currIndex = Integer.parseInt(currSelection.split("=")[0]);
+
+                            String course = (String) selectListView.getItemAtPosition(currIndex);
+
+                            String course_num = course.substring(course.lastIndexOf(" ") + 1);
+                            String subject = course.substring(0, course.length() - course_num.length() - 1);
+
+                            int courseNo = Integer.parseInt(course_num);
+
+                            dbHelper.addTutorCourse(user.getStudentID(), subject, courseNo);
+
+                            Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
+                        }
+
+
+
+                    }
+                } catch(Exception e){
                     Toast.makeText(ma, "Course selection not saved! Try again", Toast.LENGTH_LONG).show();
                 }
+
+                myCourses = dbHelper.getTutorCourses(user.getStudentID());
+
+
+                courseString = new ArrayList<String>();
+                myCourseString = new ArrayList<String>();
+                for (Course c : courses) {
+                    courseString.add(c.toStringSubjectCourseNo());
+                }
+                for (Course c : myCourses) {
+                    myCourseString.add(c.toStringSubjectCourseNo());
+                    courseString.remove(c.toStringSubjectCourseNo());
+                }
+                courseArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice, courseString);
+                myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice, myCourseString);
+                myClasses.setAdapter(myClassesAdapter);
+                selectListView.setAdapter(courseArrayAdapter);
+
+
+
+
+            }
+
+
+
+
+
+        });
+
+        button_removeClasses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparseBooleanArray sp = myClasses.getCheckedItemPositions();
+                StringBuilder sb = new StringBuilder();
+
+                try {
+
+                    for (int i = 0; i < sp.size(); i++) {
+                        int currIndex;
+                        if (sp.valueAt(i)) {
+                            currIndex = sp.keyAt(i);
+                            //String currSelection = sp.toString();
+                            //int currIndex = Integer.parseInt(currSelection.split("=")[0]);
+
+                            String course = (String) myClasses.getItemAtPosition(currIndex);
+
+                            String course_num = course.substring(course.lastIndexOf(" ") + 1);
+                            String subject = course.substring(0, course.length() - course_num.length() - 1);
+
+                            int courseNo = Integer.parseInt(course_num);
+
+                            dbHelper.deleteTutorCourse(user.getStudentID(), subject, courseNo);
+
+                            Toast.makeText(ma, "Course selection saved", Toast.LENGTH_LONG).show();
+                        }
+
+
+
+                    }
+                } catch(Exception e){
+                    Toast.makeText(ma, "Course selection not saved! Try again", Toast.LENGTH_LONG).show();
+                }
+
+                myCourses = dbHelper.getTutorCourses(user.getStudentID());
+
+
+                courseString = new ArrayList<String>();
+                myCourseString = new ArrayList<String>();
+                for (Course c : courses) {
+                    courseString.add(c.toStringSubjectCourseNo());
+                }
+                for (Course c : myCourses) {
+                    myCourseString.add(c.toStringSubjectCourseNo());
+                    courseString.remove(c.toStringSubjectCourseNo());
+                }
+                courseArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice, courseString);
+                myClassesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice, myCourseString);
+                myClasses.setAdapter(myClassesAdapter);
+                selectListView.setAdapter(courseArrayAdapter);
+
+
+
 
             }
         });
 
+
     }
+
 
 }

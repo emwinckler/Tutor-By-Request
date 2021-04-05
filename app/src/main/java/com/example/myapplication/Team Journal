@@ -13,13 +13,54 @@ be doing the Tutor Activity.  And Evan will be doing the Student Activity.
 ____________Personal Section______________
 
 Azzed:
-
+3/23/2021
+-Started Implementing frontend for TutorAvailability
+3/24/2021
+-Created a Calendar class to implement tutor calendar
+3/25/2021
+-Implementing clickability into calender
+-Implementing uploading to weeks
+-Implementing downloading data for weeks
+3/26/2021
+-Testing Calendar to to check implementations
+-Adding different colours signifying different modes of selectability
+-Fixing SelectClasses to add the delete courses from database
+-Testing SelectClasses
 
 Ryan:
 3/21/2021 - 8:38PM
 -Created users databases and
 
 Edwin:
+3/17
+- began tutoravailability database table
+
+3/21
+- added Get A Tutor page
+
+3/22
+- discussed tutorAvailability schema with Ryan and redesigned it to only store available session times
+  assuming each session block is 30 min long and starts at each half hour. pushed new tutoravailabilityhelper and tutorcourseavailability
+  TutorAvailability DB Table
+    Schema: TutorID|Date|StartTime|isBooked
+    Format: numeric|MM/DD/YYYY|HH:MM|"0" or "1"
+
+  TutorCourseAvailability DB Table (holds all the courses each tutor is avaialable to teach)
+      Schema: TutorID|Subject|CourseNumber
+      Format: numeric|alpha|numeric
+
+  Began Tutor Actor object model. imports and acts upon the database tables that the tutor is intended
+  to act on (read/write/modify). still some work to do.
+
+3/25
+ - get a tutor now loads and writes to necessary database tables
+ - added methods in database helper to return object models representing a row based on different querys
+ - added methods in database helper to return lists of object models representing matching rows from query
+
+3/26
+ - completed get a tutor page
+ - completed my sessions page
+ - helped complete tutor set classes page
 
 
 Harrison:

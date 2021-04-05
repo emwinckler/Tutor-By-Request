@@ -45,7 +45,8 @@
                 android:background="#C8C8C8"
                 android:popupBackground="#C8C8C8"
                 android:spinnerMode="dropdown"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                />
 
             <Button
                 android:id="@+id/button_prevWeek"

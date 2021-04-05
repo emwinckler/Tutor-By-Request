@@ -15,7 +15,15 @@ import com.example.myapplication.databases.TutorCoursesDBHelper;
 import com.example.myapplication.databases.UsersDBHelper;
 
 public class MainActivity extends AppCompatActivity {
-//    private CoursesDBHelper coursesDB;
+
+    private final String studentID = "0000000000";
+    private final String stutorID = "0000011111";
+    private final String tutor1ID = "1111111111";
+    private final String tutor2ID = "1111111112";
+    private final String tutor3ID = "1111111113";
+    private final String tutor4ID = "1111111114";
+
+    //    private CoursesDBHelper coursesDB;
 //    private TutorCoursesDBHelper tutorCourseDB;
 //    private TutorAvailabilityDBHelper tutorAvailabilityDB;
 //    private UsersDBHelper usersDB;
@@ -81,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 //_______Populate sessions database__________________________________________________________________________
     public void populateSessions(){
         try {
-            database.addDataSession("0000000000", "1111111111", "03/28/2021", "09:00", "Mathematics", 341, "Liberry", "Do.  The.  Math.", 0);
+            database.addDataSession("0000000000", "1111111111", "03/28/2021", "09:00", "Mathematics", 341, "Liberry", "Do.  The.  Math.", -1);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
@@ -90,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            database.addDataSession("0000000000", "1111111112", "03/29/2021", "09:30", "Computer Science", 400, "Memorial Union", "Red black trees", 1);
+            database.addDataSession("0000000000", "1111111112", "03/29/2021", "09:30", "Computer Science", 400, "Memorial Union", "Red black trees", -2);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
@@ -99,11 +107,39 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            database.addDataSession("0000000000", "1111111114", "04/20/2021", "10:30", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", 2);
+            database.addDataSession("0000000000", "1111111114", "04/20/2021", "10:30", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -3);
         } catch (Exception e) {
             // La di da I have nothing to say.
 
         }
+
+        // BEGIN STUTOR SESSIONS
+            // tutor sessions
+        try {
+            database.addDataSession(studentID, stutorID, "04/21/2021", "10:30", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -4);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+
+        }
+
+        try {
+            database.addDataSession(studentID, stutorID, "04/22/2021", "07:00", "Computer Science", 400, "Memorial Union", "Red black trees", -5);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+
+        }
+
+
+            // student sessions
+        try {
+            database.addDataSession(stutorID, tutor1ID, "04/23/2021", "07:00", "Data Science and Engineering", 204, "Coffee Shop", "Wo yao cafe.", -6);
+        } catch (Exception e) {
+            // La di da I have nothing to say.
+
+        }
+
+        // END STUTOR SESSIONS
+
     }
 //_______Populate users database__________________________________________________________________________________
     public void populateUsers(){
@@ -247,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             // La di da I have nothing to say.
         }
+
 
     }
 

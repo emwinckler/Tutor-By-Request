@@ -54,6 +54,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
     ViewGroup view_viewGroup;
 
     User user;
+    boolean isTutor;
     // UPPER MENU BEGIN
     Button button_home;
     Button button_get_a_tutor;
@@ -160,6 +161,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         super.onViewCreated(view, savedInstanceState);
 
         user = (User) this.getArguments().getSerializable("user");
+        boolean isTutor = user.isTutor(); // use this to erase entries of self
+
+
         // user = (User) getActivity().getIntent().getSerializableExtra("user");
 
         Bundle userData = new Bundle();
@@ -199,6 +203,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                         populateSessionListView();
                     }
                 }
+                else {
+                    spinner_week.setSelection(0, true);
+                }
             }
         });
 
@@ -212,6 +219,9 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                         spinner_week.setSelection(curr_week_pos, true);
                         populateSessionListView();
                     }
+                }
+                else {
+                    spinner_week.setSelection(0, true);
                 }
             }
         });
@@ -232,12 +242,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
 
         if (parent.getId() == R.id.spinner_week) {
             if (first) {
-                button_prevWeek.setEnabled(false);
-                button_prevWeek.setClickable(false);
-                button_prevWeek.setBackgroundColor(Color.GRAY);
-                button_nextWeek.setEnabled(false);
-                button_nextWeek.setClickable(false);
-                button_nextWeek.setBackgroundColor(Color.GRAY);
+                //button_prevWeek.setEnabled(false);
+                //button_prevWeek.setClickable(false);
+                //button_prevWeek.setBackgroundColor(Color.GRAY);
+                //button_nextWeek.setEnabled(false);
+                //button_nextWeek.setClickable(false);
+                //button_nextWeek.setBackgroundColor(Color.GRAY);
                 first = false;
 
             } else {
@@ -462,10 +472,12 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         spinner_week.setOnItemSelectedListener(this);
         spinner_week.setSelection(0, true);
 
-        button_prevWeek.setEnabled(false);
-        button_prevWeek.setClickable(false);
-        button_nextWeek.setEnabled(false);
-        button_nextWeek.setClickable(false);
+        button_prevWeek.setEnabled(true);
+        button_prevWeek.setClickable(true);
+        button_prevWeek.setBackgroundColor(Color.RED);
+        button_nextWeek.setEnabled(true);
+        button_nextWeek.setClickable(true);
+        button_nextWeek.setBackgroundColor(Color.RED);
 
     }
 
@@ -526,14 +538,18 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         result = new ArrayList<TutorAvailablity>();
         tutorsIDs_selectedCourse = database.getAvailableCourseTutorIDs(subject, course);
 
+
         for (int i = 0; i < tutorsIDs_selectedCourse.size(); i++) {
-            String tutorID = tutorsIDs_selectedCourse.get(i);
-            tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
-            for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
-                if (!tutorAvailabilityOnDate.get(j).isBooked()) {
-                    result.add(tutorAvailabilityOnDate.get(j));
+            if ( !tutorsIDs_selectedCourse.get(i).equals(user.getStudentID()) ) { // skip over your own TutorID if your a stutor
+                String tutorID = tutorsIDs_selectedCourse.get(i);
+                tutorAvailabilityOnDate = database.getTutorAvailabilityOnDate(tutorID, date);
+                for (int j = 0; j < tutorAvailabilityOnDate.size(); j++) {
+                    if (!tutorAvailabilityOnDate.get(j).isBooked()) {
+                        result.add(tutorAvailabilityOnDate.get(j));
+                    }
                 }
             }
+
         }
 
         // then from these tutors, load their time and availability
@@ -714,7 +730,7 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.get_a_tutor_confirm_session_popup, view_viewGroup, false);
 
-        PopupWindow popup = new PopupWindow(popupView, 1000,1000, true);
+        PopupWindow popup = new PopupWindow(popupView, 1000 , 1000, true);
         popup.setOutsideTouchable(true);
         //popup.setContentView(view);
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -734,6 +750,14 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
         EditText editText_description = (EditText) popupView.findViewById(R.id.editText_description);
         Button button_confirm = (Button) popupView.findViewById(R.id.button_confirm);
         Button button_cancel = (Button) popupView.findViewById(R.id.button_cancel);
+
+        button_confirm.setVisibility(View.VISIBLE);
+        button_confirm.setEnabled(true);
+        button_confirm.setBackgroundColor(Color.RED);
+
+        button_cancel.setVisibility(View.VISIBLE);
+        button_cancel.setEnabled(true);
+        button_cancel.setBackgroundColor(Color.RED);
 
         button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -765,12 +789,6 @@ public class Get_A_Tutor extends Fragment implements AdapterView.OnItemSelectedL
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
-
-
-
 
                 popup.dismiss();
             }

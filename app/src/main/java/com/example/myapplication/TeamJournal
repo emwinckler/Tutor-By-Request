@@ -39,9 +39,22 @@ Edwin:
   Began Tutor Actor object model. imports and acts upon the database tables that the tutor is intended
   to act on (read/write/modify). still some work to do.
 
+3/25
+ - get a tutor now loads and writes to necessary database tables
+ - added methods in database helper to return object models representing a row based on different querys
+ - added methods in database helper to return lists of object models representing matching rows from query
+
+3/26
+ - completed get a tutor page
+ - completed my sessions page
+ - helped complete tutor set classes page
 
 
 Harrison:
+3/25/2021
+Mostly debugging. Cleaned up the navigation between fragments. Started doing intensive UI
+Testing.
+
 3/25/2021
 Merging and testing the five databases into one database with multiple tables. Started on
 cleaning up the overal design to improve visual aesthetic.
