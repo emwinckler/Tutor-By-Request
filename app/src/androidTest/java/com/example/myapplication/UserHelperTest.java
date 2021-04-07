@@ -7,6 +7,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.myapplication.databases.DatabaseHelper;
+import com.example.myapplication.models.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -64,6 +65,12 @@ public class UserHelperTest {
         db.modifyPassword("tutor1", "assa");
         String password = db.getPassword("tutor1");
         assertTrue(password.equals("assa"));
+    }
+
+    @Test
+    public void getUser() {
+        User user = db.getUser("student");
+        assertTrue(user.getStudentID().equals("0000000000"));
     }
 
 

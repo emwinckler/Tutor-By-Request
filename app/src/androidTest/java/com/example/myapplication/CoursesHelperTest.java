@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -56,5 +57,27 @@ public class CoursesHelperTest {
     public void searchCourses() {
         ArrayList<Course> courses = db.getAllCoursesBySubject("Computer Science");
         assertTrue(courses.get(0).toString().equals("Programming 1 200"));
+    }
+    @Test
+    public void getAllCourses() {
+        ArrayList<Course> courses = db.getDataCourses();
+        assertTrue(courses.get(0).toString().equals("Programming 1 200"));
+        assertTrue(courses.get(0).toStringSubjectCourseNo().equals("Computer Science Programming 1 200"));
+    }
+    @Test
+    public void getTutorCourses() {
+        ArrayList<Course> courses = db.getTutorCourses("1111111111");
+        assertTrue(courses.get(1).toStringSubjectCourseNo().equals("1111111111 Computer Science 300"));
+    }
+    @Test
+    public void deleteTutorCourse() {
+        db.deleteTutorCourse("1111111111","Mathematics",221);
+        ArrayList<Course> courses = db.getTutorCourses("1111111111");
+        assertFalse(courses.get(3).toStringSubjectCourseNo().equals("1111111111 Mathematics 221"));
+    }
+    @Test
+    public void getTutorsbyCourse() {
+        ArrayList<String> courses = db.getAvailableCourseTutorIDs("Mathematics","222");
+        assertFalse(courses.get(0).equals("1111111112"));
     }
 }

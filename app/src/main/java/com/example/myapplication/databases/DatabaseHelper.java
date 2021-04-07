@@ -285,50 +285,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean modifyDataSession(String NetID, String COL, ContentValues cv) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.update(TABLE_NAME_SESSION, cv,  "" + COL + " = ? ", new String[] { NetID } );
-        return true; // TODO: what should we return?
-    }
 
-
-    public boolean modifyNameSession(String NetID, String newName) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_3_SESSION, newName);
-        return modifyDataSession(NetID, COL_3_SESSION, contentValues);
-    }
-
-    public boolean modifyPasswordSession(String NetID, String newPassword) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2_SESSION, newPassword);
-        return modifyDataSession(NetID, COL_2_SESSION, contentValues);
-    }
-
-    public boolean modifyAccountTYpeSession(String NetID, String newPassword) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2_SESSION, newPassword);
-        return modifyDataSession(NetID, COL_2_SESSION, contentValues);
-    }
-
-    public Cursor getDataSession(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+TABLE_NAME_SESSION;
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-    public Cursor checkLogin2Session(String NetID, String password){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String[] selectionArgs = {NetID,password};
-        Cursor cursor = db.query(TABLE_NAME_SESSION, new String[]{"NetID", "password"}, "NetID=? and password=?", selectionArgs , null, null, null);
-        return cursor;
-    }
-
-    public Cursor getPasswordSession(String NetID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT password FROM "+TABLE_NAME_SESSION+"  WHERE " + COL_1_SESSION + NetID +"'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
+    /*
+    THESE ARE ALL COMMENTED OUT BECAUSE THEY ARE NEVER USED LET ME KNOW IF YOU USE THEM
+    -HARRISON
+    */
+//    public boolean modifyDataSession(String NetID, String COL, ContentValues cv) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.update(TABLE_NAME_SESSION, cv,  "" + COL + " = ? ", new String[] { NetID } );
+//        return true; // TODO: what should we return?
+//    }
+//
+//
+//    public boolean modifyNameSession(String NetID, String newName) {
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_3_SESSION, newName);
+//        return modifyDataSession(NetID, COL_3_SESSION, contentValues);
+//    }
+//
+//    public boolean modifyPasswordSession(String NetID, String newPassword) {
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_2_SESSION, newPassword);
+//        return modifyDataSession(NetID, COL_2_SESSION, contentValues);
+//    }
+//
+//    public boolean modifyAccountTYpeSession(String NetID, String newPassword) {
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_2_SESSION, newPassword);
+//        return modifyDataSession(NetID, COL_2_SESSION, contentValues);
+//    }
+//
+//    public Cursor getDataSession(){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "SELECT * FROM "+TABLE_NAME_SESSION;
+//        Cursor data = db.rawQuery(query, null);
+//        return data;
+//    }
+//
+//    public Cursor checkLogin2Session(String NetID, String password){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String[] selectionArgs = {NetID,password};
+//        Cursor cursor = db.query(TABLE_NAME_SESSION, new String[]{"NetID", "password"}, "NetID=? and password=?", selectionArgs , null, null, null);
+//        return cursor;
+//    }
+//
+//    public Cursor getPasswordSession(String NetID){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "SELECT password FROM "+TABLE_NAME_SESSION+"  WHERE " + COL_1_SESSION + NetID +"'";
+//        Cursor data = db.rawQuery(query, null);
+//        return data;
+//    }
 
     /*SECTION FOR SESSION END*/
 
@@ -373,6 +379,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return courseList;
     }
+
     public ArrayList<Course> getTutorCourses(String tutorID){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -465,8 +472,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Session> getTutorSession(String tutor){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM sessions_table WHERE tutor_id='"+tutor+"'";
-        Cursor data = db.rawQuery(query, null);
+        //String query = "SELECT * FROM sessions_table WHERE tutor_id='"+tutor+"'";
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME_SESSION +" WHERE " + COL_2_SESSION + " = ?", new String[]{tutor});
+        //Cursor data = db.rawQuery(query, null);
         ArrayList<Session> sessionList = new ArrayList<Session>();
         while(data.moveToNext()){
             String studentID = data.getString(0);
@@ -796,28 +804,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data.getString(0);
     }
 
-
-    /*
-    // USERS TABLE
-    public static final String TABLE_NAME_USERS = "user_table";
-    public static final String COL_1_USERS = "student_id";
-    public static final String COL_2_USERS = "net_id";
-    public static final String COL_3_USERS = "password";
-    public static final String COL_4_USERS = "name";
-    public static final String COL_5_USERS = "email";
-    public static final String COL_6_USERS = "tutor";
-    public static final String COL_7_USERS = "tutee";
-    public static final String CREATE_TABLE_USERS = "CREATE TABLE "+ TABLE_NAME_USERS +
-
-    // user object fields
-    private String studentID;
-    private String netID;
-    private String password;
-    private String email;
-    private boolean tutor;
-    private boolean tutee;
-
-     */
     public User getUser(String NetID){
         User user;
         String studentID;

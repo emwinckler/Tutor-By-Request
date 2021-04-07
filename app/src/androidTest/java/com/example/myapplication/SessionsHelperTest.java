@@ -6,11 +6,16 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.myapplication.databases.DatabaseHelper;
+import com.example.myapplication.models.Session;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -39,8 +44,14 @@ public class SessionsHelperTest {
         db.close();
     }
     @Test
-    public void searchSessions() {
-
+    public void getTutorSession() {
+        ArrayList<Session> sessionList = db.getTutorSession("1111111111");
+        assertTrue(sessionList.get(0).toString().equals("03/28/2021 09:00 Mathematics 341"));
+    }
+    @Test
+    public void getStudentSession() {
+        ArrayList<Session> sessionList = db.getStudentSession("0000000000");
+        assertTrue(sessionList.get(0).toString().equals("03/28/2021 09:00 Mathematics 341"));
     }
 
     // More Tests
