@@ -61,23 +61,27 @@ public class CoursesHelperTest {
     @Test
     public void getAllCourses() {
         ArrayList<Course> courses = db.getDataCourses();
+        //Log.d("getAllCourses",courses.get(0).toString());
+       // Log.d("getAllCourses 2",courses.get(0).toStringSubjectCourseNo());
         assertTrue(courses.get(0).toString().equals("Programming 1 200"));
-        assertTrue(courses.get(0).toStringSubjectCourseNo().equals("Computer Science Programming 1 200"));
+        assertTrue(courses.get(0).toStringSubjectCourseNo().equals("Computer Science 200"));
     }
     @Test
     public void getTutorCourses() {
-        ArrayList<Course> courses = db.getTutorCourses("1111111111");
-        assertTrue(courses.get(1).toStringSubjectCourseNo().equals("1111111111 Computer Science 300"));
+        ArrayList<Course> courses = db.getTutorCourses("1111111112");
+        //Log.d("TutorCourse",courses.get(1).toStringSubjectCourseNo());
+        assertTrue(courses.get(1).toStringSubjectCourseNo().equals("Electrical and Computer Engineering 204"));
     }
     @Test
     public void deleteTutorCourse() {
         db.deleteTutorCourse("1111111111","Mathematics",221);
         ArrayList<Course> courses = db.getTutorCourses("1111111111");
-        assertFalse(courses.get(3).toStringSubjectCourseNo().equals("1111111111 Mathematics 221"));
+        assertTrue(courses.get(2).toStringSubjectCourseNo().equals("Computer Science 400"));
     }
     @Test
     public void getTutorsbyCourse() {
         ArrayList<String> courses = db.getAvailableCourseTutorIDs("Mathematics","222");
-        assertFalse(courses.get(0).equals("1111111112"));
+        //Log.d("TutorBC",courses.get(0));
+        assertTrue(courses.get(0).equals("1111111112"));
     }
 }
