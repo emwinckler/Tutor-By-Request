@@ -39,19 +39,35 @@ public class UITest {
 //    public ActivityScenarioRule<MainActivity> activityActivityTestRule = new ActivityScenarioRule<MainActivity>(MainActivity.class);
     @Rule
     public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
-    @Before
-    public void init(){
+    @Test
+    public void student(){
         Fragment g = new Fragment();
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction().add(R.id.loginFragment,g);
-    }
-    @Test
-    public void TestAutoComplete(){
         onView(withId(R.id.net_ID)).perform(clearText(),typeText("student"));
         onView(withId(R.id.password)).perform(clearText(),typeText("student"));
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.studentSessions)).check(matches((isDisplayed())));
-
+    }
+    @Test
+    public void tutor(){
+        Fragment g = new Fragment();
+        activityActivityTestRule.getActivity()
+                .getSupportFragmentManager().beginTransaction().add(R.id.loginFragment,g);
+        onView(withId(R.id.net_ID)).perform(clearText(),typeText("tutor1"));
+        onView(withId(R.id.password)).perform(clearText(),typeText("tutor1"));
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.tutorSessions)).check(matches((isDisplayed())));
+    }
+    @Test
+    public void stutor(){
+        Fragment g = new Fragment();
+        activityActivityTestRule.getActivity()
+                .getSupportFragmentManager().beginTransaction().add(R.id.loginFragment,g);
+        onView(withId(R.id.net_ID)).perform(clearText(),typeText("stutor"));
+        onView(withId(R.id.password)).perform(clearText(),typeText("stutor"));
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.sAndTSessions)).check(matches((isDisplayed())));
     }
 
 }
